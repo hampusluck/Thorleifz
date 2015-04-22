@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 /**
  * Created by Jacob on 2015-04-22.
  */
-public class LogIn extends ActionBarActivity {
+public class Login extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

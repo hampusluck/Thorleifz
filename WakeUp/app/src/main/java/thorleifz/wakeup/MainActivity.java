@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -40,9 +39,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void ButtonPressed(View v){
+    public void goToLoginScreen(View v){
 
-        Intent theIntent = new Intent(this, LogIn.class);
+        Intent theIntent = new Intent(this, Login.class);
         startActivity(theIntent);
     }
 }

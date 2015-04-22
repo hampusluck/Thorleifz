@@ -17,6 +17,6 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="115dp"
-        android:onClick="ButtonPressed" />
+        android:onClick="goToLoginScreen" />
 
 </RelativeLayout>
