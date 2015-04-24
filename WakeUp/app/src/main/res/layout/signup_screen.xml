@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:clickable="true">
+
+    <ImageView
+        android:layout_width="223dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_weight="0.58"
+        android:adjustViewBounds="true"
+        android:src="@drawable/snoozeloze"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupUsername"
+        android:layout_gravity="center_horizontal"
+        android:hint="Username" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username must be unique"
+        android:id="@+id/signupUsernameInfo" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/signupPassword1"
+        android:layout_gravity="center_horizontal"
+        android:hint="Password"
+        android:singleLine="false" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/signupPassword2"
+        android:layout_gravity="center_horizontal"
+        android:hint="Repeat Password" />
+
+    <TextView
+        android:layout_width="318dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/signUpPasswordInfo"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:id="@+id/signupConfirmButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="signUpConfirmButtonPressed" />
+
+</LinearLayout>
