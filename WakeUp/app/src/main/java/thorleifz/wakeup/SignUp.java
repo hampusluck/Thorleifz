@@ -37,21 +37,24 @@ public class SignUp extends ActionBarActivity {
     public void signUpConfirmButtonPressed(View v){
         String username = inputUsername.getText().toString();
         String password1 = inputPassword1.getText().toString();
-        String password2 = inputPassword1.getText().toString();
+        String password2 = inputPassword2.getText().toString();
 
         // Control text editors filled out
         if( (!username.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
 
             // Test for matching passwords
-            if (!password1.equals(password2)) {
-                passwordInfo.setText("Password not OK");
-            }
-            else {
+            if (password1.equals(password2)) {
+
                 // Test for unique username
                 // If unique send information (username, password) to database
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
                 //startActivity(theIntent);
+
+                passwordInfo.setText("Password OK");
+            }
+            else {
+                passwordInfo.setText("Password NOT ok");
             }
         }
     }
