@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void goToLoginScreen(View v){
 
-        Intent theIntent = new Intent(this, Login.class);
+        Intent theIntent = new Intent(this, LogIn.class);
         startActivity(theIntent);
     }
 
