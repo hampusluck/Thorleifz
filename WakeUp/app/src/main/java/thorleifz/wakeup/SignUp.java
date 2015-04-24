@@ -76,12 +76,12 @@ public class SignUp extends ActionBarActivity {
         @Override
         protected Integer doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpPost = new HttpGet("https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec");
-            httpPost.getParams().setParameter("accountName",accountName);
-            httpPost.getParams().setParameter("password",password);
-            httpPost.getParams().setParameter("approved","Unprocessed");
+            HttpGet httpGet = new HttpGet("https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec");
+            httpGet.getParams().setParameter("accountName",accountName);
+            httpGet.getParams().setParameter("password",password);
+            httpGet.getParams().setParameter("approved","Unprocessed");
             try {
-                HttpResponse httpResponse = httpClient.execute(httpPost);
+                HttpResponse httpResponse = httpClient.execute(httpGet);
                 Log.i("theTag", httpResponse.getParams().getParameter("approved").toString());
             } catch (IOException e) {
                 e.printStackTrace();
