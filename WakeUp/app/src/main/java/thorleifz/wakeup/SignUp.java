@@ -3,7 +3,6 @@ package thorleifz.wakeup;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
@@ -22,13 +20,14 @@ import java.io.IOException;
  */
 public class SignUp extends ActionBarActivity {
 
-    EditText inputUsername;
-    EditText inputPassword1;
-    EditText inputPassword2;
-    Button signUpConfirmButton;
-    TextView passwordInfo;
-    String accountName;
-    String password;
+    private EditText inputUsername;
+    private EditText inputPassword1;
+    private EditText inputPassword2;
+    private Button signUpConfirmButton;
+    private TextView passwordInfo;
+    private String accountName;
+    private String password;
+    private final String severURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +53,8 @@ public class SignUp extends ActionBarActivity {
             // Test for matching passwords
             if (password1.equals(password2)) {
                 password = password1;
-                Log.i("theTag","We create addUser");
-                AddUser addUser = new AddUser();
-                addUser.execute();
+                AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
+                addUserTask.execute();
                 // Test for unique accountName
                 // If unique send information (accountName, password) to database
                 // Go to "group activity"
@@ -66,23 +64,21 @@ public class SignUp extends ActionBarActivity {
                 passwordInfo.setText("Password OK");
             }
             else {
-                passwordInfo.setText("Password NOT ok");
+                passwordInfo.setText("Password NOT OK");
             }
         }
     }
 
-    private class AddUser extends AsyncTask<String, Void, Integer> {
+    private class AddUserTask extends AsyncTask<String, Void, Integer> {
 
+        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
         @Override
         protected Integer doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet("https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec");
-            httpGet.getParams().setParameter("accountName",accountName);
-            httpGet.getParams().setParameter("password",password);
-            httpGet.getParams().setParameter("approved","Unprocessed");
+            String serverURLandParams = severURL +"?username="+ accountName +"&password="+ password;
+            HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                Log.i("theTag", httpResponse.getParams().getParameter("approved").toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
