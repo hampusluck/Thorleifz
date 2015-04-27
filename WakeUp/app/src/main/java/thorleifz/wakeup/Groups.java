@@ -1,6 +1,7 @@
 package thorleifz.wakeup;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +25,7 @@ public class Groups extends Activity {
         groupList = (ListView) findViewById(R.id.groupList);
 
         // Get information from database and add into group-list
-        String[] groups = new String[] { "Grupp 1", "Grupp 2", "Grupp 3",};
+        String[] groups = new String[] { "Grupp 1", "Grupp 2", "Grupp 3", "Grupp 3","Grupp 3","Grupp 3","Grupp 3","Grupp 3","Grupp 3","Grupp 3","Grupp 3","Grupp 3"};
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, groups);
         groupList.setAdapter(arrayAdapter);
@@ -37,11 +38,9 @@ public class Groups extends Activity {
         });
 
     }
-/*    // TODO Lägga in metod onItemClick
-    @Override
-    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-        String item = (String) groupList.getItemAtPosition(position);
-        Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
+
+    public void newGroupButtonPressed(View v) {
+        Intent theIntent = new Intent(this, NewGroup.class);
+        startActivity(theIntent);
     }
-*/
 }
