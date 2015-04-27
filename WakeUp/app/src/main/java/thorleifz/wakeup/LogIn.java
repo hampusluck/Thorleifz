@@ -34,11 +34,12 @@ public class LogIn extends ActionBarActivity {
     SharedPreferences.Editor editor;
     private final String severURL = "https://script.google.com/macros/s/AKfycbxPWTBnFC0SHZ3n3JZzHxhkDvvUwcdw2VtQI9_NpNIUYQzV6tw/exec";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
-        settings = getSharedPreferences("settings",0);
+        settings = getSharedPreferences("settings",0); //gets the instance where data is locally stored
         inputUsername = (EditText)findViewById(R.id.UsernameLogIn);
         inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
         loginInfo = (TextView)findViewById(R.id.loginInfo);
@@ -48,27 +49,22 @@ public class LogIn extends ActionBarActivity {
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
         if( (!accountName.equals("")) && (!password.equals("")) && (!password.equals("")) ) {
-            Log.i("tag","not empty");
-
             LoginTask loginTask = new LoginTask();
             String loginStatus = loginTask.execute().get();
 
             if(loginStatus.equals("Login successful")){
                 createLocalUser();
-                Log.i("tag","success");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
                 //startActivity(theIntent);
             }
             else{
-                Log.i("tag","not success");
-
-                loginInfo.setText(loginStatus);
+                loginInfo.setText("Wrong Accountname or password");
             }
         }
 
     }
-
+    //Saves the entered information in the local memory using SharedPreferences
     private void createLocalUser() {
         editor = settings.edit();
         editor.putString("accountName",accountName);
@@ -76,14 +72,14 @@ public class LogIn extends ActionBarActivity {
         editor.commit();
     }
 
-
+    //private class that runs the back-end script in a seperate thread
     private class LoginTask extends AsyncTask<String, Void, String> {
         String s;
-        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
+        //The doInBackground-method is called when the object is executed
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = severURL +"?accountName="+ accountName +"&password="+ password;
+            String serverURLandParams = severURL +"?accountName="+ accountName +"&password="+ password;//creates a new String containing the scripts URL and the parameters
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
