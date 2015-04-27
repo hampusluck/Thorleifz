@@ -29,13 +29,4 @@
         android:clickable="true"
         android:onClick="signUpButtonPressed" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GO TO GROUP SCREEN"
-        android:id="@+id/groupButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="85dp" />
-
 </RelativeLayout>
