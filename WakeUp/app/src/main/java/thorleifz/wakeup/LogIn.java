@@ -54,6 +54,7 @@ public class LogIn extends ActionBarActivity {
 
             if(loginStatus.equals("Login successful")){
                 createLocalUser();
+                loginInfo.setText("You are logged in");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
                 //startActivity(theIntent);
