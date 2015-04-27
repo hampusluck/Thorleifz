@@ -1,29 +1,24 @@
 package thorleifz.wakeup;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * Created by rebeccaharkonen on 2015-04-24.
  */
-public class Groups extends ListActivity {
-
-    ListView groupList;
+public class Groups extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_screen);
 
-        groupList = (ListView) findViewById(R.id.groupList);
-
-        //Get information about groups from database
-        String[] groups = new String[] { "Grupp 1",
-                                         "Grupp 2",
-                                         "Grupp 3"};
-
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new GroupListFragment())
+                    .commit();
+        }
     }
 
 }
