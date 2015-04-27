@@ -28,11 +28,12 @@ public class MainActivity extends ActionBarActivity {
     String serverURL = "https://script.google.com/macros/s/AKfycbxu0F2ua8I8iu5NheQ8F6uzTiju1MLjLk_29-HU3jfoSfrhkeT0/exec";
     String theGroups;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        settings = getSharedPreferences("settings",0);
+        settings = getSharedPreferences("settings",0); //gets the instance where data is locally stored
     }
 
 
@@ -57,51 +58,52 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+    //Starts the Login-activity
     public void goToLoginScreen(View v){
         Intent theIntent = new Intent(this, LogIn.class);
         startActivity(theIntent);
     }
-
+    //Starts the SignUp-activity
     public void signUpButtonPressed(View v){
 
         Intent theIntent = new Intent(this, SignUp.class);
         startActivity(theIntent);
     }
+    //Downloads all the groupnames that the local user is a member of
     public void groupButtonPressed(View v) throws ExecutionException, InterruptedException {
 
-        accountName = settings.getString("accountName",null);
+        accountName = settings.getString("accountName",null); //Gets the accountName for the logged in user from local memory
         if(accountName!=null){
-            DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask();
-            theGroups = downloadGroupsTask.execute().get();
+            DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(); // Creates a new Thread that downloads the group names
+            theGroups = downloadGroupsTask.execute().get(); // executes the thread, invoking the doInBackground-method in that class
         }
 
     }
-
+    //Starts the group activity and passes a single String containing all the group names
     public void startGroupActivity(){
         Intent theIntent = new Intent(this, Groups.class);
         theIntent.putExtra("groups",theGroups);
         startActivity(theIntent);
     }
 
-
+    //private class that runs the back-end script in a seperate thread
     private class DownloadGroupsTask extends AsyncTask<String, Void, String> {
         String s;
-        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
+        //The doInBackground-method is called when the object is executed
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?accountName="+ accountName;
+            String serverURLandParams = serverURL +"?accountName="+ accountName; //creates a new String containing the scripts URL and the parameters
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                s = EntityUtils.toString(httpResponse.getEntity());
+                s = EntityUtils.toString(httpResponse.getEntity()); // The returned String is saved
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return s;
         }
-
+        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
