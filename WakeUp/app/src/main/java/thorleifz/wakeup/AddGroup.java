@@ -1,12 +1,14 @@
 package thorleifz.wakeup;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,41 +22,48 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by Jacob on 2015-04-22.
+ * Created by rebeccaharkonen on 2015-04-27.
  */
-public class LogIn extends ActionBarActivity {
-
-    private EditText inputUsername;
+public class AddGroup extends ActionBarActivity {
+    private EditText inputGroupID;
     private EditText inputPassword;
-    private TextView loginInfo;
-    private TextView passwordInfo;
-    private String accountName;
+    private TextView joinInfo;
+    private String groupID;
     private String password;
+    private String accountName;
     private SharedPreferences settings;
     SharedPreferences.Editor editor;
-    private final String severURL = "https://script.google.com/macros/s/AKfycbxPWTBnFC0SHZ3n3JZzHxhkDvvUwcdw2VtQI9_NpNIUYQzV6tw/exec";
+    private final String serverURL = "https://script.google.com/macros/s/AKfycbwDjF9pUpetKHHlYNhWuYVOES-e1zz652pyJJBTCdUgc39l4baB/exec";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.join_screen);
         settings = getSharedPreferences("settings",0);
-        inputUsername = (EditText)findViewById(R.id.UsernameLogIn);
-        inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
-        loginInfo = (TextView)findViewById(R.id.loginInfo);
+        accountName = settings.getString("accountName", null);
+        inputGroupID = (EditText)findViewById(R.id.joinGroupID);
+        inputPassword = (EditText)findViewById(R.id.joinPassword);
+        joinInfo = (TextView)findViewById(R.id.joinInfo);
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 
-    public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
-            accountName = inputUsername.getText().toString();
-            password = inputPassword.getText().toString();
-        if( (!accountName.equals("")) && !password.equals("")) {
-            Log.i("tag","not empty");
+    public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
+        groupID = inputGroupID.getText().toString();
+        password = inputPassword.getText().toString();
+        if( (!groupID.equals("")) && !password.equals("")) {
+            Log.i("tag", "not empty");
 
-            LoginTask loginTask = new LoginTask();
-            String loginStatus = loginTask.execute().get();
+            JoinTask joinTask = new JoinTask();
+            String joinStatus = joinTask.execute().get();
 
-            if(loginStatus.equals("Login successful")){
-                createLocalUser();
+            if(joinStatus.equals("Join successful")){
+                //Add member to group();
                 Log.i("tag","success");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
@@ -63,27 +72,26 @@ public class LogIn extends ActionBarActivity {
             else{
                 Log.i("tag","not success");
 
-                loginInfo.setText(loginStatus);
+                joinInfo.setText(joinStatus);
             }
         }
 
     }
-
-    private void createLocalUser() {
+   /* private void Add member to group() {
         editor = settings.edit();
         editor.putString("accountName",accountName);
         editor.putString("password",password);
         editor.commit();
-    }
+    }*/
 
 
-    private class LoginTask extends AsyncTask<String, Void, String> {
+    private class JoinTask extends AsyncTask<String, Void, String> {
         String s;
         //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = severURL +"?accountName="+ accountName +"&password="+ password;
+            String serverURLandParams = serverURL +"?accountName="+ accountName +"&password="+ password +"&groupId=";
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -95,4 +103,5 @@ public class LogIn extends ActionBarActivity {
         }
 
     }
+
 }

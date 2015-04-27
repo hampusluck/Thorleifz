@@ -40,7 +40,7 @@ public class Groups extends Activity {
     }
 
     public void newGroupButtonPressed(View v) {
-        Intent theIntent = new Intent(this, NewGroup.class);
+        Intent theIntent = new Intent(this, AddGroup.class);
         startActivity(theIntent);
     }
 }
