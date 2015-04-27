@@ -51,4 +51,9 @@ public class MainActivity extends ActionBarActivity {
         Intent theIntent = new Intent(this, SignUp.class);
         startActivity(theIntent);
     }
+    public void groupButtonPressed(View v) {
+
+        Intent theIntent = new Intent(this, Groups.class);
+        startActivity(theIntent);
+    }
 }
