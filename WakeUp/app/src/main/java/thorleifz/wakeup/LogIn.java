@@ -1,12 +1,15 @@
 package thorleifz.wakeup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +50,7 @@ public class LogIn extends ActionBarActivity {
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
+            hideKeyboard();
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
@@ -78,6 +82,18 @@ public class LogIn extends ActionBarActivity {
         Log.i("tag","in startsignupmethod");
         Intent theIntent = new Intent(this, SignUp.class);
         startActivity(theIntent);
+    }
+    //removes keyboard
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        hideKeyboard();
+        return true;
+    }
+
+    public void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
     @Override
