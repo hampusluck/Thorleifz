@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,13 +47,14 @@ public class LogIn extends ActionBarActivity {
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
+            loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
-        if( (!accountName.equals("")) && (!password.equals("")) && (!password.equals("")) ) {
+        if( (!accountName.equals("")) && (!password.equals(""))) {
             LoginTask loginTask = new LoginTask();
-            String loginStatus = loginTask.execute().get();
+            loginTask.execute();
 
-            if(loginStatus.equals("Login successful")){
+/*            if(loginStatus.equals("Login successful")){
                 createLocalUser();
                 loginInfo.setText("You are logged in");
                 // Go to "group activity"
@@ -61,9 +63,8 @@ public class LogIn extends ActionBarActivity {
             }
             else{
                 loginInfo.setText("Wrong Accountname or password");
-            }
+            }*/
         }
-
     }
     //Saves the entered information in the local memory using SharedPreferences
     private void createLocalUser() {
@@ -72,6 +73,15 @@ public class LogIn extends ActionBarActivity {
         editor.putString("password",password);
         editor.commit();
     }
+
+    public void startSignUpActivity(View v){
+        Log.i("tag","in startsignupmethod");
+        Intent theIntent = new Intent(this, SignUp.class);
+        startActivity(theIntent);
+    }
+
+    @Override
+    public void onBackPressed(){} //Overriding this method makes it impossible to go back to mainActivity
 
     //private class that runs the back-end script in a seperate thread
     private class LoginTask extends AsyncTask<String, Void, String> {
@@ -91,5 +101,17 @@ public class LogIn extends ActionBarActivity {
             return s;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(s.equals("Login successful")){
+                createLocalUser();
+                DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
+                downloadGroupsTask.execute();
+            }
+            else{
+                loginInfo.setText("Wrong username or password");
+            }
+        }
     }
 }
