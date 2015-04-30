@@ -59,4 +59,12 @@
         android:layout_gravity="center_horizontal"
         android:onClick="signUpConfirmButtonPressed" />
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.58"
+        android:indeterminate="true" />
+
 </LinearLayout>

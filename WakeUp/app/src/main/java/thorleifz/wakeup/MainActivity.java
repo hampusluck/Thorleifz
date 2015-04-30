@@ -28,6 +28,8 @@ public class MainActivity extends Activity {
     String accountName;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,8 @@ public class MainActivity extends Activity {
             startLoginActivity();
         }
     }
+
+
 
     @Override
     protected void onResume() {

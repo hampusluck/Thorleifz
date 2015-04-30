@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -31,6 +32,7 @@ public class SignUp extends ActionBarActivity {
     private EditText inputUsername;
     private EditText inputPassword1;
     private EditText inputPassword2;
+    private ProgressBar signupProgressBar;
     private TextView passwordInfo;
     private String accountName;
     private String password;
@@ -44,11 +46,12 @@ public class SignUp extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_screen);
         settings = getSharedPreferences("settings",0);
+        signupProgressBar = (ProgressBar)findViewById(R.id.signupProgressBar);
         inputUsername = (EditText) findViewById(R.id.signupUsername);
         inputPassword1 = (EditText) findViewById(R.id.signupPassword1);
         inputPassword2 = (EditText) findViewById(R.id.signupPassword2);
         passwordInfo = (TextView) findViewById(R.id.signUpPasswordInfo);
-
+        signupProgressBar.setVisibility(View.GONE);
     }
 
     public void signUpConfirmButtonPressed(View v) {
@@ -62,13 +65,15 @@ public class SignUp extends ActionBarActivity {
 
             // Test for matching passwords
             if (password1.equals(password2)) {
+                signupProgressBar.setVisibility(View.VISIBLE);
                 password = password1;
                 AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
                 addUserTask.execute();
             }
+            else
+                passwordInfo.setText("Passwords don't match");
         }
-        else
-            passwordInfo.setText("Passwords don't match");
+
     }
 
     //removes keyboard
@@ -110,6 +115,8 @@ public class SignUp extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            signupProgressBar.setVisibility(View.GONE);
+            Log.i("tag", result);
             if(result.equals("New User created")) {
                 createLocalUser();
                 Intent intent = new Intent(getApplicationContext(), Groups.class);

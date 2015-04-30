@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -35,7 +36,8 @@ public class LogIn extends ActionBarActivity {
     private String accountName;
     private String password;
     private SharedPreferences settings;
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
+    private ProgressBar loginProgressBar;
     private final String severURL = "https://script.google.com/macros/s/AKfycbxPWTBnFC0SHZ3n3JZzHxhkDvvUwcdw2VtQI9_NpNIUYQzV6tw/exec";
 
 
@@ -46,10 +48,13 @@ public class LogIn extends ActionBarActivity {
         settings = getSharedPreferences("settings",0); //gets the instance where data is locally stored
         inputUsername = (EditText)findViewById(R.id.UsernameLogIn);
         inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
+        loginProgressBar = (ProgressBar)findViewById(R.id.loginProgressBar);
+        loginProgressBar.setVisibility(View.GONE);
         loginInfo = (TextView)findViewById(R.id.loginInfo);
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
+            loginProgressBar.setVisibility(View.VISIBLE);
             hideKeyboard();
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
@@ -120,6 +125,7 @@ public class LogIn extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            loginProgressBar.setVisibility(View.GONE);
             if(s.equals("Login successful")){
                 createLocalUser();
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
