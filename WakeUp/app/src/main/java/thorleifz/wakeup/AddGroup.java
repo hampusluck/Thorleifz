@@ -61,7 +61,7 @@ public class AddGroup extends ActionBarActivity {
             JoinTask joinTask = new JoinTask();
             String joinStatus = joinTask.execute().get();
 
-            if(joinStatus.equals("Join successful")){
+            if(joinStatus.equals("Group joined!")){
                 Log.i("tag","success");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
