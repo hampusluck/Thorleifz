@@ -3,7 +3,10 @@ package thorleifz.wakeup;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +18,7 @@ import java.util.Scanner;
 /**
  * Created by rebeccaharkonen on 2015-04-24.
  */
-public class Groups extends Activity {
+public class Groups extends ActionBarActivity {
 
     private ListView groupList;
     private ArrayAdapter arrayAdapter;
@@ -26,9 +29,11 @@ public class Groups extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_screen);
-        groupString = getIntent().getStringExtra("groups");
         groupArray = new String[10];
-        fillArrayFromString(groupString);
+        groupString = getIntent().getStringExtra("groups");
+        if(groupString!=null) {
+            fillArrayFromString(groupString);
+        }
         groupList = (ListView) findViewById(R.id.groupList);
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, groupArray);
@@ -41,6 +46,28 @@ public class Groups extends Activity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
     //Takes a string of several group names and stores them in the groupArray
     private void fillArrayFromString(String s){
@@ -56,4 +83,7 @@ public class Groups extends Activity {
         Intent theIntent = new Intent(this, NewGroup.class);
         startActivity(theIntent);
     }
+
+    @Override
+    public void onBackPressed(){} //Overriding this method makes it impossible to go back to mainActivity
 }
