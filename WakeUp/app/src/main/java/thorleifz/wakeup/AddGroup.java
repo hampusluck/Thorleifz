@@ -25,10 +25,10 @@ import java.util.concurrent.ExecutionException;
  * Created by rebeccaharkonen on 2015-04-27.
  */
 public class AddGroup extends ActionBarActivity {
-    private EditText inputGroupID;
+    private EditText inputGroupId;
     private EditText inputPassword;
     private TextView joinInfo;
-    private String groupID;
+    private String groupId;
     private String password;
     private String accountName;
     private SharedPreferences settings;
@@ -40,7 +40,7 @@ public class AddGroup extends ActionBarActivity {
         setContentView(R.layout.join_screen);
         settings = getSharedPreferences("settings",0);
         accountName = settings.getString("accountName", null);
-        inputGroupID = (EditText)findViewById(R.id.joinGroupID);
+        inputGroupId = (EditText)findViewById(R.id.joinGroupId);
         inputPassword = (EditText)findViewById(R.id.joinPassword);
         joinInfo = (TextView)findViewById(R.id.joinInfo);
     }
@@ -53,9 +53,9 @@ public class AddGroup extends ActionBarActivity {
     }
 
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
-        groupID = inputGroupID.getText().toString();
+        groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
-        if( (!groupID.equals("")) && !password.equals("")) {
+        if( (!groupId.equals("")) && !password.equals("")) {
             Log.i("tag", "not empty");
 
             JoinTask joinTask = new JoinTask();
@@ -81,7 +81,7 @@ public class AddGroup extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?accountName="+ accountName +"&password="+ password +"&groupId=";
+            String serverURLandParams = serverURL +"?accountName="+ accountName +"&password="+ password +"&groupId="+groupId;
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
