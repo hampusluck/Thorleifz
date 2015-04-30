@@ -32,7 +32,6 @@ public class AddGroup extends ActionBarActivity {
     private String password;
     private String accountName;
     private SharedPreferences settings;
-    SharedPreferences.Editor editor;
     private final String serverURL = "https://script.google.com/macros/s/AKfycbwDjF9pUpetKHHlYNhWuYVOES-e1zz652pyJJBTCdUgc39l4baB/exec";
 
     @Override
@@ -63,7 +62,6 @@ public class AddGroup extends ActionBarActivity {
             String joinStatus = joinTask.execute().get();
 
             if(joinStatus.equals("Join successful")){
-                //Add member to group();
                 Log.i("tag","success");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
@@ -77,17 +75,9 @@ public class AddGroup extends ActionBarActivity {
         }
 
     }
-   /* private void Add member to group() {
-        editor = settings.edit();
-        editor.putString("accountName",accountName);
-        editor.putString("password",password);
-        editor.commit();
-    }*/
-
 
     private class JoinTask extends AsyncTask<String, Void, String> {
         String s;
-        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
