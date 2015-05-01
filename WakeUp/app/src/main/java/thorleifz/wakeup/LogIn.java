@@ -59,7 +59,9 @@ public class LogIn extends ActionBarActivity {
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
+
         if( (!accountName.equals("")) && (!password.equals(""))) {
+
             LoginTask loginTask = new LoginTask();
             loginTask.execute();
 

@@ -32,7 +32,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".NewGroup"
+            android:name=".AddGroup"
             android:label="@string/app_name" >
         </activity>
         <activity
