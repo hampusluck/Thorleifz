@@ -1,6 +1,7 @@
 package thorleifz.wakeup;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -50,6 +51,11 @@ public class AddGroup extends ActionBarActivity {
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         return true;
+    }
+
+    public void createGroupButtonPressed(View v){
+        Intent theIntent = new Intent(this, CreateNewGroup.class);
+        startActivity(theIntent);
     }
 
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
