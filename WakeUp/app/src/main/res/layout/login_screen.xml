@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:nestedScrollingEnabled="false"
-    android:background="#ffffffff">
+    android:nestedScrollingEnabled="false">
 
     <EditText
         android:layout_width="match_parent"
@@ -35,8 +34,6 @@
         android:layout_height="wrap_content"
         android:text="Login"
         android:id="@+id/LogInButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
         android:layout_gravity="center_horizontal"
         android:onClick="loginButtonPressed" />
 
@@ -45,11 +42,8 @@
         android:layout_height="wrap_content"
         android:text="Create new user"
         android:id="@+id/createNewUserButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
         android:layout_gravity="center_horizontal"
-        android:onClick="startSignUpActivity"
-        android:layout_marginTop="25dp" />
+        android:onClick="startSignUpActivity" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
