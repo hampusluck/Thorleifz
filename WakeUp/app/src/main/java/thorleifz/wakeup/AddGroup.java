@@ -79,7 +79,7 @@ public class AddGroup extends ActionBarActivity {
             Log.i("tag", "not empty");
 
             JoinTask joinTask = new JoinTask();
-            String joinStatus = joinTask.execute().get();
+            joinTask.execute();
 
 /*            if(joinStatus.equals("Group joined!")){
                 Log.i("tag","success");

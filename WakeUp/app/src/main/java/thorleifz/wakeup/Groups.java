@@ -42,9 +42,10 @@ public class Groups extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String groupName = (String) groupList.getItemAtPosition(position);
+                if(groupName!=null){
                 Intent intent = new Intent(Groups.this, InsideGroup.class);
                 intent.putExtra("groupName", groupName);
-                startActivity(intent);
+                startActivity(intent);}
             }
         });
 
