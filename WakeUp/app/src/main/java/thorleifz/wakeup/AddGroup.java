@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -34,6 +35,7 @@ public class AddGroup extends ActionBarActivity {
     private String password;
     private String accountName;
     private SharedPreferences settings;
+    private ProgressBar joinProgressBar;
     private final String serverURL = "https://script.google.com/macros/s/AKfycbwDjF9pUpetKHHlYNhWuYVOES-e1zz652pyJJBTCdUgc39l4baB/exec";
 
     @Override
@@ -44,14 +46,21 @@ public class AddGroup extends ActionBarActivity {
         accountName = settings.getString("accountName", null);
         inputGroupId = (EditText)findViewById(R.id.joinGroupId);
         inputPassword = (EditText)findViewById(R.id.joinPassword);
+        joinProgressBar = (ProgressBar)findViewById(R.id.joinProgressBar);
+        joinProgressBar.setVisibility(View.GONE);
         joinInfo = (TextView)findViewById(R.id.joinInfo);
     }
+    //removes keyboard
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        hideKeyboard();
+        return true;
+    }
+
+    public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
     }
 
 
@@ -61,6 +70,9 @@ public class AddGroup extends ActionBarActivity {
     }
 
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
+        joinProgressBar.setVisibility(View.VISIBLE);
+        hideKeyboard();
+        joinInfo.setText("");
         groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
         if( (!groupId.equals("")) && !password.equals("")) {
@@ -69,7 +81,7 @@ public class AddGroup extends ActionBarActivity {
             JoinTask joinTask = new JoinTask();
             String joinStatus = joinTask.execute().get();
 
-            if(joinStatus.equals("Group joined!")){
+/*            if(joinStatus.equals("Group joined!")){
                 Log.i("tag","success");
                 // Go to "group activity"
                 //Intent theIntent = new Intent(this, "group activity".class);
@@ -79,7 +91,7 @@ public class AddGroup extends ActionBarActivity {
                 Log.i("tag","not success");
 
                 joinInfo.setText(joinStatus);
-            }
+            }*/
         }
 
     }
@@ -102,6 +114,18 @@ public class AddGroup extends ActionBarActivity {
             return s;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            joinProgressBar.setVisibility(View.GONE);
+            if(s.equals("Group joined!")){
+                DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
+                downloadGroupsTask.execute();
+            }
+            else{
+                joinInfo.setText("Wrong username or password");
+            }
+        }
     }
 
 }

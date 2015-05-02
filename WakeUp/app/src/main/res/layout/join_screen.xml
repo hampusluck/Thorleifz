@@ -39,4 +39,11 @@
         android:id="@+id/createGroupButton"
         android:layout_gravity="center_horizontal"
         android:onClick="createGroupButtonPressed" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/joinProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true" />
 </LinearLayout>
