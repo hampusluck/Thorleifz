@@ -1,6 +1,8 @@
 package thorleifz.wakeup;
 
 import android.content.Context;
+import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -52,6 +54,12 @@ public class AddGroup extends ActionBarActivity {
         return true;
     }
 
+
+    public void createGroupButtonPressed(View v){
+        Intent theIntent = new Intent(this, CreateNewGroup.class);
+        startActivity(theIntent);
+    }
+
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
         groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
@@ -81,7 +89,9 @@ public class AddGroup extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?accountName="+ accountName +"&password="+ password +"&groupId="+groupId;
+
+            String serverURLandParams = serverURL +"?accountName="+ accountName +"&groupPassword="+ password +"&groupId="+groupId;
+
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
