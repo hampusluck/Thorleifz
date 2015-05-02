@@ -52,6 +52,10 @@ public class InsideGroup extends ActionBarActivity {
         //Add stuff to set the alarm time
     }
 
+    public void updateMembers(View v){
+        //Add stuff that updates the member list
+    }
+
     public void AlarmActiveButtonPressed(View v){
         //Add stuff to turn off/on the alarm
 

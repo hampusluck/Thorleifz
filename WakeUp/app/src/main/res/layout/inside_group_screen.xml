@@ -49,4 +49,14 @@
         android:layout_alignParentEnd="true"
         android:onClick="AlarmActiveButtonPressed" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        android:id="@+id/updateButton"
+        android:layout_marginBottom="61dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/setAlarmButton"
+        android:onClick="updateMembers" />
+
 </RelativeLayout>
