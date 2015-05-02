@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,7 +50,8 @@ public class InsideGroup extends ActionBarActivity {
     }
 
     public void setAlarmButtonPressed(View v){
-        //Add stuff to set the alarm time
+        Intent theIntent = new Intent(this, SetAlarm.class);
+        startActivity(theIntent);
     }
 
     public void updateMembers(View v){

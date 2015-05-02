@@ -29,7 +29,7 @@ public class Groups extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_screen);
-        groupArray = new String[10];
+        groupArray = new String[]{"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};
         groupString = getIntent().getStringExtra("groups");
         if(groupString!=null) {
             fillArrayFromString(groupString);
