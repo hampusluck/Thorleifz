@@ -41,8 +41,10 @@ public class Groups extends ActionBarActivity {
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) groupList.getItemAtPosition(position);
-                Toast.makeText(Groups.this, s + " selected", Toast.LENGTH_LONG).show();
+                String groupName = (String) groupList.getItemAtPosition(position);
+                Intent intent = new Intent(Groups.this, InsideGroup.class);
+                intent.putExtra("groupName", groupName);
+                startActivity(intent);
             }
         });
 
