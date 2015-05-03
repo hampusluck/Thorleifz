@@ -30,3 +30,4 @@ proguard/
 
 WakeUp/.idea/gradle.xml
 
+*.iml
