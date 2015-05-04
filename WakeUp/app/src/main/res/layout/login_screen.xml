@@ -11,7 +11,10 @@
         android:id="@+id/UsernameLogIn"
         android:layout_gravity="center_horizontal"
         android:editable="true"
-        android:hint="Username" />
+        android:hint="Username"
+        android:background="#ff4d7eff"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -23,7 +26,10 @@
         android:textAlignment="center"
         android:editable="true"
         android:clickable="true"
-        android:hint="Password" />
+        android:hint="Password"
+        android:background="#ff4d7eff"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
 
     <TextView
         android:layout_width="318dp"
