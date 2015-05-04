@@ -10,27 +10,30 @@
 
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:id="@+id/setAlarmConfirmButton"
         android:text="Set alarm"
+        android:onClick="startAlert"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="alarmConfirmButtonPressed" />
+        android:layout_alignParentLeft="true" />
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:id="@+id/setAlarmCancelButton"
+        android:text="Cancel alarm"
+        android:onClick="cancelAlert"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
 
     <TimePicker
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/timePicker"
+        android:timePickerMode="clock"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:timePickerMode="clock" />
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="blank"
-        android:id="@+id/alarmTextView"
-        android:layout_above="@+id/setAlarmConfirmButton"
-        android:layout_alignStart="@+id/timePicker" />
+
 </RelativeLayout>
