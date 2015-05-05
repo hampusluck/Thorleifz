@@ -21,9 +21,18 @@ import java.util.Scanner;
 public class Groups extends ActionBarActivity {
 
     private ListView groupList;
-    private ArrayAdapter arrayAdapter;
+   // private ArrayAdapter arrayAdapter;
     private String groupString; // a single string that contains all group names
     private String[] groupArray; // a single array that contains all group names
+
+    private String alarmString; // a single string that contains all alarms (?) from the database
+    private String[] alarmArray = {"a", "b", "c"}; // a single array that contains all alarms (testMode)
+    private int statusString; // a single string that contains all statuses (?) from the database
+    private int[] statusArray = {1, 2, 3}; // a single array that contains all statuses (testMode) (?) from the database
+    int[] statusPicturesArray = {R.drawable.imup, R.drawable.lozin, R.drawable.sleep}; // a single array that contains all the user-status images
+
+    private GroupListItemAdapter theAdapter;
+    //private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +45,19 @@ public class Groups extends ActionBarActivity {
         }
         groupList = (ListView) findViewById(R.id.groupList);
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, groupArray);
-        groupList.setAdapter(arrayAdapter);
+        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element);
+        groupList.setAdapter(theAdapter);
+       // adapter = ... ;
+       // groupList.setAdapter(adapter);
+
+        int i = 0;
+        for(String Name : groupArray ) // Create an object for each "grouprow"
+        {
+            GroupClass obj = new GroupClass(statusArray[i], Name, alarmArray[i]);
+            theAdapter.add(obj);
+            i++;
+        }
+
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
