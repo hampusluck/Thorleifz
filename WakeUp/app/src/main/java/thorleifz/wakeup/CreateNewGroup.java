@@ -24,7 +24,10 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-
+/**
+ * You get to this activity by pressing the "create new group" button in the AddGroup activity.
+ * In this activity you can create a new group.
+ */
 
 
 public class CreateNewGroup extends ActionBarActivity {
@@ -60,6 +63,8 @@ public class CreateNewGroup extends ActionBarActivity {
         accountName = settings.getString("accountName",null);
     }
 
+    //pressing this button creates a new group and adds you to it if you fill in the editable
+    // text fields correctly
     public void createGroupConfirmButtonPressed(View v){
         groupPasswordInfo.setText("");
         String GroupPassword1 = inputGroupPassword1.getText().toString();

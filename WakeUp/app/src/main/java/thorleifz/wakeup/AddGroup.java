@@ -25,6 +25,10 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * You reach this activity by clicking the "+" button on the Groups screen.
+ * The purpose of it is to be able to join an existing Group or click a button
+ * to get to another activity where you can create a new group.
+ *
  * Created by rebeccaharkonen on 2015-04-27.
  */
 public class AddGroup extends ActionBarActivity {
@@ -63,12 +67,14 @@ public class AddGroup extends ActionBarActivity {
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
-
+    //the functionality a button which directs you to the CreateNewGroup activity
     public void createGroupButtonPressed(View v){
         Intent theIntent = new Intent(this, CreateNewGroup.class);
         startActivity(theIntent);
     }
 
+    //when the group ID and group password is filled in, the functionality behind button checks if
+    // there is a matching group and if so, lets you join that group
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
         joinProgressBar.setVisibility(View.VISIBLE);
         hideKeyboard();
