@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -21,15 +22,11 @@ import java.util.Scanner;
 public class Groups extends ActionBarActivity {
 
     private ListView groupList;
+
    // private ArrayAdapter arrayAdapter;
     private String groupString; // a single string that contains all group names
     private String[] groupArray; // a single array that contains all group names
 
-    private String alarmString; // a single string that contains all alarms (?) from the database
-    private String[] alarmArray = {"a", "b", "c"}; // a single array that contains all alarms (testMode)
-    private int statusString; // a single string that contains all statuses (?) from the database
-    private int[] statusArray = {1, 2, 3}; // a single array that contains all statuses (testMode) (?) from the database
-    int[] statusPicturesArray = {R.drawable.imup, R.drawable.lozin, R.drawable.sleep}; // a single array that contains all the user-status images
 
     private GroupListItemAdapter theAdapter;
     //private ArrayAdapter adapter;
@@ -45,24 +42,33 @@ public class Groups extends ActionBarActivity {
         }
         groupList = (ListView) findViewById(R.id.groupList);
 
-        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element);
+        //Skapar en lista med GroupClass objekt, varje GroupClass objekt innehåller information om en rad
+        ArrayList<GroupClass> theList = new ArrayList<GroupClass>();
+        theList.add(new GroupClass(R.drawable.imup,"TestGroup1","21:00"));
+        theList.add(new GroupClass(R.drawable.lozin,"TestGroup2","20:00"));
+        theList.add(new GroupClass(R.drawable.imup,"TestGroup3","19:00"));
+
+        //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
+        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element, theList);
         groupList.setAdapter(theAdapter);
+
+
        // adapter = ... ;
        // groupList.setAdapter(adapter);
 
-        int i = 0;
+/*        int i = 0;
         for(String Name : groupArray ) // Create an object for each "grouprow"
         {
             GroupClass obj = new GroupClass(statusArray[i], Name, alarmArray[i]);
             theAdapter.add(obj);
             i++;
-        }
+        }*/
 
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) groupList.getItemAtPosition(position);
-                Toast.makeText(Groups.this, s + " selected", Toast.LENGTH_LONG).show();
+                GroupClass s = (GroupClass) groupList.getItemAtPosition(position);
+                Toast.makeText(Groups.this,   " selected", Toast.LENGTH_LONG).show();
             }
         });
 
