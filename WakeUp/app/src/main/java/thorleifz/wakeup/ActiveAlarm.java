@@ -29,12 +29,13 @@ public class ActiveAlarm extends Activity {
     private Vibrator vibrator;
 
     // A variable that indicates if the user has turned of the alarm.
-    private boolean turnedOff = false;
+    private boolean turnedOff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_alarm_screen);
+        turnedOff = false;
 
         // Flags that enable the activity to turn on the screen, dismiss the keyguard and show up when locked
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
@@ -90,8 +91,6 @@ public class ActiveAlarm extends Activity {
 
     // This method stops the alarm
     private void turnOffAlarm(){
-        ringtone.stop();
-        vibrator.cancel();
         turnedOff = true;
     }
 
