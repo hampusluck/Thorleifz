@@ -27,3 +27,6 @@ proguard/
 *.log
 
 
+
+WakeUp/.idea/gradle.xml
+
