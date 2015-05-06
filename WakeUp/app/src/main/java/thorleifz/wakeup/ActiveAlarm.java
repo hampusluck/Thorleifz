@@ -96,14 +96,16 @@ public class ActiveAlarm extends Activity {
 
     // This method is called whenever the activity is not in the foreground
     // For example if the user presses "back" or "home" button or finish is called
+
     @Override
-    protected void onPause(){
+    protected void onStop(){
         // If the alarm has not been turned off yet, generate a snooze
         if (turnedOff == false){
             snooze();
         }
         ringtone.stop();
         vibrator.cancel();
-        super.onPause();
+        super.onStop();
     }
+
 }
