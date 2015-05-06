@@ -4,7 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -45,19 +46,17 @@
         <activity
             android:name=".InsideGroup"
             android:label="@string/title_activity_inside_group">
-
         </activity>
         <activity
             android:name=".ActiveAlarm"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         <activity
         android:name=".SetAlarm"
         android:label="@string/set_alarm">
-
         </activity>
-
-
 
         <receiver android:name=".AlarmReceiver" />
 

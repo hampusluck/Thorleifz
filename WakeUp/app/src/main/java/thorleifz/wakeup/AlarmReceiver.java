@@ -11,17 +11,13 @@ import android.widget.Toast;
  */
 public class AlarmReceiver extends BroadcastReceiver {
 
+    // When receiving appending intent from AlarmManager this method is called.
+    // The activity ActiveAlarm is started.
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "Don't panik but your time is up!!!!",
-                Toast.LENGTH_LONG).show();
-
-
         Intent i = new Intent(context, ActiveAlarm.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         context.startActivity(i);
-
     }
 
 }

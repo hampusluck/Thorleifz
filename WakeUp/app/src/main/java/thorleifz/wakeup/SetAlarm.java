@@ -10,7 +10,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
-
+import java.util.GregorianCalendar;
 
 /**
  * Created by rebeccaharkonen on 2015-05-02.
@@ -30,25 +30,39 @@ public class SetAlarm extends ActionBarActivity{
 
     }
 
-    public void startAlert(View view) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+    // This method is called by the button "Set Alarm".
+    // It calls the method setAlarm() with the time from the time picker.
+    public void setAlarmTime(View view) {
 
-        Intent intent = new Intent(this, AlarmReceiver.class);
+        Calendar alarmTime = new GregorianCalendar();
+        alarmTime.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+        alarmTime.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
 
-        // 1 är id för vilket larm det gäller,
-        // kan använda gruppens id sen för att identifiera vilket alarm det gäller?
-        // eftersom man bara kan ha ett alarm per grupp man är medlem i
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Toast.makeText(this, "Alarm set ", Toast.LENGTH_LONG).show();
+        // If the time picker is set to an earlier time than the current time, the alarm day changes to tomorrow
+        if (alarmTime.getTimeInMillis() >= System.currentTimeMillis()){
+            setAlarm(alarmTime);
+        }
+        else {
+            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+            setAlarm(alarmTime);
+        }
 
     }
 
-    public void cancelAlert(View view) {
+    // This method sets the alarm
+    private void setAlarm(Calendar alarmTime) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+        Toast.makeText(this, "Alarm set " + alarmTime.get(Calendar.HOUR) + ":" + alarmTime.get(Calendar.MINUTE),
+                Toast.LENGTH_LONG).show();
+
+        finish();
+    }
+
+    // This method cancels the alarm
+    public void cancelAlarm(View view) {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
