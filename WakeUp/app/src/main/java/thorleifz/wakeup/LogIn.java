@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * In this activity you can log in to your account or click a button to get to an activity
+ * where you can create a new account.
+ *
  * Created by Jacob on 2015-04-22.
  */
 public class LogIn extends ActionBarActivity {

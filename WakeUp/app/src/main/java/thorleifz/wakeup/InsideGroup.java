@@ -9,10 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-
+/**
+ * When you click on a group you get to this activity where you can see all members of it.
+ * You should also be able to set your own alarm and see other peoples alarm statuses.
+ */
 public class InsideGroup extends ActionBarActivity {
 
     String [] members;

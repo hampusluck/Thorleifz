@@ -16,6 +16,9 @@ import android.widget.Toast;
 import java.util.Scanner;
 
 /**
+ * This is the activity where you can find all groups that you are a member of and you you reach
+ * it when you have logged in.
+ *
  * Created by rebeccaharkonen on 2015-04-24.
  */
 public class Groups extends ActionBarActivity {
