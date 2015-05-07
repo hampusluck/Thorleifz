@@ -107,8 +107,13 @@ public class Groups extends ActionBarActivity {
     //Takes a string of several group names and stores them in the groupArray
     private void fillArrayFromString(String s){
         Scanner sc = new Scanner(s);
+        int i = 0;
         while(sc.hasNext()){
-            theList.add(new GroupClass(R.drawable.lozin, sc.next(), "11:00"));
+            if((i%2)==0)
+                theList.add(new GroupClass(R.drawable.alarm_green, sc.next(), "11:00"));
+            else
+                theList.add(new GroupClass(R.drawable.alarm_grey, sc.next(), "11:00"));
+            i++;
         }
 
     }
