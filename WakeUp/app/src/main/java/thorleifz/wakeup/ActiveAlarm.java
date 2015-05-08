@@ -29,6 +29,8 @@ import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by rebeccaharkonen on 2015-05-02.
@@ -106,19 +108,23 @@ public class ActiveAlarm extends Activity {
         ringtone.stop();
         vibrator.cancel();
 
-        // Snoozing time in seconds
-        int snoozeTime = 10;
+        // Snoozing time in minutes
+        int snoozeTime = 1;
 
         status = SNOOZE_ALARM;
-        //TODO uppdatera time med snoozetiden
+        Calendar alarmTime = new GregorianCalendar();
+        alarmTime.add(Calendar.MINUTE, snoozeTime);
+        time = String.format("%02d%02d", alarmTime.get(Calendar.HOUR_OF_DAY), alarmTime.get(Calendar.MINUTE));
+
 
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000 * 60), pendingIntent);
 
+        SnoozeAlarmTask snoozeAlarmTask = new SnoozeAlarmTask();
+        snoozeAlarmTask.execute();
 
-        //TODO meddela databasen att status ändrats + uppdaterad tid
     }
 
     // This method stops the alarm
@@ -127,7 +133,8 @@ public class ActiveAlarm extends Activity {
 
         status = INACTIVE_ALARM;
 
-        //TODO meddela databasen att status har ändrats
+        TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask();
+        turnOffAlarmTask.execute();
     }
 
     // This method is called whenever the activity is not in the foreground
@@ -162,7 +169,7 @@ public class ActiveAlarm extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.d("ActiveAlarm",result);
+            Log.d("turnOffAlarm",result);
             return result;
         }
 
@@ -178,7 +185,7 @@ public class ActiveAlarm extends Activity {
             HttpClient httpClient = new DefaultHttpClient();
             String serverURLandParams = setAlarmServerURL +"?accountName="+ accountName +"&groupId="+ groupId
                     + "&time=" + time + "&status=" + status;
-            Log.d("turnOffAlarm", serverURLandParams);
+            Log.d("SnoozeAlarm", serverURLandParams);
 
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
@@ -187,7 +194,7 @@ public class ActiveAlarm extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.d("ActiveAlarm",result);
+            Log.d("SnoozeAlarm",result);
             return result;
         }
 
