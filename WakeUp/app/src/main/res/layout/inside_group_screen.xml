@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="thorleifz.wakeup.InsideGroup"
+    android:orientation="horizontal">
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="460dp"
+        android:id="@+id/membersListView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="My Alarm:"
+        android:id="@+id/myAlarmInfoTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="22:00"
+        android:id="@+id/myAlarmTimeTextView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Alarm"
+        android:id="@+id/setAlarmButton"
+        android:layout_alignTop="@+id/myAlarmTimeTextView"
+        android:layout_alignEnd="@+id/membersListView"
+        android:onClick="setAlarmButtonPressed" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarm Active"
+        android:id="@+id/alarmActiveButton"
+        android:layout_below="@+id/setAlarmButton"
+        android:layout_alignParentEnd="true"
+        android:onClick="AlarmActiveButtonPressed" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        android:id="@+id/updateButton"
+        android:layout_marginBottom="61dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/setAlarmButton"
+        android:onClick="updateMembers" />
+
+</RelativeLayout>

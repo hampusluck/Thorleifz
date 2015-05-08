@@ -1,14 +1,18 @@
 package thorleifz.wakeup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -21,6 +25,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * You get to this activity by clicking the "create new user" button on the login screen.
+ * Here you can create a new user account.
+ *
  * Created by rebeccaharkonen on 2015-04-22.
  */
 public class SignUp extends ActionBarActivity {
@@ -28,7 +35,7 @@ public class SignUp extends ActionBarActivity {
     private EditText inputUsername;
     private EditText inputPassword1;
     private EditText inputPassword2;
-    private Button signUpConfirmButton;
+    private ProgressBar signupProgressBar;
     private TextView passwordInfo;
     private String accountName;
     private String password;
@@ -42,45 +49,46 @@ public class SignUp extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_screen);
         settings = getSharedPreferences("settings",0);
+        signupProgressBar = (ProgressBar)findViewById(R.id.signupProgressBar);
         inputUsername = (EditText) findViewById(R.id.signupUsername);
         inputPassword1 = (EditText) findViewById(R.id.signupPassword1);
         inputPassword2 = (EditText) findViewById(R.id.signupPassword2);
-        signUpConfirmButton = (Button) findViewById(R.id.signupConfirmButton);
         passwordInfo = (TextView) findViewById(R.id.signUpPasswordInfo);
-
+        signupProgressBar.setVisibility(View.GONE);
     }
 
-    public void signUpConfirmButtonPressed(View v) throws ExecutionException, InterruptedException {
+    public void signUpConfirmButtonPressed(View v) {
         accountName = inputUsername.getText().toString();
         String password1 = inputPassword1.getText().toString();
         String password2 = inputPassword2.getText().toString();
+        passwordInfo.setText("");
 
         // Control text editors filled out
         if( (!accountName.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
 
             // Test for matching passwords
             if (password1.equals(password2)) {
+                signupProgressBar.setVisibility(View.VISIBLE);
                 password = password1;
                 AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
-                String theResult = addUserTask.execute().get();
-                if(theResult.equals("user created")) {
-                    createLocalUser();
-                    // Go to "group activity"
-                    //Intent theIntent = new Intent(this, "group activity".class);
-                    //startActivity(theIntent);
-                }
-                passwordInfo.setText(theResult);
-                // Test for unique accountName
-                // If unique send information (accountName, password) to database
-
-
-
+                addUserTask.execute();
             }
-            else {
-                passwordInfo.setText("Password NOT OK");
-            }
+            else
+                passwordInfo.setText("Passwords don't match");
         }
+
     }
+
+    //removes keyboard
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
+    }
+
+
 
     private void createLocalUser() {
         editor = settings.edit();
@@ -90,7 +98,7 @@ public class SignUp extends ActionBarActivity {
     }
 
     private class AddUserTask extends AsyncTask<String, Void, String> {
-        String s;
+        String result;
         //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
         @Override
         protected String doInBackground(String... params) {
@@ -99,12 +107,28 @@ public class SignUp extends ActionBarActivity {
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
-                s = EntityUtils.toString(httpResponse.getEntity());
+                result = EntityUtils.toString(httpResponse.getEntity());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return s;
+            Log.i("tag",result);
+            return result;
         }
 
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            signupProgressBar.setVisibility(View.GONE);
+            Log.i("tag", result);
+            if(result.equals("New User created")) {
+                createLocalUser();
+                Intent intent = new Intent(getApplicationContext(), Groups.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else {
+                passwordInfo.setText("username occupied");
+            }
+        }
     }
 }

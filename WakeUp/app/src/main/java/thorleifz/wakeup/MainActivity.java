@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -20,24 +21,35 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private SharedPreferences settings;
     SharedPreferences.Editor editor;
     String accountName;
-    String serverURL = "https://script.google.com/macros/s/AKfycbxu0F2ua8I8iu5NheQ8F6uzTiju1MLjLk_29-HU3jfoSfrhkeT0/exec";
-    String theGroups;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         settings = getSharedPreferences("settings",0); //gets the instance where data is locally stored
+        if(userLoggedIn()){
+            accountName = settings.getString("accountName",null); //Gets the username of the logged in user
+            DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName,this);
+            downloadGroupsTask.execute(); //Downloads a list of groups and starts the Groups Activity
+        }
+        else{
+            startLoginActivity();
+        }
     }
 
 
+
     @Override
+<<<<<<< HEAD
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -56,59 +68,30 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+=======
+    protected void onResume() {
+        super.onResume();
     }
+
+    //checks if there is a logged in user
+    private boolean userLoggedIn() {
+        String userLoggedIn = settings.getString("accountName","no user logged in");
+        if(userLoggedIn.equals("no user logged in"))
+            return false;
+        return true;
+    }
+
+>>>>>>> develop
+
+
     //Starts the Login-activity
-    public void goToLoginScreen(View v){
+    public void startLoginActivity(){
         Intent theIntent = new Intent(this, LogIn.class);
         startActivity(theIntent);
     }
-    //Starts the SignUp-activity
-    public void signUpButtonPressed(View v){
 
-        Intent theIntent = new Intent(this, SignUp.class);
-        startActivity(theIntent);
-    }
-    //Downloads all the groupnames that the local user is a member of
-    public void groupButtonPressed(View v) throws ExecutionException, InterruptedException {
 
-        accountName = settings.getString("accountName",null); //Gets the accountName for the logged in user from local memory
-        if(accountName!=null){
-            DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(); // Creates a new Thread that downloads the group names
-            theGroups = downloadGroupsTask.execute().get(); // executes the thread, invoking the doInBackground-method in that class
-        }
 
-    }
-    //Starts the group activity and passes a single String containing all the group names
-    public void startGroupActivity(){
-        Intent theIntent = new Intent(this, Groups.class);
-        theIntent.putExtra("groups",theGroups);
-        startActivity(theIntent);
-    }
 
-    //private class that runs the back-end script in a seperate thread
-    private class DownloadGroupsTask extends AsyncTask<String, Void, String> {
-        String s;
-        //The doInBackground-method is called when the object is executed
-        @Override
-        protected String doInBackground(String... params) {
-            HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?accountName="+ accountName; //creates a new String containing the scripts URL and the parameters
-            HttpGet httpGet = new HttpGet(serverURLandParams);
-            try {
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                s = EntityUtils.toString(httpResponse.getEntity()); // The returned String is saved
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return s;
-        }
-        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            startGroupActivity();
-        }
-    }
+
 }

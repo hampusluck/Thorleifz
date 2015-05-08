@@ -1,67 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:nestedScrollingEnabled="false"
-    android:background="#ffffffff">
+    android:layout_height="match_parent">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/UsernameLogIn"
+        android:id="@+id/joinGroupId"
         android:layout_gravity="center_horizontal"
-        android:editable="true"
-        android:hint="Username"
-        android:background="#ff4d7eff"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp" />
-
+        android:hint="Group ID"
+        android:editable="true" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/PasswordLogIn"
+        android:id="@+id/joinPassword"
         android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:editable="true"
-        android:clickable="true"
         android:hint="Password"
-        android:background="#ff4d7eff"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
-
+        android:editable="true" />
     <TextView
         android:layout_width="318dp"
         android:layout_height="wrap_content"
-        android:id="@+id/loginInfo"/>
+        android:id="@+id/joinInfo"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/LogInButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
+        android:text="Join Group"
+        android:id="@+id/joinButton"
         android:layout_gravity="center_horizontal"
-        android:onClick="loginButtonPressed" />
+        android:onClick="joinButtonPressed" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create new user"
-        android:id="@+id/createNewUserButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
+        android:text="or Create a new Group"
+        android:id="@+id/createGroupButton"
         android:layout_gravity="center_horizontal"
-        android:onClick="startSignUpActivity"
-        android:layout_marginTop="25dp" />
-
+        android:onClick="createGroupButtonPressed" />
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/joinProgressBar"
         android:layout_gravity="center_horizontal"
         android:indeterminate="true" />
 </LinearLayout>
