@@ -16,15 +16,7 @@
         android:text="Set alarm"
         android:onClick="setAlarmTime"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:id="@+id/setAlarmCancelButton"
-        android:text="Cancel alarm"
-        android:onClick="cancelAlarm"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true" />
+        android:layout_centerHorizontal="true" />
 
 
     <TimePicker

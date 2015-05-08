@@ -8,9 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -49,7 +47,7 @@ public class GroupListItemAdapter extends ArrayAdapter {
 
         //Här fylls de med information från listan
         status.setImageResource(theList.get(position).getStatus_resource());
-        groupName.setText(theList.get(position).getGroup_name());
+        groupName.setText(theList.get(position).getGroup_id());
         alarmTime.setText(theList.get(position).getAlarm_time());
 
         return row;

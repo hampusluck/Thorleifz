@@ -21,7 +21,7 @@ public class InsideGroup extends ActionBarActivity {
     String [] members;
     ListView membersListView;
     ArrayAdapter arrayAdapter;
-    String groupName;
+    String groupId;
     Button AlarmActiveButton;
 
 
@@ -30,9 +30,9 @@ public class InsideGroup extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_group_screen);
 
-        //Sets the ActionBarTitle to the groupName
-        groupName = getIntent().getStringExtra("groupName");
-        setTitle(groupName);
+        //Sets the ActionBarTitle to the groupId
+        groupId = getIntent().getStringExtra("groupId");
+        setTitle(groupId);
 
         //Gets the alarmbutton
         AlarmActiveButton = (Button)findViewById(R.id.alarmActiveButton);
@@ -53,6 +53,7 @@ public class InsideGroup extends ActionBarActivity {
 
     public void setAlarmButtonPressed(View v){
         Intent theIntent = new Intent(this, SetAlarm.class);
+        theIntent.putExtra("groupId", groupId);
         startActivity(theIntent);
     }
 
@@ -70,6 +71,23 @@ public class InsideGroup extends ActionBarActivity {
         else{
             AlarmActiveButton.setText("Alarm Active");
         }
+
+        /*
+            // This method cancels the alarm
+        public void cancelAlarm(View view) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_LONG).show();
+
+        status = INACTIVE_ALARM;
+        //TODO database stuff
+
+    }
+         */
+
+
     }
 
 
