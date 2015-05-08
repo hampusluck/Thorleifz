@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="thorleifz.wakeup" >
-
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.SET_ALARM" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,38 +22,16 @@
         </activity>
         <activity
             android:name=".SignUp"
-            android:label="@string/app_name"
-            android:parentActivityName=".LogIn" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".Groups"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AddGroup"
+            android:name=".NewGroup"
             android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name=".CreateNewGroup"
-            android:label="@string/title_activity_create_new_group" >
-        </activity>
-        <activity
-            android:name=".InsideGroup"
-            android:label="@string/title_activity_inside_group">
-        </activity>
-        <activity
-            android:name=".ActiveAlarm"
-            android:label="@string/app_name"
-            android:noHistory="true"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        </activity>
-        <activity
-        android:name=".SetAlarm"
-        android:label="@string/set_alarm">
-        </activity>
-
-        <receiver android:name=".AlarmReceiver" />
-
     </application>
 
 </manifest>
