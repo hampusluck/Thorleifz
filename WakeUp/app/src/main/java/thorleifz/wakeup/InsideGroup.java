@@ -12,17 +12,21 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * When you click on a group you get to this activity where you can see all members of it.
  * You should also be able to set your own alarm and see other peoples alarm statuses.
  */
 public class InsideGroup extends ActionBarActivity {
 
-    String [] members;
+    //String [] members;
     ListView membersListView;
-    ArrayAdapter arrayAdapter;
+    //ArrayAdapter arrayAdapter;
+    MemberListItemAdapter memberListItemAdapter;
     String groupName;
     Button AlarmActiveButton;
+    ArrayList<MemberClass> theList;
 
 
     @Override
@@ -34,14 +38,14 @@ public class InsideGroup extends ActionBarActivity {
         groupName = getIntent().getStringExtra("groupName");
         setTitle(groupName);
 
-        //Gets the alarmbutton
-        AlarmActiveButton = (Button)findViewById(R.id.alarmActiveButton);
 
         //Fills the list with test users
-        members = new String[]{"TestUser1","TestUser2","TestUser3","TestUser4","TestUser5","TestUser6","TestUser7","TestUser8","TestUser9","TestUser10","TestUser11","TestUser12"};
+        //members = new String[]{"TestUser1","TestUser2","TestUser3","TestUser4","TestUser5","TestUser6","TestUser7","TestUser8","TestUser9","TestUser10","TestUser11","TestUser12"};
+        theList = new ArrayList<MemberClass>();
+        theList.add(new MemberClass(R.drawable.alarm_green, "Adam", "22:00"));
         membersListView = (ListView)findViewById(R.id.membersListView);
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, members);
-        membersListView.setAdapter(arrayAdapter);
+        memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
+        membersListView.setAdapter(memberListItemAdapter);
         membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

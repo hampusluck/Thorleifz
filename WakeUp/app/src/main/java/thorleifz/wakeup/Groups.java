@@ -1,17 +1,13 @@
 package thorleifz.wakeup;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -53,7 +49,7 @@ public class Groups extends ActionBarActivity {
         theList.add(new GroupClass(R.drawable.imup,"TestGroup3","19:00"));*/
 
         //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
-        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element, theList);
+        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element_groups, theList);
         groupList.setAdapter(theAdapter);
 
 
