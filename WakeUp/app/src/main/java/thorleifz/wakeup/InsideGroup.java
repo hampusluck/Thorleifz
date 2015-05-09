@@ -22,9 +22,14 @@ import java.util.Scanner;
 public class InsideGroup extends ActionBarActivity {
 
     ListView membersListView;
+<<<<<<< HEAD
     MemberListItemAdapter memberListItemAdapter;
     String groupName;
     String membersString;
+=======
+    ArrayAdapter arrayAdapter;
+    String groupId;
+>>>>>>> featureAlarmSync
     Button AlarmActiveButton;
     ArrayList<MemberClass> theList;
 
@@ -34,12 +39,18 @@ public class InsideGroup extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_group_screen);
 
+<<<<<<< HEAD
         //Sets the ActionBarTitle to the groupName
         groupName = getIntent().getStringExtra("groupName");
         setTitle(groupName);
         membersString = getIntent().getStringExtra("members");
         theList = new ArrayList<MemberClass>();
         FillArrayList(membersString);
+=======
+        //Sets the ActionBarTitle to the groupId
+        groupId = getIntent().getStringExtra("groupId");
+        setTitle(groupId);
+>>>>>>> featureAlarmSync
 
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
@@ -70,6 +81,7 @@ public class InsideGroup extends ActionBarActivity {
 
     public void setAlarmButtonPressed(View v){
         Intent theIntent = new Intent(this, SetAlarm.class);
+        theIntent.putExtra("groupId", groupId);
         startActivity(theIntent);
     }
 
@@ -87,6 +99,23 @@ public class InsideGroup extends ActionBarActivity {
         else{
             AlarmActiveButton.setText("Alarm Active");
         }
+
+        /*
+            // This method cancels the alarm
+        public void cancelAlarm(View view) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_LONG).show();
+
+        status = INACTIVE_ALARM;
+        //TODO database stuff
+
+    }
+         */
+
+
     }
 
 

@@ -16,6 +16,7 @@
         android:text="Set alarm"
         android:onClick="setAlarmTime"
         android:layout_alignParentBottom="true"
+<<<<<<< HEAD
         android:layout_alignParentLeft="true"
         android:background="#ffffffff"
         android:textSize="20dp"
@@ -33,6 +34,9 @@
         android:textColor="#25b347"
         android:textSize="20dp"
         android:textStyle="bold" />
+=======
+        android:layout_centerHorizontal="true" />
+>>>>>>> featureAlarmSync
 
 
     <TimePicker

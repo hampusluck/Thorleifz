@@ -73,9 +73,18 @@ public class Groups extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupClass groupClass = (GroupClass) groupList.getItemAtPosition(position);
+<<<<<<< HEAD
                 String groupName = groupClass.getGroup_name();
                 DownloadMembersTask downloadMembersTask = new DownloadMembersTask(accountName,groupName,getApplicationContext());
                 downloadMembersTask.execute();
+=======
+                String groupId = groupClass.getGroup_id();
+                if(groupId!=null){
+                Intent intent = new Intent(Groups.this, InsideGroup.class);
+                intent.putExtra("groupId", groupId);
+
+                startActivity(intent);}
+>>>>>>> featureAlarmSync
 
             }
         });

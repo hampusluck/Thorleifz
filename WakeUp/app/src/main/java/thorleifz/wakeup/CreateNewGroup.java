@@ -127,7 +127,7 @@ public class CreateNewGroup extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?groupId="+ GroupID +"&groupPassword="+ GroupPassword + "&accountName=" + accountName + "&groupName=" + GroupName;
+            String serverURLandParams = serverURL +"?groupId="+ GroupID +"&groupPassword="+ GroupPassword + "&accountName=" + accountName + "&groupId=" + GroupName;
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
