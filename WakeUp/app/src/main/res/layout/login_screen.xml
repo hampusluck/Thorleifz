@@ -35,14 +35,6 @@
             android:layout_marginLeft="15dp" />
     </LinearLayout>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginProgressBar"
-        android:layout_gravity="center_horizontal"
-        android:indeterminate="true" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -50,6 +42,18 @@
         android:weightSum="1"
         android:layout_weight="0.15"
         android:layout_marginBottom="10dp">
+
+        <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/UsernameLogIn"
+        android:editable="true"
+        android:hint="Username"
+        android:background="#ffffffff"
+        android:layout_marginTop="5dp"
+        android:textColor="#25b347"
+        android:textStyle="normal"
+        android:layout_gravity="center" />
 
         <EditText
             android:layout_width="250dp"
@@ -66,17 +70,17 @@
             android:textColor="#25b347"
             android:layout_gravity="center" />
 
-        <EditText
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:id="@+id/UsernameLogIn"
-            android:editable="true"
-            android:hint="Username"
-            android:background="#ffffffff"
-            android:layout_marginTop="5dp"
-            android:textColor="#25b347"
-            android:textStyle="normal"
-            android:layout_gravity="center" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/loginInfo"
+            android:paddingLeft="65dp"
+            android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:textColor="#fffffffd" />
 
     </LinearLayout>
 
@@ -96,7 +100,6 @@
             android:background="#fffcfff9"
             android:layout_gravity="center_horizontal"
             android:onClick="loginButtonPressed"
-            android:clickable="false"
             android:textStyle="bold"
             android:textSize="20dp" />
 
@@ -112,6 +115,14 @@
             android:layout_marginTop="25dp"
             android:textStyle="bold"
             android:textSize="20dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginProgressBar"
+            android:layout_gravity="center_horizontal"
+            android:indeterminate="true" />
     </LinearLayout>
 
 </LinearLayout>

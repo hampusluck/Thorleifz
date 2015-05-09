@@ -76,28 +76,14 @@ public class AddGroup extends ActionBarActivity {
     //when the group ID and group password is filled in, the functionality behind button checks if
     // there is a matching group and if so, lets you join that group
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
-        joinProgressBar.setVisibility(View.VISIBLE);
         hideKeyboard();
         joinInfo.setText("");
         groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
         if( (!groupId.equals("")) && !password.equals("")) {
-            Log.i("tag", "not empty");
-
+            joinProgressBar.setVisibility(View.VISIBLE);
             JoinTask joinTask = new JoinTask();
             joinTask.execute();
-
-/*            if(joinStatus.equals("Group joined!")){
-                Log.i("tag","success");
-                // Go to "group activity"
-                //Intent theIntent = new Intent(this, "group activity".class);
-                //startActivity(theIntent);
-            }
-            else{
-                Log.i("tag","not success");
-
-                joinInfo.setText(joinStatus);
-            }*/
         }
 
     }
@@ -123,12 +109,12 @@ public class AddGroup extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            joinProgressBar.setVisibility(View.GONE);
             if(s.equals("Group joined!")){
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
                 downloadGroupsTask.execute();
             }
             else{
+                joinProgressBar.setVisibility(View.GONE);
                 joinInfo.setText("Wrong username or password");
             }
         }

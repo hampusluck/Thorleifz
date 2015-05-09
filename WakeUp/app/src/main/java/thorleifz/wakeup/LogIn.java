@@ -53,18 +53,17 @@ public class LogIn extends ActionBarActivity {
         inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
         loginProgressBar = (ProgressBar)findViewById(R.id.loginProgressBar);
         loginProgressBar.setVisibility(View.GONE);
-       // loginInfo = (TextView)findViewById(R.id.loginInfo);
+        loginInfo = (TextView)findViewById(R.id.loginInfo);
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
-            loginProgressBar.setVisibility(View.VISIBLE);
             hideKeyboard();
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
 
         if( (!accountName.equals("")) && (!password.equals(""))) {
-
+            loginProgressBar.setVisibility(View.VISIBLE);
             LoginTask loginTask = new LoginTask();
             loginTask.execute();
 
@@ -130,13 +129,14 @@ public class LogIn extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loginProgressBar.setVisibility(View.GONE);
+
             if(s.equals("Login successful")){
                 createLocalUser();
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
                 downloadGroupsTask.execute();
             }
             else{
+                loginProgressBar.setVisibility(View.GONE);
                 loginInfo.setText("Wrong username or password");
             }
         }

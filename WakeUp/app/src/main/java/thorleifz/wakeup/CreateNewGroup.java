@@ -72,6 +72,7 @@ public class CreateNewGroup extends ActionBarActivity {
         GroupID = inputGroupID.getText().toString();
         GroupName = inputGroupName.getText().toString();
         if( (!GroupID.equals("")) && (!GroupPassword1.equals("")) && (!GroupPassword2.equals("")) && (!GroupName.equals(""))) {
+            createGroupProgressBar.setVisibility(View.VISIBLE);
             // Test for matching passwords
             if (GroupPassword1.equals(GroupPassword2)) {
                 GroupPassword = GroupPassword1;
@@ -141,12 +142,12 @@ public class CreateNewGroup extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            createGroupProgressBar.setVisibility(View.GONE);
             if(result.equals("Group created.")) {
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName,getApplicationContext());
                 downloadGroupsTask.execute();
             }
             else {
+                createGroupProgressBar.setVisibility(View.GONE);
                 groupPasswordInfo.setText("GroupsID occupied");
             }
         }

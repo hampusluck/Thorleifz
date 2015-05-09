@@ -21,9 +21,7 @@ import java.util.Scanner;
  */
 public class InsideGroup extends ActionBarActivity {
 
-    //String [] members;
     ListView membersListView;
-    //ArrayAdapter arrayAdapter;
     MemberListItemAdapter memberListItemAdapter;
     String groupName;
     String membersString;
@@ -43,18 +41,9 @@ public class InsideGroup extends ActionBarActivity {
         theList = new ArrayList<MemberClass>();
         FillArrayList(membersString);
 
-        //members = new String[]{"TestUser1","TestUser2","TestUser3","TestUser4","TestUser5","TestUser6","TestUser7","TestUser8","TestUser9","TestUser10","TestUser11","TestUser12"};
-
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
-        membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) membersListView.getItemAtPosition(position);
-                Toast.makeText(InsideGroup.this, s + " selected", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void FillArrayList(String membersString) {
