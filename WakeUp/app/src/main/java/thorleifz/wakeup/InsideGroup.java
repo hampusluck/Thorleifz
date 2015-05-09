@@ -12,17 +12,23 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * When you click on a group you get to this activity where you can see all members of it.
  * You should also be able to set your own alarm and see other peoples alarm statuses.
  */
 public class InsideGroup extends ActionBarActivity {
 
-    String [] members;
+    //String [] members;
     ListView membersListView;
-    ArrayAdapter arrayAdapter;
+    //ArrayAdapter arrayAdapter;
+    MemberListItemAdapter memberListItemAdapter;
     String groupName;
+    String membersString;
     Button AlarmActiveButton;
+    ArrayList<MemberClass> theList;
 
 
     @Override
@@ -33,15 +39,15 @@ public class InsideGroup extends ActionBarActivity {
         //Sets the ActionBarTitle to the groupName
         groupName = getIntent().getStringExtra("groupName");
         setTitle(groupName);
+        membersString = getIntent().getStringExtra("members");
+        theList = new ArrayList<MemberClass>();
+        FillArrayList(membersString);
 
-        //Gets the alarmbutton
-        AlarmActiveButton = (Button)findViewById(R.id.alarmActiveButton);
+        //members = new String[]{"TestUser1","TestUser2","TestUser3","TestUser4","TestUser5","TestUser6","TestUser7","TestUser8","TestUser9","TestUser10","TestUser11","TestUser12"};
 
-        //Fills the list with test users
-        members = new String[]{"TestUser1","TestUser2","TestUser3","TestUser4","TestUser5","TestUser6","TestUser7","TestUser8","TestUser9","TestUser10","TestUser11","TestUser12"};
         membersListView = (ListView)findViewById(R.id.membersListView);
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, members);
-        membersListView.setAdapter(arrayAdapter);
+        memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
+        membersListView.setAdapter(memberListItemAdapter);
         membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -49,6 +55,28 @@ public class InsideGroup extends ActionBarActivity {
                 Toast.makeText(InsideGroup.this, s + " selected", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void FillArrayList(String membersString) {
+        Scanner sc = new Scanner(membersString);
+        String name;
+        String alarmTime;
+        int status;
+        int image;
+        while(sc.hasNext()){
+            name = sc.next();
+            alarmTime = sc.next();
+            status = sc.nextInt();
+            if(status==0)
+                image = R.drawable.alarm_black;
+            else if(status==1)
+                image = R.drawable.alarm_green;
+            else
+                image = R.drawable.alarm_grey;
+
+            theList.add(new MemberClass(image,name,alarmTime));
+        }
+
     }
 
     public void setAlarmButtonPressed(View v){

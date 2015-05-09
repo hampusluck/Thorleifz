@@ -1,17 +1,14 @@
 package thorleifz.wakeup;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,6 +26,8 @@ public class Groups extends ActionBarActivity {
    // private ArrayAdapter arrayAdapter;
     private String groupString; // a single string that contains all group names
     private String[] groupArray; // a single array that contains all group names
+    SharedPreferences settings;
+    String accountName;
     ArrayList<GroupClass> theList;
 
     private GroupListItemAdapter theAdapter;
@@ -38,6 +37,8 @@ public class Groups extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_screen);
+        settings = getSharedPreferences("settings",0);
+        accountName = settings.getString("accountName", null);
 /*        groupArray = new String[]{"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};*/
         groupString = getIntent().getStringExtra("groups");
         theList = new ArrayList<GroupClass>();
@@ -53,7 +54,7 @@ public class Groups extends ActionBarActivity {
         theList.add(new GroupClass(R.drawable.imup,"TestGroup3","19:00"));*/
 
         //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
-        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element, theList);
+        theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element_groups, theList);
         groupList.setAdapter(theAdapter);
 
 
@@ -73,10 +74,8 @@ public class Groups extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupClass groupClass = (GroupClass) groupList.getItemAtPosition(position);
                 String groupName = groupClass.getGroup_name();
-                if(groupName!=null){
-                Intent intent = new Intent(Groups.this, InsideGroup.class);
-                intent.putExtra("groupName", groupName);
-                startActivity(intent);}
+                DownloadMembersTask downloadMembersTask = new DownloadMembersTask(accountName,groupName,getApplicationContext());
+                downloadMembersTask.execute();
 
             }
         });

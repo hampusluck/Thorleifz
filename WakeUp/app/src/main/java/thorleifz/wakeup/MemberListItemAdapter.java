@@ -14,16 +14,16 @@ import java.util.ArrayList;
 /**
  * Created by Jacob on 2015-05-04.
  */
-public class GroupListItemAdapter extends ArrayAdapter {
+public class MemberListItemAdapter extends ArrayAdapter {
 
     ImageView status;
-    TextView groupName;
+    TextView memberName;
     TextView alarmTime;
 
-    ArrayList<GroupClass> theList;
+    ArrayList<MemberClass> theList;
 
     //När adaptern skapas tas listan med information om raderna och sparas
-    public GroupListItemAdapter(Context context, int resource, ArrayList<GroupClass> theList) {
+    public MemberListItemAdapter(Context context, int resource, ArrayList<MemberClass> theList) {
         super(context, resource, theList);
         this.theList = theList; //Listan sparas
     }
@@ -37,17 +37,17 @@ public class GroupListItemAdapter extends ArrayAdapter {
         //Här är något autogenererat som bestämmer vilken layout raden ska ha
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_element_groups, parent, false);
+            row = inflater.inflate(R.layout.list_element_members, parent, false);
 
         }
         //Här hämtas alla saker från layouten
-        status = (ImageView) row.findViewById(R.id.theStatusOnEachGroup);
-        groupName = (TextView) row.findViewById(R.id.theGroupNameID);
-        alarmTime = (TextView) row.findViewById(R.id.theAlarmID);
+        status = (ImageView) row.findViewById(R.id.memberStatusImageView);
+        memberName = (TextView) row.findViewById(R.id.memberNameTextView);
+        alarmTime = (TextView) row.findViewById(R.id.memberAlarmTextView);
 
         //Här fylls de med information från listan
         status.setImageResource(theList.get(position).getStatus_resource());
-        groupName.setText(theList.get(position).getGroup_name());
+        memberName.setText(theList.get(position).getMember_name());
         alarmTime.setText(theList.get(position).getAlarm_time());
 
         return row;
