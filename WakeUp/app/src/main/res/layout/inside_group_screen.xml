@@ -3,15 +3,14 @@
     android:layout_height="match_parent"
     tools:context="thorleifz.wakeup.InsideGroup"
     android:orientation="horizontal"
-    android:focusable="false">
+    android:focusable="false"
+    android:background="#3b943f">
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="98dp"
+        android:background="#ffffffff">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="460dp"
-        android:id="@+id/membersListView"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:paddingTop="10dp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="10dp"
+        android:textColor="#ff000000" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,10 +31,10 @@
         android:text="22:00"
         android:id="@+id/myAlarmTimeTextView"
         android:layout_below="@+id/myAlarmInfoTextView"
-        android:textColor="#ff787878"
         android:layout_alignParentStart="true"
         android:paddingLeft="10dp"
-        android:paddingTop="5dp" />
+        android:paddingTop="5dp"
+        android:textColor="#ff787878" />
 
     <Button
         android:layout_width="wrap_content"
@@ -42,28 +42,40 @@
         android:text="Set Alarm"
         android:id="@+id/setAlarmButton"
         android:onClick="setAlarmButtonPressed"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/myAlarmInfoTextView"
+        android:layout_alignBottom="@+id/myAlarmInfoTextView"
         android:layout_alignEnd="@+id/InsideGroupSwitch" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="update"
-        android:id="@+id/updateButton"
-        android:layout_marginBottom="61dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/setAlarmButton"
-        android:onClick="updateMembers" />
+
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/InsideGroupSwitch"
-        android:layout_below="@+id/setAlarmButton"
-        android:layout_alignParentEnd="true"
-        android:background="#ff27681b"
         android:textOn="On"
         android:textOff="Off"
-        android:paddingRight="20dp" />
+        android:paddingRight="20dp"
+        android:layout_below="@+id/setAlarmButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="9dp" />
+    </RelativeLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="460dp"
+        android:id="@+id/membersListView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="update"
+        android:id="@+id/updateButton"
+        android:layout_marginBottom="43dp"
+        android:onClick="updateMembers"
+        android:layout_alignBottom="@+id/membersListView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp" />
+
 
 </RelativeLayout>

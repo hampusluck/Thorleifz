@@ -46,7 +46,7 @@
             android:id="@+id/theStatusOnEachGroup"
             android:src="@drawable/alarm_black"
             android:scaleType="fitXY"
-            android:padding="15dp"
+            android:padding="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>

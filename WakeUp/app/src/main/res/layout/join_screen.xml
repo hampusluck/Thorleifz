@@ -93,6 +93,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/joinProgressBar"
         android:layout_gravity="center_horizontal"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:progressTint="#ff6a8759" />
 
 </LinearLayout>
