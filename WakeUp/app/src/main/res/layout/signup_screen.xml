@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:clickable="true"
-    android:id="@+id/"
     android:background="#25b347">
 
     <LinearLayout

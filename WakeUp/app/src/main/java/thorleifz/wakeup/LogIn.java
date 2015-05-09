@@ -53,7 +53,7 @@ public class LogIn extends ActionBarActivity {
         inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
         loginProgressBar = (ProgressBar)findViewById(R.id.loginProgressBar);
         loginProgressBar.setVisibility(View.GONE);
-        loginInfo = (TextView)findViewById(R.id.loginInfo);
+       // loginInfo = (TextView)findViewById(R.id.loginInfo);
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {

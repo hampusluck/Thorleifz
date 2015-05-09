@@ -55,7 +55,7 @@ public class CreateNewGroup extends ActionBarActivity {
         inputGroupName = (EditText)findViewById(R.id.groupName);
         inputGroupPassword1 = (EditText) findViewById(R.id.createGroupPassword1);
         inputGroupPassword2 = (EditText) findViewById(R.id.createGroupPassword2);
-        groupIDInfo = (TextView) findViewById(R.id.createGroupIDInfo);
+        //groupIDInfo = (TextView) findViewById(R.id.createGroupIDInfo);
         groupPasswordInfo = (TextView) findViewById(R.id.createGroupPasswordInfo);
         createGroupProgressBar = (ProgressBar) findViewById(R.id.createGroupProgressBar);
         createGroupProgressBar.setVisibility(View.GONE);
