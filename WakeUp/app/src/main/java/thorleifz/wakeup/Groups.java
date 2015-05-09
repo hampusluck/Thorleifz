@@ -23,7 +23,6 @@ public class Groups extends ActionBarActivity {
 
     private ListView groupList;
 
-   // private ArrayAdapter arrayAdapter;
     private String groupString; // a single string that contains all group names
     private String[] groupArray; // a single array that contains all group names
     SharedPreferences settings;
@@ -31,7 +30,6 @@ public class Groups extends ActionBarActivity {
     ArrayList<GroupClass> theList;
 
     private GroupListItemAdapter theAdapter;
-    //private ArrayAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,6 @@ public class Groups extends ActionBarActivity {
         setContentView(R.layout.group_screen);
         settings = getSharedPreferences("settings",0);
         accountName = settings.getString("accountName", null);
-/*        groupArray = new String[]{"Empty", "Empty", "Empty", "Empty", "Empty", "Empty", "Empty"};*/
         groupString = getIntent().getStringExtra("groups");
         theList = new ArrayList<GroupClass>();
         if(groupString!=null) {
@@ -47,45 +44,17 @@ public class Groups extends ActionBarActivity {
         }
         groupList = (ListView) findViewById(R.id.groupList);
 
-        //Skapar en lista med GroupClass objekt, varje GroupClass objekt innehåller information om en rad
-
-/*        theList.add(new GroupClass(R.drawable.imup,"TestGroup1","21:00"));
-        theList.add(new GroupClass(R.drawable.lozin,"TestGroup2","20:00"));
-        theList.add(new GroupClass(R.drawable.imup,"TestGroup3","19:00"));*/
-
         //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
         theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element_groups, theList);
         groupList.setAdapter(theAdapter);
-
-
-       // adapter = ... ;
-       // groupList.setAdapter(adapter);
-
-/*        int i = 0;
-        for(String Name : groupArray ) // Create an object for each "grouprow"
-        {
-            GroupClass obj = new GroupClass(statusArray[i], Name, alarmArray[i]);
-            theAdapter.add(obj);
-            i++;
-        }*/
 
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupClass groupClass = (GroupClass) groupList.getItemAtPosition(position);
-<<<<<<< HEAD
-                String groupName = groupClass.getGroup_name();
+                String groupName = groupClass.getGroup_id();
                 DownloadMembersTask downloadMembersTask = new DownloadMembersTask(accountName,groupName,getApplicationContext());
                 downloadMembersTask.execute();
-=======
-                String groupId = groupClass.getGroup_id();
-                if(groupId!=null){
-                Intent intent = new Intent(Groups.this, InsideGroup.class);
-                intent.putExtra("groupId", groupId);
-
-                startActivity(intent);}
->>>>>>> featureAlarmSync
-
             }
         });
 

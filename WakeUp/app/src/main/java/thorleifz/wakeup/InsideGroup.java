@@ -22,14 +22,11 @@ import java.util.Scanner;
 public class InsideGroup extends ActionBarActivity {
 
     ListView membersListView;
-<<<<<<< HEAD
+
+
     MemberListItemAdapter memberListItemAdapter;
     String groupName;
     String membersString;
-=======
-    ArrayAdapter arrayAdapter;
-    String groupId;
->>>>>>> featureAlarmSync
     Button AlarmActiveButton;
     ArrayList<MemberClass> theList;
 
@@ -39,18 +36,13 @@ public class InsideGroup extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_group_screen);
 
-<<<<<<< HEAD
         //Sets the ActionBarTitle to the groupName
         groupName = getIntent().getStringExtra("groupName");
         setTitle(groupName);
         membersString = getIntent().getStringExtra("members");
         theList = new ArrayList<MemberClass>();
         FillArrayList(membersString);
-=======
-        //Sets the ActionBarTitle to the groupId
-        groupId = getIntent().getStringExtra("groupId");
-        setTitle(groupId);
->>>>>>> featureAlarmSync
+
 
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
@@ -81,7 +73,7 @@ public class InsideGroup extends ActionBarActivity {
 
     public void setAlarmButtonPressed(View v){
         Intent theIntent = new Intent(this, SetAlarm.class);
-        theIntent.putExtra("groupId", groupId);
+        theIntent.putExtra("groupId", groupName);
         startActivity(theIntent);
     }
 

@@ -15,28 +15,12 @@
         android:id="@+id/setAlarmConfirmButton"
         android:text="Set alarm"
         android:onClick="setAlarmTime"
-        android:layout_alignParentBottom="true"
-<<<<<<< HEAD
-        android:layout_alignParentLeft="true"
         android:background="#ffffffff"
         android:textSize="20dp"
         android:textColor="#25b347"
-        android:textStyle="bold" />
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/setAlarmCancelButton"
-        android:text="Cancel alarm"
-        android:onClick="cancelAlarm"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="#ffffffff"
-        android:textColor="#25b347"
-        android:textSize="20dp"
-        android:textStyle="bold" />
-=======
+        android:textStyle="bold"
+        android:layout_below="@+id/timePicker"
         android:layout_centerHorizontal="true" />
->>>>>>> featureAlarmSync
 
 
     <TimePicker
