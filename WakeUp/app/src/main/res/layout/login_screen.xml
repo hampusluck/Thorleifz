@@ -2,66 +2,99 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:nestedScrollingEnabled="false"
-    android:background="#ffffffff">
+    android:weightSum="1"
+    android:clickable="true"
+    android:id="@+id/"
+    android:background="#25b347">
 
-    <EditText
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/UsernameLogIn"
-        android:layout_gravity="center_horizontal"
-        android:editable="true"
-        android:hint="Username"
-        android:background="#ff4d7eff"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp" />
+        android:weightSum="1"
+        android:layout_weight="0.13"
+        android:layout_gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="103dp"
+            android:id="@+id/logoSignup"
+            android:src="@drawable/SnoozeLozewhite"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="0.32"
+            android:layout_marginTop="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="CREATE ACCOUNT"
+            android:id="@+id/createAcc"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="15dp" />
+    </LinearLayout>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/signupUsername"
+        android:layout_gravity="center"
+        android:hint="Username must be unique"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp"
+        android:textColor="#25b347" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/PasswordLogIn"
-        android:layout_gravity="center_horizontal"
-        android:textAlignment="center"
-        android:editable="true"
-        android:clickable="true"
+        android:id="@+id/signupPassword1"
+        android:layout_gravity="center"
         android:hint="Password"
-        android:background="#ff4d7eff"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
+        android:singleLine="false"
+        android:background="#ffffffff"
+        android:textColor="#25b347"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/signupPassword2"
+        android:layout_gravity="center"
+        android:hint="Confirm Password"
+        android:background="#ffffffff"
+        android:textColor="#25b347" />
 
     <TextView
         android:layout_width="318dp"
         android:layout_height="wrap_content"
-        android:id="@+id/loginInfo"/>
+        android:id="@+id/signUpPasswordInfo"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="195dp"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/LogInButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
+        android:text="Confirm"
+        android:id="@+id/signupConfirmButton"
         android:layout_gravity="center_horizontal"
-        android:onClick="loginButtonPressed" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create new user"
-        android:id="@+id/createNewUserButton"
-        android:textColor="#ffffff"
-        android:background="@drawable/thebutton"
-        android:layout_gravity="center_horizontal"
-        android:onClick="startSignUpActivity"
-        android:layout_marginTop="25dp" />
+        android:onClick="signUpConfirmButtonPressed"
+        android:background="#ffffffff"
+        android:textColor="#25b347"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp" />
 
     <ProgressBar
-        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/signupProgressBar"
         android:layout_gravity="center_horizontal"
+        android:layout_weight="0.58"
         android:indeterminate="true" />
+
 </LinearLayout>
