@@ -1,19 +1,29 @@
 package thorleifz.wakeup;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * When you click on a group you get to this activity where you can see all members of it.
@@ -23,33 +33,44 @@ public class InsideGroup extends ActionBarActivity {
 
     ListView membersListView;
 
-
+    SharedPreferences settings;
     MemberListItemAdapter memberListItemAdapter;
-    String groupName;
+    String groupId;
+    String accountName;
     String membersString;
     Button AlarmActiveButton;
     ArrayList<MemberClass> theList;
-
+    Button updateButton;
+    ProgressBar updateProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_group_screen);
-
+        updateButton = (Button) findViewById(R.id.updateButton);
+        updateProgressBar = (ProgressBar)findViewById(R.id.updateProgressBar);
         //Sets the ActionBarTitle to the groupName
-        groupName = getIntent().getStringExtra("groupName");
-        setTitle(groupName);
-        membersString = getIntent().getStringExtra("members");
+        groupId = getIntent().getStringExtra("groupId");
+        setTitle(groupId);
+        settings = getSharedPreferences("settings",0);
+        accountName = settings.getString("accountName",null);
         theList = new ArrayList<MemberClass>();
-        FillArrayList(membersString);
-
 
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
+
+
+
     }
 
-    private void FillArrayList(String membersString) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateMembers();
+    }
+
+    private void fillTheList(String membersString) {
         Scanner sc = new Scanner(membersString);
         String name;
         String alarmTime;
@@ -68,17 +89,27 @@ public class InsideGroup extends ActionBarActivity {
 
             theList.add(new MemberClass(image,name,alarmTime));
         }
-
     }
 
     public void setAlarmButtonPressed(View v){
         Intent theIntent = new Intent(this, SetAlarm.class);
-        theIntent.putExtra("groupId", groupName);
+        theIntent.putExtra("groupId", groupId);
         startActivity(theIntent);
     }
 
-    public void updateMembers(View v){
-        //Add stuff that updates the member list
+    public void updateButtonPressed(View v){
+        updateMembers();
+
+    }
+
+    //Add stuff that updates the member list
+    public void updateMembers(){
+        theList.clear();
+        memberListItemAdapter.notifyDataSetChanged();
+        updateProgressBar.setVisibility(View.VISIBLE);
+        DownloadMembersTask downloadMembersTask = new DownloadMembersTask();
+        downloadMembersTask.execute();
+        updateButton.setEnabled(false);
     }
 
     public void AlarmActiveButtonPressed(View v){
@@ -136,5 +167,36 @@ public class InsideGroup extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DownloadMembersTask extends AsyncTask<String, Void, Void> {
+
+        String serverURL = "https://script.google.com/macros/s/AKfycbzq3AKQZ-GgQEzXdpIpNjG5nvzB89hDQ-wZAkrRudRbOkoQ5AiQ/exec";
+
+
+        @Override
+        protected Void doInBackground(String... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+            String serverURLandParams = serverURL +"?accountName="+ accountName + "&groupId=" + groupId; //creates a new String containing the scripts URL and the parameters
+            HttpGet httpGet = new HttpGet(serverURLandParams);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                membersString = EntityUtils.toString(httpResponse.getEntity()); // The returned String is saved
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            updateProgressBar.setVisibility(View.GONE);
+            fillTheList(membersString);
+            memberListItemAdapter.notifyDataSetChanged();
+            updateButton.setEnabled(true);
+        }
     }
 }

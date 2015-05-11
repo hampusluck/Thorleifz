@@ -72,10 +72,21 @@
         android:text="update"
         android:id="@+id/updateButton"
         android:layout_marginBottom="43dp"
-        android:onClick="updateMembers"
+        android:onClick="updateButtonPressed"
         android:layout_alignBottom="@+id/membersListView"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp" />
+        android:layout_marginEnd="40dp"
+        android:nestedScrollingEnabled="false" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateProgressBar"
+        android:layout_alignTop="@+id/membersListView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:indeterminate="true" />
 
 
 </RelativeLayout>

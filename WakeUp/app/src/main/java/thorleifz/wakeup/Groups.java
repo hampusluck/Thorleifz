@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This is the activity where you can find all groups that you are a member of and you you reach
@@ -24,7 +26,6 @@ public class Groups extends ActionBarActivity {
     private ListView groupList;
 
     private String groupString; // a single string that contains all group names
-    private String[] groupArray; // a single array that contains all group names
     SharedPreferences settings;
     String accountName;
     ArrayList<GroupClass> theList;
@@ -52,9 +53,10 @@ public class Groups extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupClass groupClass = (GroupClass) groupList.getItemAtPosition(position);
-                String groupName = groupClass.getGroup_id();
-                DownloadMembersTask downloadMembersTask = new DownloadMembersTask(accountName,groupName,getApplicationContext());
-                downloadMembersTask.execute();
+                String groupId = groupClass.getGroup_id();
+                    Intent intent = new Intent(getApplicationContext(), InsideGroup.class);
+                    intent.putExtra("groupId", groupId);
+                    startActivity(intent);
             }
         });
 
