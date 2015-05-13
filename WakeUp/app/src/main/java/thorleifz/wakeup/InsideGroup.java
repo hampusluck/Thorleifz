@@ -81,11 +81,11 @@ public class InsideGroup extends ActionBarActivity {
             alarmTime = sc.next();
             status = sc.nextInt();
             if(status==0)
-                image = R.drawable.alarm_black;
+                image = R.drawable.alarm_grey;
             else if(status==1)
                 image = R.drawable.alarm_green;
             else
-                image = R.drawable.alarm_grey;
+                image = R.drawable.alarm_black;
 
             theList.add(new MemberClass(image,name,alarmTime));
         }
