@@ -56,9 +56,11 @@ public class ActiveAlarm extends Activity {
     private final String getSnoozeStringURL = "https://script.google.com/macros/s/AKfycbwgzzbw-NXaxYfB8urQ0PM8rsKp2S3zgoTWG5LYHTRevHcIus0/exec";
     // A variable that indicates if the user has turned of the alarm.
     private boolean turnedOff;
+    Boolean haswindowfocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("newTag","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_alarm_screen);
         snoozeStringView = (TextView) findViewById(R.id.activeAlarmTextView);
@@ -68,13 +70,10 @@ public class ActiveAlarm extends Activity {
         accountName = settings.getString("accountName", null);
         groupId = getIntent().getStringExtra("groupId");
 
-        // Flags that enable the activity to turn on the screen, dismiss the keyguard and show up when locked
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON|
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD|
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD,
-                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED,
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -89,6 +88,7 @@ public class ActiveAlarm extends Activity {
 
     @Override
     protected void onResume(){
+        Log.i("newTag","onResume");
         super.onResume();
 
         // Create a pattern for alarm vibration
@@ -112,12 +112,14 @@ public class ActiveAlarm extends Activity {
 
     // This method is called when the user presses the button to snooze
     public void snoozeButtonPressed(View view){
+        Log.i("newTag","snoozeButtonPressed");
         snooze();
         finish();
     }
 
     //This method is called when the user presses the button to turn of the alarm
     public void turnOffAlarmButtonPressed(View view){
+        Log.i("newTag","turnOffAlarmButtonPressed");
         turnOffAlarm();
         SharedPreferences.Editor editor = settings.edit();
         String AlarmActiveKey = "AlarmActive" + groupId;
@@ -128,6 +130,7 @@ public class ActiveAlarm extends Activity {
 
     // This method stops the alarm and generates a new one within the snoozing time
     private void snooze(){
+        Log.i("newTag","snooze");
         ringtone.stop();
         vibrator.cancel();
 
@@ -143,7 +146,7 @@ public class ActiveAlarm extends Activity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000 * 60), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000 * 10), pendingIntent);
 
         SnoozeAlarmTask snoozeAlarmTask = new SnoozeAlarmTask();
         snoozeAlarmTask.execute();
@@ -152,8 +155,8 @@ public class ActiveAlarm extends Activity {
 
     // This method stops the alarm
     private void turnOffAlarm(){
+        Log.i("newTag","turnOffAlarm");
         turnedOff = true;
-
         status = INACTIVE_ALARM;
 
         TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask();
@@ -167,10 +170,9 @@ public class ActiveAlarm extends Activity {
 
     @Override
     protected void onStop(){
-        // If the alarm has not been turned off yet, generate a snooze
-        if (turnedOff == false){
-            snooze();
-        }
+        Log.i("newTag","onStop");
+       // If the alarm has not been turned off yet, generate a snooze
+        Log.i("newTag",Boolean.toString(turnedOff));
         ringtone.stop();
         vibrator.cancel();
         super.onStop();
@@ -197,8 +199,6 @@ public class ActiveAlarm extends Activity {
             Log.d("turnOffAlarm",result);
             return result;
         }
-
-
     }
 
     private class SnoozeAlarmTask extends AsyncTask<String, Void, String> {

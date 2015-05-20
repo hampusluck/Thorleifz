@@ -114,7 +114,10 @@ public class InsideGroup extends ActionBarActivity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/develop
     }
 
 
