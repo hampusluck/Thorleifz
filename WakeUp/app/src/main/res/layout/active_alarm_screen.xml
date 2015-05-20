@@ -38,7 +38,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stäng av"
+            android:text="TURN OFF"
             android:id="@+id/activeAlarmOffButton"
             android:onClick="turnOffAlarmButtonPressed"
             android:textColor="#25b347"

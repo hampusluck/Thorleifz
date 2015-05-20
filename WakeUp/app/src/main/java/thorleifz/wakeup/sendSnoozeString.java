@@ -45,9 +45,13 @@ public class sendSnoozeString extends Activity {
 
     }
 
+
+
     public void setSnoozeString(View view){
 
         snoozeString = setSnoozeStringEditText.getText().toString();
+        snoozeString = snoozeString.replaceAll(" ", "_").toLowerCase();
+
         Log.d("snoozeString", snoozeString);
         Toast.makeText(this, "Snooze message set!", Toast.LENGTH_LONG).show();
 

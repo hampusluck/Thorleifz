@@ -106,6 +106,7 @@ public class ActiveAlarm extends Activity {
     }
 
     private void setSnoozeTextView(){
+        snoozeString = snoozeString.replaceAll("_", " ").toLowerCase();
         snoozeStringView.setText(snoozeString);
 
     }
