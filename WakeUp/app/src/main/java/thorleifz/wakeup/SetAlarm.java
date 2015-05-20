@@ -74,6 +74,13 @@ public class SetAlarm extends ActionBarActivity{
             alarmTime.add(Calendar.DAY_OF_YEAR, 1);
             setAlarm(alarmTime);
         }
+        SharedPreferences.Editor editor = settings.edit();
+
+        String AlarmTimekey = "myTime" + groupId;
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        editor.putString(AlarmTimekey,time);
+        editor.putBoolean(AlarmActiveKey,true);
+        editor.commit();
         finish();
     }
 
@@ -82,16 +89,16 @@ public class SetAlarm extends ActionBarActivity{
         Log.d("setAlarm", alarmTime.toString());
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("groupId", groupId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
         Toast.makeText(this, "Alarm set ", Toast.LENGTH_LONG).show();
 
-        SetAlarmTask setAlarmTask = new SetAlarmTask();
+        SetAlarmTask setAlarmTask = new SetAlarmTask(accountName, groupId, time, status);
         setAlarmTask.execute();
     }
 
-    private class SetAlarmTask extends AsyncTask<String, Void, String> {
+/*    private class SetAlarmTask extends AsyncTask<String, Void, String> {
         String result;
 
         @Override
@@ -114,6 +121,6 @@ public class SetAlarm extends ActionBarActivity{
         }
 
 
-    }
+    }*/
 
 }

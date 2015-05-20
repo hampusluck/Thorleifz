@@ -40,9 +40,6 @@ public class Groups extends ActionBarActivity {
         accountName = settings.getString("accountName", null);
         groupString = getIntent().getStringExtra("groups");
         theList = new ArrayList<GroupClass>();
-        if(groupString!=null) {
-            fillArrayFromString(groupString);
-        }
         groupList = (ListView) findViewById(R.id.groupList);
 
         //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
@@ -60,6 +57,14 @@ public class Groups extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(groupString!=null)
+            fillArrayFromString(groupString);
+            theAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -85,14 +90,21 @@ public class Groups extends ActionBarActivity {
     }
     //Takes a string of several group names and stores them in the groupArray
     private void fillArrayFromString(String s){
+        theList.clear();
         Scanner sc = new Scanner(s);
-        int i = 0;
         while(sc.hasNext()){
-            if((i%2)==0)
-                theList.add(new GroupClass(R.drawable.alarm_green, sc.next(), "11:00"));
+            String groupId = sc.next();
+            String AlarmTimeKey = "myTime" + groupId;
+            String myTime = settings.getString(AlarmTimeKey,"0000");
+
+            String AlarmActiveKey = "AlarmActive" + groupId;
+            Boolean AlarmActive = settings.getBoolean(AlarmActiveKey,false);
+            int status;
+            if(AlarmActive)
+                status = R.drawable.alarm_green;
             else
-                theList.add(new GroupClass(R.drawable.alarm_grey, sc.next(), "11:00"));
-            i++;
+                status = R.drawable.alarm_grey;
+            theList.add(new GroupClass(status, groupId, myTime.substring(0,2)+":"+myTime.substring(2,4)));
         }
 
     }
