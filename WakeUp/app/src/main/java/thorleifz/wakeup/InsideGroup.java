@@ -1,5 +1,7 @@
 package thorleifz.wakeup;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,8 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,6 +29,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -43,6 +51,11 @@ public class InsideGroup extends ActionBarActivity {
     ArrayList<MemberClass> theList;
     Button updateButton;
     ProgressBar updateProgressBar;
+    String myTime;
+    TextView myAlarmTimeTextView;
+    Switch setAlarmSwitch;
+    Boolean AlarmActive;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +63,23 @@ public class InsideGroup extends ActionBarActivity {
         setContentView(R.layout.inside_group_screen);
         updateButton = (Button) findViewById(R.id.updateButton);
         updateProgressBar = (ProgressBar)findViewById(R.id.updateProgressBar);
+        myAlarmTimeTextView = (TextView)findViewById(R.id.myAlarmTimeTextView);
+        setAlarmSwitch = (Switch)findViewById(R.id.InsideGroupSwitch);
+        setAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = settings.edit();
+                String AlarmActiveKey = "AlarmActive" + groupId;
+                editor.putBoolean(AlarmActiveKey,isChecked);
+                editor.commit();
+                if(isChecked) {
+                    setAlarm(myTime);
+                }
+                else{
+                    cancelAlarm();
+                }
+
+            }
+        });
         //Sets the ActionBarTitle to the groupName
         groupId = getIntent().getStringExtra("groupId");
         setTitle(groupId);
@@ -60,7 +90,9 @@ public class InsideGroup extends ActionBarActivity {
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
+    }
 
+<<<<<<< HEAD
         membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,12 +109,46 @@ public class InsideGroup extends ActionBarActivity {
         });
 
 
+=======
+    private void cancelAlarm() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+>>>>>>> origin/develop
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         updateMembers();
+        String AlarmTimeKey = "myTime" + groupId;
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        myTime = settings.getString(AlarmTimeKey,null);
+        if(myTime!=null) {
+            myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
+        }
+        AlarmActive = settings.getBoolean(AlarmActiveKey,false);
+        setAlarmSwitch.setChecked(AlarmActive);
+    }
+
+    // This method sets the alarm
+    private void setAlarm(String myTime) {
+        Calendar alarmTime = new GregorianCalendar();
+        alarmTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(myTime.substring(0,2)));
+        alarmTime.set(Calendar.MINUTE, Integer.parseInt(myTime.substring(2, 4)));
+        alarmTime.set(Calendar.SECOND, 0);
+        alarmTime.set(Calendar.MILLISECOND, 0);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("groupId", groupId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (alarmTime.getTimeInMillis() < System.currentTimeMillis()){
+            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+        }
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+        SetAlarmTask setAlarmTask = new SetAlarmTask(accountName, groupId, myTime, 1);
+        setAlarmTask.execute();
     }
 
     private void fillTheList(String membersString) {

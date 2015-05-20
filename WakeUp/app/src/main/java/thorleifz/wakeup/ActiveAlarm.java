@@ -119,6 +119,10 @@ public class ActiveAlarm extends Activity {
     //This method is called when the user presses the button to turn of the alarm
     public void turnOffAlarmButtonPressed(View view){
         turnOffAlarm();
+        SharedPreferences.Editor editor = settings.edit();
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        editor.putBoolean(AlarmActiveKey,false);
+        editor.commit();
         finish();
     }
 
