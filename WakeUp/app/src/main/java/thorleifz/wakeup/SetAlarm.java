@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -25,7 +26,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by rebeccaharkonen on 2015-05-02.
  */
-public class SetAlarm extends ActionBarActivity{
+public class SetAlarm extends Activity {
 
     AlarmManager alarmManager;
     private TimePicker alarmTimePicker;

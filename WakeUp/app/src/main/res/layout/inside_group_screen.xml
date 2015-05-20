@@ -43,9 +43,12 @@
         android:text="Set Alarm"
         android:id="@+id/setAlarmButton"
         android:onClick="setAlarmButtonPressed"
-        android:layout_alignBaseline="@+id/myAlarmInfoTextView"
-        android:layout_alignBottom="@+id/myAlarmInfoTextView"
-        android:layout_alignEnd="@+id/InsideGroupSwitch" />
+        android:textColor="#25b347"
+        android:background="#fffcfff9"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_above="@+id/myAlarmTimeTextView"
+        android:layout_alignParentEnd="true" />
 
 
 
@@ -57,7 +60,7 @@
         android:textOff="Off"
         android:paddingRight="20dp"
         android:checked="false"
-        android:layout_below="@+id/setAlarmButton"
+        android:layout_below="@+id/myAlarmTimeTextView"
         android:layout_alignParentEnd="true" />
     </RelativeLayout>
     <ListView
@@ -73,6 +76,10 @@
         android:id="@+id/updateButton"
         android:onClick="updateButtonPressed"
         android:nestedScrollingEnabled="false"
+        android:textColor="#25b347"
+        android:background="#fffcfff9"
+        android:textStyle="bold"
+        android:textSize="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 

@@ -53,7 +53,7 @@ public class sendSnoozeString extends Activity {
 
         SetSnoozeStringTask setSnoozeStringTask = new SetSnoozeStringTask();
         setSnoozeStringTask.execute();
-
+        finish();
     }
 
     private class SetSnoozeStringTask extends AsyncTask<String, Void, String> {
