@@ -65,6 +65,7 @@ public class InsideGroup extends ActionBarActivity {
         updateProgressBar = (ProgressBar)findViewById(R.id.updateProgressBar);
         myAlarmTimeTextView = (TextView)findViewById(R.id.myAlarmTimeTextView);
         setAlarmSwitch = (Switch)findViewById(R.id.InsideGroupSwitch);
+
         setAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = settings.edit();
@@ -189,9 +190,7 @@ public class InsideGroup extends ActionBarActivity {
 
     //Add stuff that updates the member list
     public void updateMembers(){
-        theList.clear();
-        memberListItemAdapter.notifyDataSetChanged();
-        updateProgressBar.setVisibility(View.VISIBLE);
+
         DownloadMembersTask downloadMembersTask = new DownloadMembersTask();
         downloadMembersTask.execute();
         updateButton.setEnabled(false);
@@ -248,6 +247,9 @@ public class InsideGroup extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_leave) {
+            theList.clear();
+            memberListItemAdapter.notifyDataSetChanged();
+            updateProgressBar.setVisibility(View.VISIBLE);
             LeaveGroupTask leaveGroupTask = new LeaveGroupTask();
             leaveGroupTask.execute();
         }
@@ -279,6 +281,8 @@ public class InsideGroup extends ActionBarActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            theList.clear();
+/*            memberListItemAdapter.notifyDataSetChanged();*/
             updateProgressBar.setVisibility(View.GONE);
             fillTheList(membersString);
             memberListItemAdapter.notifyDataSetChanged();
