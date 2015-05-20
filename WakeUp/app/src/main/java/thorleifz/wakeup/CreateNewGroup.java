@@ -24,7 +24,10 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-
+/**
+ * You get to this activity by pressing the "create new group" button in the AddGroup activity.
+ * In this activity you can create a new group.
+ */
 
 
 public class CreateNewGroup extends ActionBarActivity {
@@ -52,7 +55,7 @@ public class CreateNewGroup extends ActionBarActivity {
         inputGroupName = (EditText)findViewById(R.id.groupName);
         inputGroupPassword1 = (EditText) findViewById(R.id.createGroupPassword1);
         inputGroupPassword2 = (EditText) findViewById(R.id.createGroupPassword2);
-        groupIDInfo = (TextView) findViewById(R.id.createGroupIDInfo);
+        //groupIDInfo = (TextView) findViewById(R.id.createGroupIDInfo);
         groupPasswordInfo = (TextView) findViewById(R.id.createGroupPasswordInfo);
         createGroupProgressBar = (ProgressBar) findViewById(R.id.createGroupProgressBar);
         createGroupProgressBar.setVisibility(View.GONE);
@@ -60,6 +63,8 @@ public class CreateNewGroup extends ActionBarActivity {
         accountName = settings.getString("accountName",null);
     }
 
+    //pressing this button creates a new group and adds you to it if you fill in the editable
+    // text fields correctly
     public void createGroupConfirmButtonPressed(View v){
         groupPasswordInfo.setText("");
         String GroupPassword1 = inputGroupPassword1.getText().toString();
@@ -67,6 +72,7 @@ public class CreateNewGroup extends ActionBarActivity {
         GroupID = inputGroupID.getText().toString();
         GroupName = inputGroupName.getText().toString();
         if( (!GroupID.equals("")) && (!GroupPassword1.equals("")) && (!GroupPassword2.equals("")) && (!GroupName.equals(""))) {
+            createGroupProgressBar.setVisibility(View.VISIBLE);
             // Test for matching passwords
             if (GroupPassword1.equals(GroupPassword2)) {
                 GroupPassword = GroupPassword1;
@@ -121,7 +127,7 @@ public class CreateNewGroup extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?groupId="+ GroupID +"&groupPassword="+ GroupPassword + "&accountName=" + accountName + "&groupName=" + GroupName;
+            String serverURLandParams = serverURL +"?groupId="+ GroupID +"&groupPassword="+ GroupPassword + "&accountName=" + accountName + "&groupId=" + GroupName;
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
@@ -136,12 +142,12 @@ public class CreateNewGroup extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            createGroupProgressBar.setVisibility(View.GONE);
             if(result.equals("Group created.")) {
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName,getApplicationContext());
                 downloadGroupsTask.execute();
             }
             else {
+                createGroupProgressBar.setVisibility(View.GONE);
                 groupPasswordInfo.setText("GroupsID occupied");
             }
         }

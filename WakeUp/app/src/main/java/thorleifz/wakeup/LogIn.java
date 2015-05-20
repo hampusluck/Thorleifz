@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * In this activity you can log in to your account or click a button to get to an activity
+ * where you can create a new account.
+ *
  * Created by Jacob on 2015-04-22.
  */
 public class LogIn extends ActionBarActivity {
@@ -54,14 +57,13 @@ public class LogIn extends ActionBarActivity {
     }
 
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
-            loginProgressBar.setVisibility(View.VISIBLE);
             hideKeyboard();
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
 
         if( (!accountName.equals("")) && (!password.equals(""))) {
-
+            loginProgressBar.setVisibility(View.VISIBLE);
             LoginTask loginTask = new LoginTask();
             loginTask.execute();
 
@@ -127,13 +129,14 @@ public class LogIn extends ActionBarActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            loginProgressBar.setVisibility(View.GONE);
+
             if(s.equals("Login successful")){
                 createLocalUser();
                 DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName, getApplicationContext()); //downloads the groups and starts the Groups activity
                 downloadGroupsTask.execute();
             }
             else{
+                loginProgressBar.setVisibility(View.GONE);
                 loginInfo.setText("Wrong username or password");
             }
         }

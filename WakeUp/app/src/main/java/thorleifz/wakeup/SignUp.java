@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * You get to this activity by clicking the "create new user" button on the login screen.
+ * Here you can create a new user account.
+ *
  * Created by rebeccaharkonen on 2015-04-22.
  */
 public class SignUp extends ActionBarActivity {
