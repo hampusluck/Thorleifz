@@ -23,6 +23,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * You get to this activity by clicking the "create new user" button on the login screen.
@@ -42,7 +44,7 @@ public class SignUp extends ActionBarActivity {
     private SharedPreferences settings;
     SharedPreferences.Editor editor;
     private final String severURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
-
+    boolean found = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,9 @@ public class SignUp extends ActionBarActivity {
     }
 
     public void signUpConfirmButtonPressed(View v) {
+        found = false;
+        Log.d("FOUND", found + "");
+
         accountName = inputUsername.getText().toString();
         String password1 = inputPassword1.getText().toString();
         String password2 = inputPassword2.getText().toString();
@@ -66,15 +71,30 @@ public class SignUp extends ActionBarActivity {
         // Control text editors filled out
         if( (!accountName.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
 
-            // Test for matching passwords
-            if (password1.equals(password2)) {
-                signupProgressBar.setVisibility(View.VISIBLE);
-                password = password1;
-                AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
-                addUserTask.execute();
+
+            Pattern pattern = Pattern.compile("\\s");
+            Matcher matcher = pattern.matcher(accountName);
+            found = matcher.find();
+            Log.d("FOUND", found + "");
+            if (found == false) {
+
+
+
+                Log.d("PAST FOUND", "japp");
+                // Test for matching passwords
+                if (password1.equals(password2)) {
+                    Log.d("PAST EQUALS", "HEJ");
+                    signupProgressBar.setVisibility(View.VISIBLE);
+                    password = password1;
+                    AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
+                    addUserTask.execute();
+                    Log.d("POST EXECUTE", "AAAH");
+                }
+                else
+                    passwordInfo.setText("Passwords don't match");
             }
             else
-                passwordInfo.setText("Passwords don't match");
+                passwordInfo.setText("Your account name cannot contain blank spaces");
         }
 
     }
@@ -88,6 +108,9 @@ public class SignUp extends ActionBarActivity {
         return true;
     }
 
+    private boolean containsNoSpaces(){
+        return true;
+    }
 
 
     private void createLocalUser() {

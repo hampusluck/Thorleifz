@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="98dp"
-        android:background="#ffffffff">
+        android:background="#ffffffff"
+        android:id="@+id/relativeLayout">
 
 
     <TextView
@@ -61,21 +62,19 @@
     </RelativeLayout>
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="460dp"
+        android:layout_height="wrap_content"
         android:id="@+id/membersListView"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/relativeLayout"
         android:layout_alignParentStart="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="update"
         android:id="@+id/updateButton"
-        android:layout_marginBottom="43dp"
         android:onClick="updateButtonPressed"
-        android:layout_alignBottom="@+id/membersListView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

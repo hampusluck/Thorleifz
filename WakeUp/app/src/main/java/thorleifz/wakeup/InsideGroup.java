@@ -90,9 +90,7 @@ public class InsideGroup extends ActionBarActivity {
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
-    }
 
-<<<<<<< HEAD
         membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,14 +105,16 @@ public class InsideGroup extends ActionBarActivity {
 
 
         });
+    }
 
 
-=======
+
+
     private void cancelAlarm() {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
->>>>>>> origin/develop
+
     }
 
 
