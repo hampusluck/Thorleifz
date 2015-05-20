@@ -47,7 +47,7 @@ public class MemberListItemAdapter extends ArrayAdapter {
 
         //Här fylls de med information från listan
         status.setImageResource(theList.get(position).getStatus_resource());
-        memberName.setText(theList.get(position).getMember_name());
+        memberName.setText(theList.get(position).getAccount_name());
         alarmTime.setText(theList.get(position).getAlarm_time());
 
         return row;
