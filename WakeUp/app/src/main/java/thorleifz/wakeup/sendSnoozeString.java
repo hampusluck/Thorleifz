@@ -22,11 +22,10 @@ import java.io.IOException;
  */
 public class sendSnoozeString extends Activity {
 
-    private final String serverURL = "https://script.google.com/macros/s/AKfycbw4jlLwAXJJ4HSddhgeBwYpgbrI9GDmpM3NJYao7zhYuY-UpdA/exec";
+    private final String serverURL = "https://script.google.com/macros/s/AKfycbxvLBgw0pY2fml0SEh4MX51TUbT34MIojhXw7FaQWGOjEhy1OD1/exec";
     private String accountName;
     private String groupId;
     private String snoozeString;
-    private Button setSnoozeStringButton;
     private EditText setSnoozeStringEditText;
 
 
@@ -36,8 +35,6 @@ public class sendSnoozeString extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.set_snooze_string_screen);
-
-        setSnoozeStringButton = (Button) findViewById(R.id.setSnoozeStringButton);
         setSnoozeStringEditText = (EditText) findViewById(R.id.setSnoozeStringEditText);
 
         groupId = getIntent().getStringExtra("groupId");
