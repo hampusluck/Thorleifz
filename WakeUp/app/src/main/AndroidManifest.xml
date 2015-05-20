@@ -57,6 +57,9 @@
         android:name=".SetAlarm"
         android:label="@string/set_alarm">
         </activity>
+        <activity
+            android:name=".sendSnoozeString">
+        </activity>
 
         <receiver android:name=".AlarmReceiver" />
 

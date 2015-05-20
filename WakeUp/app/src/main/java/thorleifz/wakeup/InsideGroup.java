@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -60,6 +61,20 @@ public class InsideGroup extends ActionBarActivity {
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
 
+        membersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MemberClass memberClass = (MemberClass) membersListView.getItemAtPosition(position);
+                String memberName = memberClass.getAccount_name();
+                Intent intent = new Intent(getApplicationContext(), sendSnoozeString.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("accountName", memberName);
+                Log.d("DEBUG", groupId + " " + memberName);
+                startActivity(intent);
+            }
+
+
+        });
 
 
     }
