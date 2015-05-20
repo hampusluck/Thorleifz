@@ -107,6 +107,20 @@ public class InsideGroup extends ActionBarActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateMembers();
+        String AlarmTimeKey = "myTime" + groupId;
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        myTime = settings.getString(AlarmTimeKey,"0000");
+        if(myTime!=null) {
+            myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
+        }
+        AlarmActive = settings.getBoolean(AlarmActiveKey,false);
+        setAlarmSwitch.setChecked(AlarmActive);
+    }
+
 
 
 
@@ -114,26 +128,10 @@ public class InsideGroup extends ActionBarActivity {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/develop
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateMembers();
-        String AlarmTimeKey = "myTime" + groupId;
-        String AlarmActiveKey = "AlarmActive" + groupId;
-        myTime = settings.getString(AlarmTimeKey,null);
-        if(myTime!=null) {
-            myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
-        }
-        AlarmActive = settings.getBoolean(AlarmActiveKey,false);
-        setAlarmSwitch.setChecked(AlarmActive);
-    }
+
 
     // This method sets the alarm
     private void setAlarm(String myTime) {

@@ -1,7 +1,9 @@
 package thorleifz.wakeup;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -11,6 +13,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -70,7 +79,7 @@ public class Groups extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_groups, menu);
         return true;
     }
 
@@ -82,12 +91,31 @@ public class Groups extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            clearAlarms();
+
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void clearAlarms() {
+        for(GroupClass g:theList){
+            String groupId = g.getGroup_id();
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent.cancel();
+
+        }
+        SetAlarmInactiveTask theTask = new SetAlarmInactiveTask();
+        theTask.execute();
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.commit();
+    }
+
     //Takes a string of several group names and stores them in the groupArray
     private void fillArrayFromString(String s){
         theList.clear();
@@ -116,4 +144,24 @@ public class Groups extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){} //Overriding this method makes it impossible to go back to mainActivity
+
+    private class SetAlarmInactiveTask extends AsyncTask<String, Void, Void> {
+
+        String serverURL = "https://script.google.com/macros/s/AKfycbyKYa8rYf382qq0dzabyEXb4JLeEIUoGr3D8sy1cnY5dlYIK_Te/exec";
+
+
+        @Override
+        protected Void doInBackground(String... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+            String serverURLandParams = serverURL + "?accountName=" + accountName; //creates a new String containing the scripts URL and the parameters
+            HttpGet httpGet = new HttpGet(serverURLandParams);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
+    }
 }
