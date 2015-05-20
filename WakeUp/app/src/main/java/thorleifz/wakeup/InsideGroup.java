@@ -247,8 +247,9 @@ public class InsideGroup extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_leave) {
+            LeaveGroupTask leaveGroupTask = new LeaveGroupTask();
+            leaveGroupTask.execute();
         }
 
         return super.onOptionsItemSelected(item);
@@ -283,7 +284,30 @@ public class InsideGroup extends ActionBarActivity {
             memberListItemAdapter.notifyDataSetChanged();
             updateButton.setEnabled(true);
         }
+    }
 
+    private class LeaveGroupTask extends AsyncTask<String, Void, Void> {
 
+        String serverURL = "https://script.google.com/macros/s/AKfycbwZxGzUFA2mKEqHyf5Tt-IacScURcZQXvDvhhle1N78wb-1qUA/exec";
+
+        @Override
+        protected Void doInBackground(String... params) {
+            HttpClient httpClient = new DefaultHttpClient();
+            String serverURLandParams = serverURL + "?accountName=" + accountName + "&groupId=" + groupId; //creates a new String containing the scripts URL and the parameters
+            HttpGet httpGet = new HttpGet(serverURLandParams);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                Log.i("thetag",EntityUtils.toString(httpResponse.getEntity()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName,getApplicationContext());
+            downloadGroupsTask.execute();
+        }
     }
 }
