@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="22:00"
+        android:text="00:00"
         android:id="@+id/myAlarmTimeTextView"
         android:layout_below="@+id/myAlarmInfoTextView"
         android:layout_alignParentStart="true"
@@ -58,7 +58,8 @@
         android:layout_below="@+id/setAlarmButton"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="9dp" />
+        android:layout_marginTop="9dp"
+        android:checked="false" />
     </RelativeLayout>
     <ListView
         android:layout_width="wrap_content"

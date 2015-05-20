@@ -1,5 +1,7 @@
 package thorleifz.wakeup;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,6 +28,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -42,6 +50,10 @@ public class InsideGroup extends ActionBarActivity {
     ArrayList<MemberClass> theList;
     Button updateButton;
     ProgressBar updateProgressBar;
+    String myTime;
+    TextView myAlarmTimeTextView;
+    Switch setAlarmSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,16 @@ public class InsideGroup extends ActionBarActivity {
         setContentView(R.layout.inside_group_screen);
         updateButton = (Button) findViewById(R.id.updateButton);
         updateProgressBar = (ProgressBar)findViewById(R.id.updateProgressBar);
+        myAlarmTimeTextView = (TextView)findViewById(R.id.myAlarmTimeTextView);
+        setAlarmSwitch = (Switch)findViewById(R.id.InsideGroupSwitch);
+        setAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    setAlarm(myTime);
+                else
+                    cancelAlarm();
+            }
+        });
         //Sets the ActionBarTitle to the groupName
         groupId = getIntent().getStringExtra("groupId");
         setTitle(groupId);
@@ -59,7 +81,15 @@ public class InsideGroup extends ActionBarActivity {
         membersListView = (ListView)findViewById(R.id.membersListView);
         memberListItemAdapter = new MemberListItemAdapter(this, R.layout.list_element_members, theList);
         membersListView.setAdapter(memberListItemAdapter);
+    }
 
+    private void cancelAlarm() {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+    }
+
+    public void onSwitchPressed(View v){
 
 
     }
@@ -68,6 +98,30 @@ public class InsideGroup extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         updateMembers();
+        String key = "myTime" + groupId;
+        myTime = settings.getString(key,null);
+        if(myTime!=null) {
+            myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
+        }
+    }
+
+    // This method sets the alarm
+    private void setAlarm(String myTime) {
+        Calendar alarmTime = new GregorianCalendar();
+        alarmTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(myTime.substring(0,2)));
+        alarmTime.set(Calendar.MINUTE, Integer.parseInt(myTime.substring(2, 4)));
+        alarmTime.set(Calendar.SECOND, 0);
+        alarmTime.set(Calendar.MILLISECOND, 0);
+
+        Log.d("setAlarm", alarmTime.toString());
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("groupId", groupId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
+        Toast.makeText(this, "Alarm set ", Toast.LENGTH_LONG).show();
+        SetAlarmTask setAlarmTask = new SetAlarmTask(accountName, groupId, myTime, 1);
+        setAlarmTask.execute();
     }
 
     private void fillTheList(String membersString) {
