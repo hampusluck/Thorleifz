@@ -39,6 +39,8 @@ public class ActiveAlarm extends Activity {
 
     private Ringtone ringtone;
     private Vibrator vibrator;
+    private TextView snoozeStringView;
+    private String snoozeString = "ERROR";
 
     private String time;
     private SharedPreferences settings;
@@ -51,7 +53,7 @@ public class ActiveAlarm extends Activity {
     private int status;
     private final String setAlarmServerURL = "https://script.google.com/macros/s/AKfycbwZ_k3B0xfsgIG9AgpsTsqIBZx_UtmVXjUD1--msnD218XQkbSC/exec";
     private final String alarmOffServerURL = "https://script.google.com/macros/s/AKfycbyhW8nDaJx8pGsw8kSVxc0XukPvrtjEQrh-fYg2Xyyol2XbRrQ/exec";
-
+    private final String getSnoozeStringURL = "https://script.google.com/macros/s/AKfycbwgzzbw-NXaxYfB8urQ0PM8rsKp2S3zgoTWG5LYHTRevHcIus0/exec";
     // A variable that indicates if the user has turned of the alarm.
     private boolean turnedOff;
 
@@ -59,6 +61,7 @@ public class ActiveAlarm extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_alarm_screen);
+        snoozeStringView = (TextView) findViewById(R.id.activeAlarmTextView);
         turnedOff = false;
 
         settings = getSharedPreferences("settings", 0);
@@ -75,8 +78,13 @@ public class ActiveAlarm extends Activity {
 
         vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
+
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(this, alarmUri);
+
+        getSnoozeString();
+
+
     }
 
     @Override
@@ -89,6 +97,17 @@ public class ActiveAlarm extends Activity {
         // Start vibration and alarm tone
         vibrator.vibrate(pattern, 0);
         ringtone.play();
+    }
+
+    private void getSnoozeString(){
+        Log.d("NU ÄR VI DÄR", snoozeString);
+        GetSnoozeStringTask getSnoozeStringTask = new GetSnoozeStringTask();
+        getSnoozeStringTask.execute();
+    }
+
+    private void setSnoozeTextView(){
+        snoozeStringView.setText(snoozeString);
+
     }
 
     // This method is called when the user presses the button to snooze
@@ -135,6 +154,8 @@ public class ActiveAlarm extends Activity {
 
         TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask();
         turnOffAlarmTask.execute();
+
+        snoozeString = turnOffAlarmTask.result;
     }
 
     // This method is called whenever the activity is not in the foreground
@@ -195,10 +216,45 @@ public class ActiveAlarm extends Activity {
                 e.printStackTrace();
             }
             Log.d("SnoozeAlarm",result);
+            snoozeStringView.setText(snoozeString + "");
             return result;
+
         }
 
 
+    }
+
+    private class GetSnoozeStringTask extends AsyncTask<String, Void, String> {
+        protected String result;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            HttpClient httpClient = new DefaultHttpClient();
+            String serverURLandParams = getSnoozeStringURL +"?accountName="+ accountName +"&groupId="+ groupId;
+            Log.d("SnoozeAlarm", serverURLandParams);
+
+            HttpGet httpGet = new HttpGet(serverURLandParams);
+            try {
+                HttpResponse httpResponse = httpClient.execute(httpGet);
+                result = EntityUtils.toString(httpResponse.getEntity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Log.d("SnoozeAlarm",result);
+
+            snoozeString = result.toString();
+            Log.d("NU ÄR VI HÄR", snoozeString);
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            setSnoozeTextView();
+        }
     }
 
 }
