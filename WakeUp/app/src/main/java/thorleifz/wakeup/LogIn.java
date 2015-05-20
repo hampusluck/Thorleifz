@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,7 +34,7 @@ import java.util.regex.Pattern;
  *
  * Created by Jacob on 2015-04-22.
  */
-public class LogIn extends ActionBarActivity {
+public class LogIn extends Activity {
 
     private EditText inputUsername;
     private EditText inputPassword;
@@ -90,7 +91,7 @@ public class LogIn extends ActionBarActivity {
     //Saves the entered information in the local memory using SharedPreferences
     private void createLocalUser() {
         editor = settings.edit();
-        editor.putString("accountName",accountName);
+        editor.putString("accountName", accountName);
         editor.putString("password",password);
         editor.commit();
     }

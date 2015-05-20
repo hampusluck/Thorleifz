@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
  *
  * Created by rebeccaharkonen on 2015-04-22.
  */
-public class SignUp extends ActionBarActivity {
+public class SignUp extends Activity {
 
     private EditText inputUsername;
     private EditText inputPassword1;

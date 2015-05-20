@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -33,7 +34,7 @@ import java.util.regex.Pattern;
  *
  * Created by rebeccaharkonen on 2015-04-27.
  */
-public class AddGroup extends ActionBarActivity {
+public class AddGroup extends Activity {
     private EditText inputGroupId;
     private EditText inputPassword;
     private TextView joinInfo;

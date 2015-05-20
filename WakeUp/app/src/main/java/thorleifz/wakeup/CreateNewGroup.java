@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -31,7 +32,7 @@ import java.util.regex.Pattern;
  */
 
 
-public class CreateNewGroup extends ActionBarActivity {
+public class CreateNewGroup extends Activity {
 
     String serverURL = "https://script.google.com/macros/s/AKfycbyL917crfmq3rm3laLN2ebLZyC_VSXSlYhE8kwCkNeHyezAQQ4/exec";
     EditText inputGroupID;
