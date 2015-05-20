@@ -1,7 +1,6 @@
 package thorleifz.wakeup;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +22,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * You get to this activity by pressing the "create new group" button in the AddGroup activity.
@@ -39,11 +40,11 @@ public class CreateNewGroup extends ActionBarActivity {
     EditText inputGroupPassword2;
     TextView groupIDInfo;
     TextView groupPasswordInfo;
-    String GroupID;
-    String GroupPassword;
+    String groupId;
+    String groupPassword;
     SharedPreferences settings;
     String accountName;
-    String GroupName;
+    String groupName;
     ProgressBar createGroupProgressBar;
 
 
@@ -69,24 +70,51 @@ public class CreateNewGroup extends ActionBarActivity {
         groupPasswordInfo.setText("");
         String GroupPassword1 = inputGroupPassword1.getText().toString();
         String GroupPassword2 = inputGroupPassword2.getText().toString();
-        GroupID = inputGroupID.getText().toString();
-        GroupName = inputGroupName.getText().toString();
-        if( (!GroupID.equals("")) && (!GroupPassword1.equals("")) && (!GroupPassword2.equals("")) && (!GroupName.equals(""))) {
+        groupId = inputGroupID.getText().toString();
+        groupName = inputGroupName.getText().toString();
+
+        Log.d("DEBUG", "innan IF");
+        if( (!groupId.equals("")) && (!GroupPassword1.equals("")) && (!GroupPassword2.equals("")) && (!groupName.equals(""))) {
             createGroupProgressBar.setVisibility(View.VISIBLE);
             // Test for matching passwords
-            if (GroupPassword1.equals(GroupPassword2)) {
-                GroupPassword = GroupPassword1;
-                createGroupProgressBar.setVisibility(View.VISIBLE);
-                CreateGroupTask createGroupTask = new CreateGroupTask();
-                createGroupTask.execute();
-            }
-            else{
-                groupPasswordInfo.setText("Passwords don't match");
+            Log.d("DEBUG", "innan contains");
+            if(!containsSpaces(groupId)) {
+                Log.d("DEBUG", groupId + "");
+
+                if(!containsSpaces(GroupPassword1)) {
+                    Log.d("DEBUG", GroupPassword1 + "");
+                    if (!containsSpaces(groupName)) {
+                        Log.d("DEBUF", groupName + "");
+
+                        if (GroupPassword1.equals(GroupPassword2)) {
+                            groupPassword = GroupPassword1;
+                            createGroupProgressBar.setVisibility(View.VISIBLE);
+                            CreateGroupTask createGroupTask = new CreateGroupTask();
+                            createGroupTask.execute();
+                        } else {
+                            groupPasswordInfo.setText("Passwords don't match");
+                        }
+                    }
+                    else {
+                        groupPasswordInfo.setText("Group name cannot contain blank spaces");
+                    }
+                }
+                else {
+                    groupPasswordInfo.setText("Passwords cannot contain blank spaces");
+                }
+            } else {
+                groupPasswordInfo.setText("Group ID cannot contain blank spaces");
             }
         }
 
     }
 
+
+    private boolean containsSpaces(String string){
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.find();
+    }
 
     //removes keyboard
     @Override
@@ -127,7 +155,7 @@ public class CreateNewGroup extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?groupId="+ GroupID +"&groupPassword="+ GroupPassword + "&accountName=" + accountName + "&groupId=" + GroupName;
+            String serverURLandParams = serverURL +"?groupId="+ groupId +"&groupPassword="+ groupPassword + "&accountName=" + accountName + "&groupId=" + groupName;
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);

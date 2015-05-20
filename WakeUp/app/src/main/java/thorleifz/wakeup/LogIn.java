@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -23,6 +24,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * In this activity you can log in to your account or click a button to get to an activity
@@ -63,10 +66,17 @@ public class LogIn extends ActionBarActivity {
             password = inputPassword.getText().toString();
 
         if( (!accountName.equals("")) && (!password.equals(""))) {
-            loginProgressBar.setVisibility(View.VISIBLE);
-            LoginTask loginTask = new LoginTask();
-            loginTask.execute();
 
+            if(!containsSpaces(accountName) && !containsSpaces(password)) {
+
+                loginProgressBar.setVisibility(View.VISIBLE);
+                LoginTask loginTask = new LoginTask();
+                loginTask.execute();
+
+            }
+            else{
+                loginInfo.setText("Login unsuccessful");
+            }
 /*            if(loginStatus.equals("Login successful")){
                 createLocalUser();
                 loginInfo.setText("You are logged in");
@@ -74,9 +84,7 @@ public class LogIn extends ActionBarActivity {
                 //Intent theIntent = new Intent(this, "group activity".class);
                 //startActivity(theIntent);
             }
-            else{
-                loginInfo.setText("Wrong Accountname or password");
-            }*/
+            */
         }
     }
     //Saves the entered information in the local memory using SharedPreferences
@@ -85,6 +93,11 @@ public class LogIn extends ActionBarActivity {
         editor.putString("accountName",accountName);
         editor.putString("password",password);
         editor.commit();
+    }
+    private boolean containsSpaces(String string){
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.find();
     }
 
     public void startSignUpActivity(View v){

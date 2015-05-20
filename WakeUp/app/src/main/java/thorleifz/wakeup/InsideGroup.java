@@ -110,14 +110,13 @@ public class InsideGroup extends ActionBarActivity {
 
 
 
+
+
     private void cancelAlarm() {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/develop
     }
 
 
@@ -282,5 +281,7 @@ public class InsideGroup extends ActionBarActivity {
             memberListItemAdapter.notifyDataSetChanged();
             updateButton.setEnabled(true);
         }
+
+
     }
 }

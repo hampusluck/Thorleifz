@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +41,7 @@ public class SignUp extends ActionBarActivity {
     private String password;
     private SharedPreferences settings;
     SharedPreferences.Editor editor;
-    private final String severURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
+    private final String serverURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
     boolean found = false;
 
     @Override
@@ -60,8 +58,6 @@ public class SignUp extends ActionBarActivity {
     }
 
     public void signUpConfirmButtonPressed(View v) {
-        found = false;
-        Log.d("FOUND", found + "");
 
         accountName = inputUsername.getText().toString();
         String password1 = inputPassword1.getText().toString();
@@ -71,27 +67,26 @@ public class SignUp extends ActionBarActivity {
         // Control text editors filled out
         if( (!accountName.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
 
+            if (!containsSpaces(accountName)) {
 
-            Pattern pattern = Pattern.compile("\\s");
-            Matcher matcher = pattern.matcher(accountName);
-            found = matcher.find();
-            Log.d("FOUND", found + "");
-            if (found == false) {
+                if (!containsSpaces(password1)) {
 
 
+                    // Test for matching passwords
+                    if (password1.equals(password2)) {
+                        Log.d("PAST EQUALS", "HEJ");
+                        signupProgressBar.setVisibility(View.VISIBLE);
+                        password = password1;
+                        AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
+                        addUserTask.execute();
+                    }
 
-                Log.d("PAST FOUND", "japp");
-                // Test for matching passwords
-                if (password1.equals(password2)) {
-                    Log.d("PAST EQUALS", "HEJ");
-                    signupProgressBar.setVisibility(View.VISIBLE);
-                    password = password1;
-                    AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
-                    addUserTask.execute();
-                    Log.d("POST EXECUTE", "AAAH");
+                    else
+                        passwordInfo.setText("Passwords don't match");
                 }
+
                 else
-                    passwordInfo.setText("Passwords don't match");
+                    passwordInfo.setText("Your password cannot contain blank spaces");
             }
             else
                 passwordInfo.setText("Your account name cannot contain blank spaces");
@@ -108,8 +103,10 @@ public class SignUp extends ActionBarActivity {
         return true;
     }
 
-    private boolean containsNoSpaces(){
-        return true;
+    private boolean containsSpaces(String string){
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.find();
     }
 
 
@@ -126,7 +123,7 @@ public class SignUp extends ActionBarActivity {
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = severURL +"?username="+ accountName +"&password="+ password;
+            String serverURLandParams = serverURL +"?username="+ accountName +"&password="+ password;
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
