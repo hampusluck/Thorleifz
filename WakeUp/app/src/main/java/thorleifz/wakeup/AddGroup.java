@@ -23,6 +23,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * You reach this activity by clicking the "+" button on the Groups screen.
@@ -67,6 +69,12 @@ public class AddGroup extends ActionBarActivity {
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
+    private boolean containsSpaces(String string){
+        Pattern pattern = Pattern.compile("\\s");
+        Matcher matcher = pattern.matcher(string);
+        return matcher.find();
+    }
+
     //the functionality a button which directs you to the CreateNewGroup activity
     public void createGroupButtonPressed(View v){
         Intent theIntent = new Intent(this, CreateNewGroup.class);
@@ -81,9 +89,15 @@ public class AddGroup extends ActionBarActivity {
         groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
         if( (!groupId.equals("")) && !password.equals("")) {
-            joinProgressBar.setVisibility(View.VISIBLE);
-            JoinTask joinTask = new JoinTask();
-            joinTask.execute();
+            if(!containsSpaces(groupId) && !containsSpaces(password)) {
+
+
+                joinProgressBar.setVisibility(View.VISIBLE);
+                JoinTask joinTask = new JoinTask();
+                joinTask.execute();
+            }else{
+                joinInfo.setText("Wrong password or group ID");
+            }
         }
 
     }
