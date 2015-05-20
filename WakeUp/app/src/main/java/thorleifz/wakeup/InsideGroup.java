@@ -53,6 +53,7 @@ public class InsideGroup extends ActionBarActivity {
     String myTime;
     TextView myAlarmTimeTextView;
     Switch setAlarmSwitch;
+    Boolean AlarmActive;
 
 
     @Override
@@ -65,10 +66,17 @@ public class InsideGroup extends ActionBarActivity {
         setAlarmSwitch = (Switch)findViewById(R.id.InsideGroupSwitch);
         setAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
+                SharedPreferences.Editor editor = settings.edit();
+                String AlarmActiveKey = "AlarmActive" + groupId;
+                editor.putBoolean(AlarmActiveKey,isChecked);
+                editor.commit();
+                if(isChecked) {
                     setAlarm(myTime);
-                else
+                }
+                else{
                     cancelAlarm();
+                }
+
             }
         });
         //Sets the ActionBarTitle to the groupName
@@ -89,20 +97,19 @@ public class InsideGroup extends ActionBarActivity {
         pendingIntent.cancel();
     }
 
-    public void onSwitchPressed(View v){
-
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateMembers();
-        String key = "myTime" + groupId;
-        myTime = settings.getString(key,null);
+        String AlarmTimeKey = "myTime" + groupId;
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        myTime = settings.getString(AlarmTimeKey,null);
         if(myTime!=null) {
             myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
         }
+        AlarmActive = settings.getBoolean(AlarmActiveKey,false);
+        setAlarmSwitch.setChecked(AlarmActive);
     }
 
     // This method sets the alarm
@@ -112,14 +119,14 @@ public class InsideGroup extends ActionBarActivity {
         alarmTime.set(Calendar.MINUTE, Integer.parseInt(myTime.substring(2, 4)));
         alarmTime.set(Calendar.SECOND, 0);
         alarmTime.set(Calendar.MILLISECOND, 0);
-
-        Log.d("setAlarm", alarmTime.toString());
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("groupId", groupId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (alarmTime.getTimeInMillis() < System.currentTimeMillis()){
+            alarmTime.add(Calendar.DAY_OF_YEAR, 1);
+        }
         alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime.getTimeInMillis(), pendingIntent);
-        Toast.makeText(this, "Alarm set ", Toast.LENGTH_LONG).show();
         SetAlarmTask setAlarmTask = new SetAlarmTask(accountName, groupId, myTime, 1);
         setAlarmTask.execute();
     }

@@ -55,11 +55,9 @@
         android:textOn="On"
         android:textOff="Off"
         android:paddingRight="20dp"
+        android:checked="false"
         android:layout_below="@+id/setAlarmButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="9dp"
-        android:checked="false" />
+        android:layout_alignParentEnd="true" />
     </RelativeLayout>
     <ListView
         android:layout_width="wrap_content"

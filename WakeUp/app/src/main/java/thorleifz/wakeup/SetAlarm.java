@@ -76,9 +76,10 @@ public class SetAlarm extends ActionBarActivity{
         }
         SharedPreferences.Editor editor = settings.edit();
 
-        String key = "myTime" + groupId;
-        editor.putString(key,time);
-
+        String AlarmTimekey = "myTime" + groupId;
+        String AlarmActiveKey = "AlarmActive" + groupId;
+        editor.putString(AlarmTimekey,time);
+        editor.putBoolean(AlarmActiveKey,true);
         editor.commit();
         finish();
     }
