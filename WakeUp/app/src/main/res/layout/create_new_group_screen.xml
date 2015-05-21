@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="thorleifz.wakeup.CreateNewGroup"
-    android:background="#25b347"
+    android:background="@color/green"
     android:orientation="vertical">
 
 
@@ -86,7 +86,7 @@
         android:layout_gravity="center_horizontal"
         android:onClick="createGroupConfirmButtonPressed"
         android:background="#ffffffff"
-        android:textColor="#25b347"
+        android:textColor="@color/green"
         android:textStyle="bold"
         android:textSize="20dp"/>
 

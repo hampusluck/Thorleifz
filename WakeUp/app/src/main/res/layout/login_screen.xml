@@ -3,8 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="false"
-    android:background="#25b347"
-    android:weightSum="1">
+    android:background="@color/green">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -86,7 +85,7 @@
             android:layout_height="wrap_content"
             android:text="Login"
             android:id="@+id/LogInButton"
-            android:textColor="#25b347"
+            android:textColor="@color/green"
             android:background="#fffcfff9"
             android:textStyle="bold"
             android:textSize="20dp"
@@ -100,7 +99,7 @@
             android:layout_height="wrap_content"
             android:text="Create"
             android:id="@+id/createNewUserButton"
-            android:textColor="#25b347"
+            android:textColor="@color/green"
             android:background="#fffcfff9"
             android:layout_gravity="center_horizontal"
             android:onClick="startSignUpActivity"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:weightSum="1"
     android:clickable="true"
-    android:background="#25b347">
+    android:background="@color/green">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -63,8 +63,7 @@
         android:id="@+id/signupPassword2"
         android:layout_gravity="center"
         android:hint="Confirm Password"
-        android:background="#ffffffff"
-        android:textColor="#25b347" />
+        android:background="#ffffffff"/>
     </LinearLayout>
     <TextView
         android:layout_width="318dp"
@@ -79,7 +78,7 @@
         android:layout_gravity="center_horizontal"
         android:onClick="signUpConfirmButtonPressed"
         android:background="#ffffffff"
-        android:textColor="#25b347"
+        android:textColor="@color/green"
         android:textSize="20dp"
         android:textStyle="bold"/>
 
