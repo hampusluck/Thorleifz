@@ -1,6 +1,8 @@
 package thorleifz.wakeup;
 
 /**
+ * a GroupClass is a class representing a group in the Groups activity.
+ * Each entry in the list seen in the Groups activity corresponds to a GroupClass object.
  * Created by Jacob on 2015-05-05.
  */
 public class GroupClass {

@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * You get to this activity by pressing the "create new group" button in the AddGroup activity.
+ * You get to this activity by pressing the "create new group" button in the JoinGroup activity.
  * In this activity you can create a new group.
  */
 
@@ -35,18 +35,21 @@ import java.util.regex.Pattern;
 public class CreateNewGroup extends Activity {
 
     String serverURL = "https://script.google.com/macros/s/AKfycbyL917crfmq3rm3laLN2ebLZyC_VSXSlYhE8kwCkNeHyezAQQ4/exec";
+
     EditText inputGroupID;
     EditText inputGroupName;
     EditText inputGroupPassword1;
     EditText inputGroupPassword2;
-    TextView groupIDInfo;
     TextView groupPasswordInfo;
+    ProgressBar createGroupProgressBar;
+
     String groupId;
     String groupPassword;
-    SharedPreferences settings;
     String accountName;
     String groupName;
-    ProgressBar createGroupProgressBar;
+
+    SharedPreferences settings;
+
 
 
     @Override
@@ -57,10 +60,10 @@ public class CreateNewGroup extends Activity {
         inputGroupName = (EditText)findViewById(R.id.groupName);
         inputGroupPassword1 = (EditText) findViewById(R.id.createGroupPassword1);
         inputGroupPassword2 = (EditText) findViewById(R.id.createGroupPassword2);
-        //groupIDInfo = (TextView) findViewById(R.id.createGroupIDInfo);
         groupPasswordInfo = (TextView) findViewById(R.id.createGroupPasswordInfo);
         createGroupProgressBar = (ProgressBar) findViewById(R.id.createGroupProgressBar);
         createGroupProgressBar.setVisibility(View.GONE);
+
         settings = getSharedPreferences("settings",0);
         accountName = settings.getString("accountName",null);
     }
@@ -74,19 +77,17 @@ public class CreateNewGroup extends Activity {
         groupId = inputGroupID.getText().toString();
         groupName = inputGroupName.getText().toString();
 
-        Log.d("DEBUG", "innan IF");
+        // Test that all fields are filled in
         if( (!groupId.equals("")) && (!GroupPassword1.equals("")) && (!GroupPassword2.equals("")) && (!groupName.equals(""))) {
             createGroupProgressBar.setVisibility(View.VISIBLE);
-            // Test for matching passwords
-            Log.d("DEBUG", "innan contains");
+
+            // Test for spaces in groupId
             if(!containsSpaces(groupId)) {
-                Log.d("DEBUG", groupId + "");
-
+                // Test for spaces in groupPassword1
                 if(!containsSpaces(GroupPassword1)) {
-                    Log.d("DEBUG", GroupPassword1 + "");
+                    // Test for spaces in groupName
                     if (!containsSpaces(groupName)) {
-                        Log.d("DEBUF", groupName + "");
-
+                        // Test for matching passwords
                         if (GroupPassword1.equals(GroupPassword2)) {
                             groupPassword = GroupPassword1;
                             createGroupProgressBar.setVisibility(View.VISIBLE);
@@ -110,7 +111,7 @@ public class CreateNewGroup extends Activity {
 
     }
 
-
+    // Method for testing whether a string contains spaces or not
     private boolean containsSpaces(String string){
         Pattern pattern = Pattern.compile("\\s");
         Matcher matcher = pattern.matcher(string);
@@ -128,8 +129,8 @@ public class CreateNewGroup extends Activity {
 
 
     @Override
+    // Inflate the menu; this adds items to the action bar if it is present.
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_create_new_group, menu);
         return true;
     }
@@ -149,10 +150,10 @@ public class CreateNewGroup extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
     private class CreateGroupTask extends AsyncTask<String, Void, String> {
         String result;
-        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
+
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
@@ -169,6 +170,7 @@ public class CreateNewGroup extends Activity {
         }
 
         @Override
+        // Checks if the group was successfully created, if so, it starts DownloadGroupsTask
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(result.equals("Group created.")) {

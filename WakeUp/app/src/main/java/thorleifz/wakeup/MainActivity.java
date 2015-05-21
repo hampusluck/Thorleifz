@@ -20,15 +20,12 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-
+// The main activity directs the user to the login screen if he is not logged in, and
+// the group screen if he is logged in.
 public class MainActivity extends Activity {
 
     private SharedPreferences settings;
-    SharedPreferences.Editor editor;
     String accountName;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +43,6 @@ public class MainActivity extends Activity {
         }
     }
 
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     //checks if there is a logged in user
     private boolean userLoggedIn() {
         String userLoggedIn = settings.getString("accountName","no user logged in");
@@ -61,16 +51,9 @@ public class MainActivity extends Activity {
         return true;
     }
 
-
-
     //Starts the Login-activity
     public void startLoginActivity(){
         Intent theIntent = new Intent(this, LogIn.class);
         startActivity(theIntent);
     }
-
-
-
-
-
 }

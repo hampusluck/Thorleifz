@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +16,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * This is the activity where you can find all groups that you are a member of and you you reach
@@ -31,14 +28,11 @@ import java.util.concurrent.ExecutionException;
  * Created by rebeccaharkonen on 2015-04-24.
  */
 public class Groups extends ActionBarActivity {
-
-    private ListView groupList;
-
-    private String groupString; // a single string that contains all group names
-    SharedPreferences settings;
     String accountName;
+    private String groupString; // a single string that contains all group names
+    private ListView groupList;
+    SharedPreferences settings;
     ArrayList<GroupClass> theList;
-
     private GroupListItemAdapter theAdapter;
 
     @Override
@@ -51,10 +45,11 @@ public class Groups extends ActionBarActivity {
         theList = new ArrayList<GroupClass>();
         groupList = (ListView) findViewById(R.id.groupList);
 
-        //Initierar adaptern och skickar med listan så att den vet vad den ska fylla raderna med
+        //Initializes the adapter and sends a list to it with information, so the adapter can fill its rows
         theAdapter = new GroupListItemAdapter(getApplicationContext(), R.layout.list_element_groups, theList);
         groupList.setAdapter(theAdapter);
 
+        // listens for clicks on the groups in the list
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,6 +97,7 @@ public class Groups extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Function that removes all the users alarms for this group ID
     private void clearAlarms() {
         for(GroupClass g:theList){
             String groupId = g.getGroup_id();
@@ -126,7 +122,7 @@ public class Groups extends ActionBarActivity {
             String AlarmTimeKey = "myTime" + groupId;
             String myTime = settings.getString(AlarmTimeKey,"0000");
 
-            String AlarmActiveKey = "AlarmActive" + groupId;
+            String AlarmActiveKey = "alarmActive" + groupId;
             Boolean AlarmActive = settings.getBoolean(AlarmActiveKey,false);
             int status;
             if(AlarmActive)
@@ -138,8 +134,9 @@ public class Groups extends ActionBarActivity {
 
     }
 
+    //Starts the activity JoinGroup when the + button is pressed
     public void newGroupButtonPressed(View v) {
-        Intent theIntent = new Intent(this, AddGroup.class);
+        Intent theIntent = new Intent(this, JoinGroup.class);
         startActivity(theIntent);
     }
 

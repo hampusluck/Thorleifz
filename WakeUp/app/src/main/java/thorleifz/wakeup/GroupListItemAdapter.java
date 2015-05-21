@@ -20,32 +20,32 @@ public class GroupListItemAdapter extends ArrayAdapter {
     TextView groupName;
     TextView alarmTime;
 
-    ArrayList<GroupClass> theList;
-
-    //När adaptern skapas tas listan med information om raderna och sparas
+    //When the adapter is created, the list of rows is saved
     public GroupListItemAdapter(Context context, int resource, ArrayList<GroupClass> theList) {
         super(context, resource, theList);
-        this.theList = theList; //Listan sparas
+        this.theList = theList; //The list is saved
     }
 
-    //Den här metoden styr upp vilken information i listan som ska hamna var i raden
+    ArrayList<GroupClass> theList;
+
+    //This method decides which information in the list goes where
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
 
-        //Här är något autogenererat som bestämmer vilken layout raden ska ha
+        //Deciding the layout of the row
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.list_element_groups, parent, false);
 
         }
-        //Här hämtas alla saker från layouten
+        //Fetching everything from the layout
         status = (ImageView) row.findViewById(R.id.theStatusOnEachGroup);
         groupName = (TextView) row.findViewById(R.id.theGroupNameID);
         alarmTime = (TextView) row.findViewById(R.id.theAlarmID);
 
-        //Här fylls de med information från listan
+        //Filling them with information from the list
         status.setImageResource(theList.get(position).getStatus_resource());
         groupName.setText(theList.get(position).getGroup_id());
         alarmTime.setText(theList.get(position).getAlarm_time());

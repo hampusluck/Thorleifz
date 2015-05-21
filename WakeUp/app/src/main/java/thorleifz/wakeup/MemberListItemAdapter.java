@@ -22,30 +22,30 @@ public class MemberListItemAdapter extends ArrayAdapter {
 
     ArrayList<MemberClass> theList;
 
-    //När adaptern skapas tas listan med information om raderna och sparas
+    //When the adapter is created, the list of rows is saved
     public MemberListItemAdapter(Context context, int resource, ArrayList<MemberClass> theList) {
         super(context, resource, theList);
         this.theList = theList; //Listan sparas
     }
 
-    //Den här metoden styr upp vilken information i listan som ska hamna var i raden
+    //This method decides which information in the list goes where
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row;
         row = convertView;
 
-        //Här är något autogenererat som bestämmer vilken layout raden ska ha
+        //Deciding the layout of the row
         if(convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.list_element_members, parent, false);
 
         }
-        //Här hämtas alla saker från layouten
+        //Fetching everything from the layout
         status = (ImageView) row.findViewById(R.id.memberStatusImageView);
         memberName = (TextView) row.findViewById(R.id.memberNameTextView);
         alarmTime = (TextView) row.findViewById(R.id.memberAlarmTextView);
 
-        //Här fylls de med information från listan
+        //Filling them with information from the list
         status.setImageResource(theList.get(position).getStatus_resource());
         memberName.setText(theList.get(position).getAccount_name());
         alarmTime.setText(theList.get(position).getAlarm_time());

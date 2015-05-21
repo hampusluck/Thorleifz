@@ -39,12 +39,12 @@ public class LogIn extends Activity {
     private EditText inputUsername;
     private EditText inputPassword;
     private TextView loginInfo;
-    private TextView passwordInfo;
+    private ProgressBar loginProgressBar;
+
     private String accountName;
     private String password;
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
-    private ProgressBar loginProgressBar;
     private final String severURL = "https://script.google.com/macros/s/AKfycbxPWTBnFC0SHZ3n3JZzHxhkDvvUwcdw2VtQI9_NpNIUYQzV6tw/exec";
 
 
@@ -60,16 +60,17 @@ public class LogIn extends Activity {
         loginInfo = (TextView)findViewById(R.id.loginInfo);
     }
 
+    //runs when the login button is pressed.
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
             hideKeyboard();
             loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
-
+        // test if both fields are filled in
         if( (!accountName.equals("")) && (!password.equals(""))) {
-
+            // test if both fields do not contain spaces
             if(!containsSpaces(accountName) && !containsSpaces(password)) {
-
+                // log in
                 loginProgressBar.setVisibility(View.VISIBLE);
                 LoginTask loginTask = new LoginTask();
                 loginTask.execute();
@@ -95,24 +96,27 @@ public class LogIn extends Activity {
         editor.putString("password",password);
         editor.commit();
     }
+    // Method that checks whether a given string contains spaces or not
     private boolean containsSpaces(String string){
         Pattern pattern = Pattern.compile("\\s");
         Matcher matcher = pattern.matcher(string);
         return matcher.find();
     }
 
+    // Method that starts the SignUpActivity
     public void startSignUpActivity(View v){
-        Log.i("tag","in startsignupmethod");
         Intent theIntent = new Intent(this, SignUp.class);
         startActivity(theIntent);
     }
-    //removes keyboard
+
+    // calls method to remove keyboard
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
         return true;
     }
 
+    //removes keyboard
     public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.
                 INPUT_METHOD_SERVICE);

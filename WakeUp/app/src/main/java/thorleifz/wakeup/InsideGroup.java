@@ -2,7 +2,6 @@ package thorleifz.wakeup;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -19,7 +18,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * When you click on a group you get to this activity where you can see all members of it.
@@ -41,20 +38,23 @@ import java.util.concurrent.ExecutionException;
 public class InsideGroup extends ActionBarActivity {
 
     ListView membersListView;
+    TextView myAlarmTimeTextView;
+    Switch setAlarmSwitch;
+    Button alarmActiveButton;
+    Button updateButton;
+    ProgressBar updateProgressBar;
 
     SharedPreferences settings;
-    MemberListItemAdapter memberListItemAdapter;
+
     String groupId;
     String accountName;
     String membersString;
-    Button AlarmActiveButton;
-    ArrayList<MemberClass> theList;
-    Button updateButton;
-    ProgressBar updateProgressBar;
     String myTime;
-    TextView myAlarmTimeTextView;
-    Switch setAlarmSwitch;
-    Boolean AlarmActive;
+    Boolean alarmActive;
+
+    ArrayList<MemberClass> theList;
+    MemberListItemAdapter memberListItemAdapter;
+
 
 
     @Override
@@ -69,7 +69,7 @@ public class InsideGroup extends ActionBarActivity {
         setAlarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = settings.edit();
-                String AlarmActiveKey = "AlarmActive" + groupId;
+                String AlarmActiveKey = "alarmActive" + groupId;
                 editor.putBoolean(AlarmActiveKey,isChecked);
                 editor.commit();
                 if(isChecked) {
@@ -97,7 +97,7 @@ public class InsideGroup extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MemberClass memberClass = (MemberClass) membersListView.getItemAtPosition(position);
                 String memberName = memberClass.getAccount_name();
-                Intent intent = new Intent(getApplicationContext(), sendSnoozeString.class);
+                Intent intent = new Intent(getApplicationContext(), SendSnoozeString.class);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("accountName", memberName);
                 Log.d("DEBUG", groupId + " " + memberName);
@@ -111,7 +111,7 @@ public class InsideGroup extends ActionBarActivity {
 
 
 
-
+    // Cancels an alarm
     private void cancelAlarm() {
         Intent intent = new Intent(this, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -125,13 +125,13 @@ public class InsideGroup extends ActionBarActivity {
         super.onResume();
         updateMembers();
         String AlarmTimeKey = "myTime" + groupId;
-        String AlarmActiveKey = "AlarmActive" + groupId;
+        String AlarmActiveKey = "alarmActive" + groupId;
         myTime = settings.getString(AlarmTimeKey,"0000");
         if(myTime!=null) {
             myAlarmTimeTextView.setText(myTime.substring(0,2)+ ":" + myTime.substring(2,4));
         }
-        AlarmActive = settings.getBoolean(AlarmActiveKey,false);
-        setAlarmSwitch.setChecked(AlarmActive);
+        alarmActive = settings.getBoolean(AlarmActiveKey,false);
+        setAlarmSwitch.setChecked(alarmActive);
     }
 
 
@@ -177,12 +177,14 @@ public class InsideGroup extends ActionBarActivity {
         }
     }
 
+    // Runs when the Set Alarm button is pressed. Opens the SetAlarm activity.
     public void setAlarmButtonPressed(View v){
         Intent theIntent = new Intent(this, SetAlarm.class);
         theIntent.putExtra("groupId", groupId);
         startActivity(theIntent);
     }
 
+    // Calls the method updateMembers when the update button is pressed
     public void updateButtonPressed(View v){
         updateMembers();
 
@@ -200,11 +202,11 @@ public class InsideGroup extends ActionBarActivity {
         //Add stuff to turn off/on the alarm
 
         //Test Stuff
-        if(AlarmActiveButton.getText().equals("Alarm Active")){
-            AlarmActiveButton.setText("Alarm Inactive");
+        if(alarmActiveButton.getText().equals("Alarm Active")){
+            alarmActiveButton.setText("Alarm Inactive");
         }
         else{
-            AlarmActiveButton.setText("Alarm Active");
+            alarmActiveButton.setText("Alarm Active");
         }
 
         /*
@@ -257,12 +259,14 @@ public class InsideGroup extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Seperate thread that downloads the members of a group
     private class DownloadMembersTask extends AsyncTask<String, Void, Void> {
 
         String serverURL = "https://script.google.com/macros/s/AKfycbzq3AKQZ-GgQEzXdpIpNjG5nvzB89hDQ-wZAkrRudRbOkoQ5AiQ/exec";
 
 
         @Override
+
         protected Void doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();
             String serverURLandParams = serverURL +"?accountName="+ accountName + "&groupId=" + groupId; //creates a new String containing the scripts URL and the parameters
@@ -275,10 +279,11 @@ public class InsideGroup extends ActionBarActivity {
             }
             return null;
         }
-        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
+
 
 
         @Override
+        // Updates the view of the list and enables the update button
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             theList.clear();
@@ -290,6 +295,7 @@ public class InsideGroup extends ActionBarActivity {
         }
     }
 
+    // Seperate thread that notifies the database that the user has left a group
     private class LeaveGroupTask extends AsyncTask<String, Void, Void> {
 
         String serverURL = "https://script.google.com/macros/s/AKfycbwZxGzUFA2mKEqHyf5Tt-IacScURcZQXvDvhhle1N78wb-1qUA/exec";
@@ -309,6 +315,7 @@ public class InsideGroup extends ActionBarActivity {
         }
 
         @Override
+        // Re-downloads the users groups after completion
         protected void onPostExecute(Void aVoid) {
             DownloadGroupsTask downloadGroupsTask = new DownloadGroupsTask(accountName,getApplicationContext());
             downloadGroupsTask.execute();

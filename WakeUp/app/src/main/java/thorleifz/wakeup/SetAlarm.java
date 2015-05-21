@@ -78,7 +78,7 @@ public class SetAlarm extends Activity {
         SharedPreferences.Editor editor = settings.edit();
 
         String AlarmTimekey = "myTime" + groupId;
-        String AlarmActiveKey = "AlarmActive" + groupId;
+        String AlarmActiveKey = "alarmActive" + groupId;
         editor.putString(AlarmTimekey,time);
         editor.putBoolean(AlarmActiveKey,true);
         editor.commit();

@@ -23,6 +23,7 @@ public class DownloadGroupsTask extends AsyncTask<String, Void, String> {
     String accountName;
     String theGroups;
     Context context;
+
     //The doInBackground-method is called when the object is executed
     public DownloadGroupsTask(String accountName, Context context){
         this.accountName = accountName;

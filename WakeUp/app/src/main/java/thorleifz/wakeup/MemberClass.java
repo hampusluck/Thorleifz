@@ -1,6 +1,8 @@
 package thorleifz.wakeup;
 
 /**
+ * a MemberClass is a class representing a member in the InsideGroup activity.
+ * Each entry in the list seen in the InsideGroup activity corresponds to a MemberClass object.
  * Created by Jacob on 2015-05-05.
  */
 public class MemberClass {

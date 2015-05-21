@@ -43,7 +43,7 @@ public class SignUp extends Activity {
     private SharedPreferences settings;
     SharedPreferences.Editor editor;
     private final String serverURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
-    boolean found = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,7 @@ public class SignUp extends Activity {
         signupProgressBar.setVisibility(View.GONE);
     }
 
+    // Runs when the sign up button is pressed.
     public void signUpConfirmButtonPressed(View v) {
 
         accountName = inputUsername.getText().toString();
@@ -67,18 +68,16 @@ public class SignUp extends Activity {
 
         // Control text editors filled out
         if( (!accountName.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
-
+            // Test if accountName contains spaces
             if (!containsSpaces(accountName)) {
-
+                // Test if password1 contains spaces
                 if (!containsSpaces(password1)) {
-
 
                     // Test for matching passwords
                     if (password1.equals(password2)) {
-                        Log.d("PAST EQUALS", "HEJ");
                         signupProgressBar.setVisibility(View.VISIBLE);
                         password = password1;
-                        AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that saves adds the user to the database
+                        AddUserTask addUserTask = new AddUserTask(); //Create a new AsyncTask that adds the user to the database
                         addUserTask.execute();
                     }
 
@@ -104,13 +103,14 @@ public class SignUp extends Activity {
         return true;
     }
 
+    // Method that checks if a given string contains spaces or not
     private boolean containsSpaces(String string){
         Pattern pattern = Pattern.compile("\\s");
         Matcher matcher = pattern.matcher(string);
         return matcher.find();
     }
 
-
+    // Method that saves a user to the local memory in a settings file
     private void createLocalUser() {
         editor = settings.edit();
         editor.putString("accountName",accountName);
@@ -118,9 +118,11 @@ public class SignUp extends Activity {
         editor.commit();
     }
 
+    // Seperate thread that created a new user in the database
+    // Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
     private class AddUserTask extends AsyncTask<String, Void, String> {
         String result;
-        //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
+
         @Override
         protected String doInBackground(String... params) {
             HttpClient httpClient = new DefaultHttpClient();

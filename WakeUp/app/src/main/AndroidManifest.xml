@@ -36,7 +36,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".AddGroup"
+            android:name=".JoinGroup"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -61,7 +61,7 @@
         android:theme="@style/Theme.Transparent">
         </activity>
         <activity
-            android:name=".sendSnoozeString"
+            android:name=".SendSnoozeString"
             android:theme="@style/Theme.Transparent">
 
         </activity>

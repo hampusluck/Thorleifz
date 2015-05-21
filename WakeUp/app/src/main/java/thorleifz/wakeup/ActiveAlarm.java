@@ -47,10 +47,12 @@ public class ActiveAlarm extends Activity {
     private String accountName;
     private String groupId;
 
+    //variables that represent the alarm state
     private int INACTIVE_ALARM = 0;
     private int ACTIVE_ALARM = 1;
     private int SNOOZE_ALARM = 2;
     private int status;
+
     private final String setAlarmServerURL = "https://script.google.com/macros/s/AKfycbwZ_k3B0xfsgIG9AgpsTsqIBZx_UtmVXjUD1--msnD218XQkbSC/exec";
     private final String alarmOffServerURL = "https://script.google.com/macros/s/AKfycbyhW8nDaJx8pGsw8kSVxc0XukPvrtjEQrh-fYg2Xyyol2XbRrQ/exec";
     private final String getSnoozeStringURL = "https://script.google.com/macros/s/AKfycbwgzzbw-NXaxYfB8urQ0PM8rsKp2S3zgoTWG5LYHTRevHcIus0/exec";
@@ -60,9 +62,9 @@ public class ActiveAlarm extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("newTag","onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.active_alarm_screen);
+
         snoozeStringView = (TextView) findViewById(R.id.activeAlarmTextView);
         turnedOff = false;
 
@@ -100,11 +102,12 @@ public class ActiveAlarm extends Activity {
     }
 
     private void getSnoozeString(){
-        Log.d("NU ÄR VI DÄR", snoozeString);
+        //Starts the asynctask GetSnoozeStringTask
         GetSnoozeStringTask getSnoozeStringTask = new GetSnoozeStringTask();
         getSnoozeStringTask.execute();
     }
 
+    //function that reformats spaces to underscores before sending to database
     private void setSnoozeTextView(){
         snoozeString = snoozeString.replaceAll("_", " ").toLowerCase();
         snoozeStringView.setText(snoozeString);
@@ -123,7 +126,7 @@ public class ActiveAlarm extends Activity {
         Log.i("newTag","turnOffAlarmButtonPressed");
         turnOffAlarm();
         SharedPreferences.Editor editor = settings.edit();
-        String AlarmActiveKey = "AlarmActive" + groupId;
+        String AlarmActiveKey = "alarmActive" + groupId;
         editor.putBoolean(AlarmActiveKey,false);
         editor.commit();
         finish();
@@ -179,6 +182,7 @@ public class ActiveAlarm extends Activity {
         super.onStop();
     }
 
+    // side thread that notifies the database that the alarm has been turned off
     private class TurnOffAlarmTask extends AsyncTask<String, Void, String> {
         String result;
 
@@ -201,7 +205,7 @@ public class ActiveAlarm extends Activity {
             return result;
         }
     }
-
+    // side thread that notifies the database of a new snooze alarm
     private class SnoozeAlarmTask extends AsyncTask<String, Void, String> {
         String result;
 
@@ -229,6 +233,7 @@ public class ActiveAlarm extends Activity {
 
     }
 
+    // side thread that downloads the snooze string from the database
     private class GetSnoozeStringTask extends AsyncTask<String, Void, String> {
         protected String result;
 
@@ -256,6 +261,7 @@ public class ActiveAlarm extends Activity {
         }
 
         @Override
+        //sets the alarmtext to be equal to the string that was downloaded
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             setSnoozeTextView();

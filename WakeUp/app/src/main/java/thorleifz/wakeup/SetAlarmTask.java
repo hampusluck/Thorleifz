@@ -12,6 +12,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 /**
+ * Class that connects to the database and gives it the info about the alarm that was set.
  * Created by adammyren on 15-05-20.
  */
 public class SetAlarmTask extends AsyncTask<String, Void, String> {

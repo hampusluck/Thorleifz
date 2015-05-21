@@ -18,9 +18,11 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 /**
+ * Activity that prompts the user to enter text into a textview.
+ * The text is then sent to the database and saved to the alarm of the user that was selected.
  * Created by rebeccaharkonen on 2015-05-20.
  */
-public class sendSnoozeString extends Activity {
+public class SendSnoozeString extends Activity {
 
     private final String serverURL = "https://script.google.com/macros/s/AKfycbxvLBgw0pY2fml0SEh4MX51TUbT34MIojhXw7FaQWGOjEhy1OD1/exec";
     private String accountName;
@@ -40,13 +42,12 @@ public class sendSnoozeString extends Activity {
         groupId = getIntent().getStringExtra("groupId");
         accountName = getIntent().getStringExtra("accountName");
 
-
-
-
     }
 
 
-
+    // Method that reads the text that the user entered, converts spaces to underscores and
+    // calls the SetSnoozeStringTask class to notify the database.
+    // After the method is complete the activity will close.
     public void setSnoozeString(View view){
 
         snoozeString = setSnoozeStringEditText.getText().toString();
@@ -60,6 +61,7 @@ public class sendSnoozeString extends Activity {
         finish();
     }
 
+    // Seperate thread that sends the relevant information to the database
     private class SetSnoozeStringTask extends AsyncTask<String, Void, String> {
         String result;
 
