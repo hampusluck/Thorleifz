@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -171,7 +172,7 @@ public class InsideGroup extends ActionBarActivity {
             else if(status==1)
                 image = R.drawable.alarm_green;
             else
-                image = R.drawable.alarm_black;
+                image = R.drawable.alarm_red;
 
             theList.add(new MemberClass(image,name,alarmTime));
         }

@@ -1,34 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     style="@style/Theme.Transparent"
     android:background="#e1b9b9b9">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="201dp"
+        android:layout_height="180dp"
+        android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:background="#963b943f">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OK"
-            android:textSize="40dp"
-            android:textColor="#25b347"
-            android:background="#fffcfff9"
-            android:textStyle="bold"
-            android:id="@+id/setSnoozeStringButton"
-            android:layout_gravity="center_horizontal"
-            android:onClick="setSnoozeString"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="5dp" />
+
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="45dp"
             android:background="#fffcfff9"
             android:textSize="20dp"
@@ -38,6 +26,25 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
-    </RelativeLayout>
-</LinearLayout>
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="45dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:textSize="30dp"
+            android:textColor="#25b347"
+            android:background="#fffcfff9"
+            android:textStyle="bold"
+            android:id="@+id/setSnoozeStringButton"
+            android:layout_gravity="center_horizontal"
+            android:onClick="setSnoozeString"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+    </LinearLayout>
+</RelativeLayout>

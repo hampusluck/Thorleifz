@@ -3,45 +3,38 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:nestedScrollingEnabled="false"
-    android:background="#25b347"
-    android:weightSum="1">
+    android:background="@color/green">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        android:layout_weight="0.13">
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp">
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="88dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/logoLogin"
-            android:src="@drawable/alarm_grey"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="0.15"
-            android:layout_marginTop="15dp" />
+            android:src="@drawable/sleepsmart555"
+            android:layout_marginLeft="60dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="SnoozeLoze"
+            android:text="LOGIN"
             android:id="@+id/snoozeLoze"
             android:textColor="#ffffffff"
             android:textStyle="bold"
-            android:textSize="40dp"
-            android:layout_marginTop="35dp"
+            android:textSize="30dp"
+            android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="87dp"
-        android:weightSum="1"
-        android:layout_weight="0.15"
-        android:layout_marginBottom="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <EditText
         android:layout_width="250dp"
@@ -51,7 +44,6 @@
         android:hint="Username"
         android:background="#ffffffff"
         android:layout_marginTop="5dp"
-        android:textColor="#25b347"
         android:textStyle="normal"
         android:layout_gravity="center" />
 
@@ -67,7 +59,6 @@
             android:hint="Password"
             android:background="#ffffffff"
             android:layout_marginTop="5dp"
-            android:textColor="#25b347"
             android:layout_gravity="center" />
 
 
@@ -85,37 +76,36 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="148dp"
-        android:layout_weight="0.20"
-        android:weightSum="1">
+        android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="193dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:text="Login"
             android:id="@+id/LogInButton"
-            android:textColor="#25b347"
+            android:textColor="@color/green"
             android:background="#fffcfff9"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:layout_gravity="center_horizontal"
             android:onClick="loginButtonPressed"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="10dp"
 />
 
         <Button
-            android:layout_width="223dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:text="Create Account"
+            android:text="Create"
             android:id="@+id/createNewUserButton"
-            android:textColor="#25b347"
+            android:textColor="@color/green"
             android:background="#fffcfff9"
             android:layout_gravity="center_horizontal"
             android:onClick="startSignUpActivity"
-            android:layout_marginTop="25dp"
             android:textStyle="bold"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"/>
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"

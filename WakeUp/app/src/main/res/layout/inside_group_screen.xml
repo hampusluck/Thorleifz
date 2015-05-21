@@ -4,15 +4,19 @@
     tools:context="thorleifz.wakeup.InsideGroup"
     android:orientation="horizontal"
     android:focusable="false"
-    android:background="#3b943f">
+    android:background="#ffffff">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="98dp"
+        android:layout_height="110dp"
         android:background="#ffffffff"
-        android:id="@+id/relativeLayout">
+        android:id="@+id/relativeLayout"
+        android:layout_marginBottom="1dp">
 
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +25,7 @@
         android:id="@+id/myAlarmInfoTextView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="10dp"
+        android:paddingTop="20dp"
         android:paddingLeft="10dp"
         android:textColor="#ff000000" />
 
@@ -36,21 +40,27 @@
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
         android:textColor="#ff787878" />
-
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="right">
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="Set Alarm"
         android:id="@+id/setAlarmButton"
         android:onClick="setAlarmButtonPressed"
-        android:textColor="#25b347"
-        android:background="#fffcfff9"
-        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:background="@color/green"
         android:textSize="20dp"
-        android:layout_above="@+id/myAlarmTimeTextView"
-        android:layout_alignParentEnd="true" />
-
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+/>
 
     <Switch
         android:layout_width="wrap_content"
@@ -60,28 +70,44 @@
         android:textOff="Off"
         android:paddingRight="20dp"
         android:checked="false"
-        android:layout_below="@+id/myAlarmTimeTextView"
-        android:layout_alignParentEnd="true" />
-    </RelativeLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp"/>
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/green"
+        android:layout_marginTop="110dp"
+        >
+
+        </LinearLayout>
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:id="@+id/membersListView"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentStart="true" />
+        android:drawSelectorOnTop="true"
+        android:layout_marginTop="112dp"
+        />
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:text="update"
         android:id="@+id/updateButton"
         android:onClick="updateButtonPressed"
         android:nestedScrollingEnabled="false"
-        android:textColor="#25b347"
-        android:background="#fffcfff9"
-        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:background="@color/green"
         android:textSize="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
