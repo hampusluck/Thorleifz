@@ -2,39 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#25b347"
-    android:weightSum="1">
+    android:background="#25b347">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="60dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginTop="50dp">
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="88dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/imageView3"
             android:src="@drawable/sleepsmart555"
-            android:layout_weight="0.15" />
+            android:layout_marginLeft="60dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="JOIN GROUP"
             android:id="@+id/joinGroup"
             android:textColor="#ffffffff"
             android:textStyle="bold"
             android:textSize="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="15dp" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
     <EditText
         android:layout_width="250dp"
         android:layout_height="40dp"
@@ -54,38 +52,42 @@
         android:editable="true"
         android:background="#ffffffff"
         android:layout_marginTop="5dp" />
+
     <TextView
         android:layout_width="318dp"
         android:layout_height="wrap_content"
         android:id="@+id/joinInfo"/>
-
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
-        android:layout_width="158dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="JOIN"
         android:id="@+id/button2"
-        android:layout_gravity="center_horizontal"
         android:onClick="joinButtonPressed"
         android:background="#ffffffff"
         android:textColor="#25b347"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_weight="0.07" />
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="70dp"
+        />
 
     <Button
-        android:layout_width="185dp"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:text="CREATE"
         android:id="@+id/button3"
-        android:layout_gravity="center_horizontal"
         android:onClick="createGroupButtonPressed"
         android:background="#ffffffff"
         android:textColor="#25b347"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_weight="0.06" />
+        android:layout_marginLeft="10dp"/>
+    </LinearLayout>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

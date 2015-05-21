@@ -72,7 +72,6 @@ public class SignUp extends Activity {
 
                 if (!containsSpaces(password1)) {
 
-
                     // Test for matching passwords
                     if (password1.equals(password2)) {
                         Log.d("PAST EQUALS", "HEJ");

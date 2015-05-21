@@ -171,7 +171,7 @@ public class InsideGroup extends ActionBarActivity {
             else if(status==1)
                 image = R.drawable.alarm_green;
             else
-                image = R.drawable.alarm_black;
+                image = R.drawable.alarm_red;
 
             theList.add(new MemberClass(image,name,alarmTime));
         }
