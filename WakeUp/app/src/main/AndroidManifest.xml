@@ -61,7 +61,7 @@
         android:theme="@style/Theme.Transparent">
         </activity>
         <activity
-            android:name=".SendSnoozeString"
+            android:name=".sendSnoozeString"
             android:theme="@style/Theme.Transparent">
 
         </activity>

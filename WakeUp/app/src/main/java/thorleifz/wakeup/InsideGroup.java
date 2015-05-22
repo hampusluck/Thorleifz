@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -98,7 +97,7 @@ public class InsideGroup extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MemberClass memberClass = (MemberClass) membersListView.getItemAtPosition(position);
                 String memberName = memberClass.getAccount_name();
-                Intent intent = new Intent(getApplicationContext(), SendSnoozeString.class);
+                Intent intent = new Intent(getApplicationContext(), sendSnoozeString.class);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("accountName", memberName);
                 Log.d("DEBUG", groupId + " " + memberName);

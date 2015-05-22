@@ -22,7 +22,7 @@ import java.io.IOException;
  * The text is then sent to the database and saved to the alarm of the user that was selected.
  * Created by rebeccaharkonen on 2015-05-20.
  */
-public class SendSnoozeString extends Activity {
+public class sendSnoozeString extends Activity {
 
     private final String serverURL = "https://script.google.com/macros/s/AKfycbxvLBgw0pY2fml0SEh4MX51TUbT34MIojhXw7FaQWGOjEhy1OD1/exec";
     private String accountName;
