@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
@@ -41,7 +42,7 @@ public class InsideGroup extends ActionBarActivity {
     TextView myAlarmTimeTextView;
     Switch setAlarmSwitch;
     Button alarmActiveButton;
-    Button updateButton;
+    ImageButton updateButton;
     ProgressBar updateProgressBar;
 
     SharedPreferences settings;
@@ -61,7 +62,7 @@ public class InsideGroup extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inside_group_screen);
-        updateButton = (Button) findViewById(R.id.updateButton);
+        updateButton = (ImageButton) findViewById(R.id.updateButton);
         updateProgressBar = (ProgressBar)findViewById(R.id.updateProgressBar);
         myAlarmTimeTextView = (TextView)findViewById(R.id.myAlarmTimeTextView);
         setAlarmSwitch = (Switch)findViewById(R.id.InsideGroupSwitch);

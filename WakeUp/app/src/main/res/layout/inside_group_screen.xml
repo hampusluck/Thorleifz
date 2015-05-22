@@ -92,18 +92,13 @@
         android:drawSelectorOnTop="true"
         android:layout_marginTop="112dp"
         />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:text="update"
         android:id="@+id/updateButton"
         android:onClick="updateButtonPressed"
-        android:nestedScrollingEnabled="false"
-        android:textColor="#ffffff"
-        android:background="@color/green"
-        android:textSize="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:background="@drawable/update_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="40dp"
