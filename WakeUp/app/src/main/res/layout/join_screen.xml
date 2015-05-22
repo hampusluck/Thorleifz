@@ -20,13 +20,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="JOIN GROUP"
+            android:text="JOIN \nGROUP"
             android:id="@+id/joinGroup"
             android:textColor="#ffffffff"
             android:textStyle="bold"
             android:textSize="30dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="20dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
@@ -58,10 +58,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/joinInfo"/>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_centerInParent="true">
     <Button
         android:layout_width="110dp"
         android:layout_height="wrap_content"
@@ -72,8 +76,7 @@
         android:textColor="@color/green"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginRight="15dp"
         />
 
     <Button
@@ -86,8 +89,9 @@
         android:textColor="@color/green"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="15dp"/>
     </LinearLayout>
+    </RelativeLayout>
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

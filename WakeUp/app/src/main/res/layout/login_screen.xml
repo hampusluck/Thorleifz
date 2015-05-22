@@ -74,11 +74,15 @@
             android:textColor="#fffffffd" />
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
         <Button
             android:layout_width="110dp"
@@ -90,8 +94,7 @@
             android:textStyle="bold"
             android:textSize="20dp"
             android:onClick="loginButtonPressed"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
 />
 
         <Button
@@ -105,7 +108,9 @@
             android:onClick="startSignUpActivity"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+    </RelativeLayout>
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -114,6 +119,6 @@
             android:id="@+id/loginProgressBar"
             android:layout_gravity="center_horizontal"
             android:indeterminate="true" />
-    </LinearLayout>
+
 
 </LinearLayout>

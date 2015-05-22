@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/snooze_loze_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MyActionBar" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -32,8 +32,9 @@
             android:parentActivityName=".LogIn" >
         </activity>
         <activity
+            android:theme="@style/CustomActionBarTheme"
             android:name=".Groups"
-            android:label="@string/app_name" >
+            android:label="My Groups" >
         </activity>
         <activity
             android:name=".JoinGroup"
@@ -44,6 +45,7 @@
             android:label="@string/title_activity_create_new_group" >
         </activity>
         <activity
+            android:theme="@style/CustomActionBarTheme"
             android:name=".InsideGroup"
             android:label="@string/title_activity_inside_group">
         </activity>

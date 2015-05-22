@@ -11,7 +11,9 @@
         android:layout_height="110dp"
         android:background="#ffffffff"
         android:id="@+id/relativeLayout"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="1dp"
+        android:onClick="setAlarmButtonPressed"
+        >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -41,40 +43,28 @@
         android:paddingTop="5dp"
         android:textColor="#ff787878" />
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:gravity="right">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Set Alarm"
-        android:id="@+id/setAlarmButton"
-        android:onClick="setAlarmButtonPressed"
-        android:textColor="#ffffff"
-        android:background="@color/green"
-        android:textSize="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-/>
+
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:switchMinWidth="80dp"
+        android:minHeight="20dp"
         android:id="@+id/InsideGroupSwitch"
+        android:layout_centerInParent="true"
         android:textOn="On"
         android:textOff="Off"
-        android:paddingRight="20dp"
         android:checked="false"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"/>
-    </LinearLayout>
+    </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="fill_parent"
