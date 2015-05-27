@@ -1,5 +1,6 @@
 package thorleifz.wakeup;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ public class Groups extends ActionBarActivity {
     SharedPreferences settings;
     ArrayList<GroupClass> theList;
     private GroupListItemAdapter theAdapter;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

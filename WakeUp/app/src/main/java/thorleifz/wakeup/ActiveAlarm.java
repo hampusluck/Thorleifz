@@ -42,6 +42,8 @@ public class ActiveAlarm extends Activity {
     private TextView snoozeStringView;
     private String snoozeString = "ERROR";
 
+
+
     private String time;
     private SharedPreferences settings;
     private String accountName;
@@ -163,7 +165,7 @@ public class ActiveAlarm extends Activity {
         turnedOff = true;
         status = INACTIVE_ALARM;
 
-        TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask();
+        TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask(accountName,groupId,status);
         turnOffAlarmTask.execute();
 
         snoozeString = turnOffAlarmTask.result;
@@ -182,7 +184,7 @@ public class ActiveAlarm extends Activity {
         super.onStop();
     }
 
-    // side thread that notifies the database that the alarm has been turned off
+/*    // side thread that notifies the database that the alarm has been turned off
     private class TurnOffAlarmTask extends AsyncTask<String, Void, String> {
         String result;
 
@@ -204,7 +206,7 @@ public class ActiveAlarm extends Activity {
             Log.d("turnOffAlarm",result);
             return result;
         }
-    }
+    }*/
     // side thread that notifies the database of a new snooze alarm
     private class SnoozeAlarmTask extends AsyncTask<String, Void, String> {
         String result;
