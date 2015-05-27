@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -37,7 +38,6 @@ import java.util.regex.Pattern;
 public class JoinGroup extends Activity {
     private EditText inputGroupId;
     private EditText inputPassword;
-    private TextView joinInfo;
     private String groupId;
     private String password;
     private String accountName;
@@ -49,13 +49,12 @@ public class JoinGroup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_screen);
-        settings = getSharedPreferences("settings",0);
+        settings = getSharedPreferences("settings", 0);
         accountName = settings.getString("accountName", null);
         inputGroupId = (EditText)findViewById(R.id.joinGroupId);
         inputPassword = (EditText)findViewById(R.id.joinPassword);
         joinProgressBar = (ProgressBar)findViewById(R.id.joinProgressBar);
         joinProgressBar.setVisibility(View.GONE);
-        joinInfo = (TextView)findViewById(R.id.joinInfo);
     }
     //removes keyboard
     @Override
@@ -88,7 +87,6 @@ public class JoinGroup extends Activity {
     // there is a matching group and if so, lets you join that group
     public void joinButtonPressed(View v) throws ExecutionException, InterruptedException {
         hideKeyboard();
-        joinInfo.setText("");
         groupId = inputGroupId.getText().toString();
         password = inputPassword.getText().toString();
         if( (!groupId.equals("")) && !password.equals("")) {
@@ -99,8 +97,7 @@ public class JoinGroup extends Activity {
                 JoinTask joinTask = new JoinTask();
                 joinTask.execute();
             }else{
-                joinInfo.setText("Wrong password or group ID");
-            }
+                Toast.makeText(this, "Wrong Group ID or password", Toast.LENGTH_LONG).show();            }
         }
 
     }
@@ -134,7 +131,7 @@ public class JoinGroup extends Activity {
             }
             else{
                 joinProgressBar.setVisibility(View.GONE);
-                joinInfo.setText("Wrong username or password");
+                Toast.makeText(getApplicationContext(), "Wrong Group ID or password ", Toast.LENGTH_LONG).show();
             }
         }
     }

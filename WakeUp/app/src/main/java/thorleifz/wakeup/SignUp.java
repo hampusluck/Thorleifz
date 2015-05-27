@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -37,7 +38,6 @@ public class SignUp extends Activity {
     private EditText inputPassword1;
     private EditText inputPassword2;
     private ProgressBar signupProgressBar;
-    private TextView passwordInfo;
     private String accountName;
     private String password;
     private SharedPreferences settings;
@@ -54,7 +54,6 @@ public class SignUp extends Activity {
         inputUsername = (EditText) findViewById(R.id.signupUsername);
         inputPassword1 = (EditText) findViewById(R.id.signupPassword1);
         inputPassword2 = (EditText) findViewById(R.id.signupPassword2);
-        passwordInfo = (TextView) findViewById(R.id.signUpPasswordInfo);
         signupProgressBar.setVisibility(View.GONE);
     }
 
@@ -64,7 +63,6 @@ public class SignUp extends Activity {
         accountName = inputUsername.getText().toString();
         String password1 = inputPassword1.getText().toString();
         String password2 = inputPassword2.getText().toString();
-        passwordInfo.setText("");
 
         // Control text editors filled out
         if( (!accountName.equals("")) && (!password1.equals("")) && (!password2.equals("")) ) {
@@ -82,14 +80,15 @@ public class SignUp extends Activity {
                     }
 
                     else
-                        passwordInfo.setText("Passwords don't match");
+                        Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_LONG).show();
+
                 }
 
                 else
-                    passwordInfo.setText("Your password cannot contain blank spaces");
+                    Toast.makeText(getApplicationContext(), "Your password cannot contain blank spaces", Toast.LENGTH_LONG).show();
             }
             else
-                passwordInfo.setText("Your account name cannot contain blank spaces");
+                Toast.makeText(getApplicationContext(), "Your account name cannot contain blank spaces", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -97,10 +96,15 @@ public class SignUp extends Activity {
     //removes keyboard
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        hideKeyboard();
+        return true;
+    }
+
+    //removes keyboard
+    public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
     }
 
     // Method that checks if a given string contains spaces or not
@@ -150,7 +154,8 @@ public class SignUp extends Activity {
                 startActivity(intent);
             }
             else {
-                passwordInfo.setText("username occupied");
+                Toast.makeText(getApplicationContext(), "username occupied", Toast.LENGTH_LONG).show();
+
             }
         }
     }

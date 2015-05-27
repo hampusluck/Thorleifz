@@ -65,10 +65,6 @@
         android:hint="Confirm Password"
         android:background="#ffffffff"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="318dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/signUpPasswordInfo"/>
 
     <Button
         android:layout_width="110dp"
@@ -80,7 +76,8 @@
         android:background="#ffffffff"
         android:textColor="@color/green"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_marginTop="5dp" />
 
     <ProgressBar
         android:layout_width="wrap_content"

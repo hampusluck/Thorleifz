@@ -73,10 +73,6 @@
         android:hint="Repeat Password"
         android:background="#ffffffff" />
     </LinearLayout>
-    <TextView
-        android:layout_width="318dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/createGroupPasswordInfo"/>
 
     <Button
         android:layout_width="110dp"
@@ -88,7 +84,8 @@
         android:background="#ffffffff"
         android:textColor="@color/green"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:layout_marginTop="5dp" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

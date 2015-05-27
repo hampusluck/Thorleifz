@@ -62,21 +62,11 @@
             android:layout_gravity="center" />
 
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/loginInfo"
-            android:paddingLeft="65dp"
-            android:textSize="15dp"
-            android:paddingTop="5dp"
-            android:textColor="#fffffffd" />
-
     </LinearLayout>
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
 
     <LinearLayout
         android:orientation="horizontal"

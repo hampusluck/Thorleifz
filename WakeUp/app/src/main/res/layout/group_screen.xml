@@ -20,7 +20,7 @@
         android:id="@+id/newGroupButton"
         android:layout_gravity="right"
         android:clickable="true"
-        android:background="@drawable/add_button"
+        android:background="@drawable/add_button_xml"
         android:onClick="newGroupButtonPressed"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

@@ -38,7 +38,6 @@ public class LogIn extends Activity {
 
     private EditText inputUsername;
     private EditText inputPassword;
-    private TextView loginInfo;
     private ProgressBar loginProgressBar;
 
     private String accountName;
@@ -57,13 +56,11 @@ public class LogIn extends Activity {
         inputPassword = (EditText)findViewById(R.id.PasswordLogIn);
         loginProgressBar = (ProgressBar)findViewById(R.id.loginProgressBar);
         loginProgressBar.setVisibility(View.GONE);
-        loginInfo = (TextView)findViewById(R.id.loginInfo);
     }
 
     //runs when the login button is pressed.
     public void loginButtonPressed(View v) throws ExecutionException, InterruptedException {
             hideKeyboard();
-            loginInfo.setText("");
             accountName = inputUsername.getText().toString();
             password = inputPassword.getText().toString();
         // test if both fields are filled in
@@ -77,7 +74,7 @@ public class LogIn extends Activity {
 
             }
             else{
-                loginInfo.setText("Login unsuccessful");
+                Toast.makeText(getApplicationContext(), "Login unsuccessful", Toast.LENGTH_LONG).show();
             }
 /*            if(loginStatus.equals("Login successful")){
                 createLocalUser();
@@ -155,7 +152,7 @@ public class LogIn extends Activity {
             }
             else{
                 loginProgressBar.setVisibility(View.GONE);
-                loginInfo.setText("Wrong username or password");
+                Toast.makeText(getApplicationContext(), "Wrong username or password", Toast.LENGTH_LONG).show();
             }
         }
     }

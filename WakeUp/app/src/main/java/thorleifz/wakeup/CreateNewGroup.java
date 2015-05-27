@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -40,7 +41,6 @@ public class CreateNewGroup extends Activity {
     EditText inputGroupName;
     EditText inputGroupPassword1;
     EditText inputGroupPassword2;
-    TextView groupPasswordInfo;
     ProgressBar createGroupProgressBar;
 
     String groupId;
@@ -60,7 +60,6 @@ public class CreateNewGroup extends Activity {
         inputGroupName = (EditText)findViewById(R.id.groupName);
         inputGroupPassword1 = (EditText) findViewById(R.id.createGroupPassword1);
         inputGroupPassword2 = (EditText) findViewById(R.id.createGroupPassword2);
-        groupPasswordInfo = (TextView) findViewById(R.id.createGroupPasswordInfo);
         createGroupProgressBar = (ProgressBar) findViewById(R.id.createGroupProgressBar);
         createGroupProgressBar.setVisibility(View.GONE);
 
@@ -71,7 +70,7 @@ public class CreateNewGroup extends Activity {
     //pressing this button creates a new group and adds you to it if you fill in the editable
     // text fields correctly
     public void createGroupConfirmButtonPressed(View v){
-        groupPasswordInfo.setText("");
+        hideKeyboard();
         String GroupPassword1 = inputGroupPassword1.getText().toString();
         String GroupPassword2 = inputGroupPassword2.getText().toString();
         groupId = inputGroupID.getText().toString();
@@ -94,18 +93,19 @@ public class CreateNewGroup extends Activity {
                             CreateGroupTask createGroupTask = new CreateGroupTask();
                             createGroupTask.execute();
                         } else {
-                            groupPasswordInfo.setText("Passwords don't match");
+
+                            Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_LONG).show();
                         }
                     }
                     else {
-                        groupPasswordInfo.setText("Group name cannot contain blank spaces");
+                        Toast.makeText(getApplicationContext(), "Group name cannot contain blank spaces", Toast.LENGTH_LONG).show();
                     }
                 }
                 else {
-                    groupPasswordInfo.setText("Passwords cannot contain blank spaces");
+                    Toast.makeText(getApplicationContext(), "Passwords cannot contain blank spaces", Toast.LENGTH_LONG).show();
                 }
             } else {
-                groupPasswordInfo.setText("Group ID cannot contain blank spaces");
+                Toast.makeText(getApplicationContext(), "Group ID cannot contain blank spaces", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -121,10 +121,15 @@ public class CreateNewGroup extends Activity {
     //removes keyboard
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        hideKeyboard();
+        return true;
+    }
+
+    // Hides the keyboard
+    public void hideKeyboard(){
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
     }
 
 
@@ -179,7 +184,7 @@ public class CreateNewGroup extends Activity {
             }
             else {
                 createGroupProgressBar.setVisibility(View.GONE);
-                groupPasswordInfo.setText("GroupsID occupied");
+                Toast.makeText(getApplicationContext(), "Group ID occupied", Toast.LENGTH_LONG).show();
             }
         }
     }

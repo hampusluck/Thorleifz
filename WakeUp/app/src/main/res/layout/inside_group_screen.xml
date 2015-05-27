@@ -88,7 +88,7 @@
         android:text="update"
         android:id="@+id/updateButton"
         android:onClick="updateButtonPressed"
-        android:background="@drawable/update_button"
+        android:background="@drawable/update_button_xml"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="40dp"
