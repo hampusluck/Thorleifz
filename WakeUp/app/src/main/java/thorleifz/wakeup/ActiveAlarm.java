@@ -150,6 +150,7 @@ public class ActiveAlarm extends Activity {
 
 
         Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("groupId", groupId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000 * 10), pendingIntent);
@@ -227,7 +228,7 @@ public class ActiveAlarm extends Activity {
                 e.printStackTrace();
             }
             Log.d("SnoozeAlarm",result);
-            snoozeStringView.setText(snoozeString + "");
+            //snoozeStringView.setText(snoozeString + "");
             return result;
 
         }
@@ -243,6 +244,7 @@ public class ActiveAlarm extends Activity {
         protected String doInBackground(String... params) {
 
             HttpClient httpClient = new DefaultHttpClient();
+
             String serverURLandParams = getSnoozeStringURL +"?accountName="+ accountName +"&groupId="+ groupId;
             Log.d("SnoozeAlarm", serverURLandParams);
 
