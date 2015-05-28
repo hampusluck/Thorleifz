@@ -56,15 +56,9 @@ public class SetAlarm extends Activity {
 
     // This method is called by the button "Set Alarm".
     // It calls the method setAlarm() with the time from the time picker.
-    public void setAlarmTime(View view) {
+    public void setAlarmButtonPressed(View view) {
 
-        Calendar alarmTime = new GregorianCalendar();
-        alarmTime.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-        alarmTime.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-        alarmTime.set(Calendar.SECOND, 0);
-        alarmTime.set(Calendar.MILLISECOND, 0);
-        status = ACTIVE_ALARM;
-
+        Calendar alarmTime = getTimeFromTimePicker();
         time = String.format("%02d%02d", alarmTimePicker.getCurrentHour(), alarmTimePicker.getCurrentMinute());
 
         // If the time picker is set to an earlier time than the current time, the alarm day changes to tomorrow
@@ -75,19 +69,31 @@ public class SetAlarm extends Activity {
             alarmTime.add(Calendar.DAY_OF_YEAR, 1);
             setAlarm(alarmTime);
         }
+        saveLocalAlarm(time);
+        finish();
+    }
+    //Saves the alarm in SharedPreferences
+    private void saveLocalAlarm(String time) {
         SharedPreferences.Editor editor = settings.edit();
-
         String AlarmTimekey = "myTime" + groupId;
         String AlarmActiveKey = "alarmActive" + groupId;
         editor.putString(AlarmTimekey,time);
         editor.putBoolean(AlarmActiveKey,true);
         editor.commit();
-        finish();
+    }
+    //Gets the time from the Timepicker and returns it
+    private Calendar getTimeFromTimePicker() {
+        Calendar alarmTime = new GregorianCalendar();
+        alarmTime.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+        alarmTime.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+        alarmTime.set(Calendar.SECOND, 0);
+        alarmTime.set(Calendar.MILLISECOND, 0);
+        return alarmTime;
     }
 
     // This method sets the alarm
     private void setAlarm(Calendar alarmTime) {
-        Log.d("setAlarm", alarmTime.toString());
+        status = ACTIVE_ALARM;
         Intent intent = new Intent(this, AlarmReceiver.class);
         intent.putExtra("groupId", groupId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), groupId.hashCode(), intent, 0);
@@ -99,29 +105,5 @@ public class SetAlarm extends Activity {
         setAlarmTask.execute();
     }
 
-/*    private class SetAlarmTask extends AsyncTask<String, Void, String> {
-        String result;
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = serverURL +"?accountName="+ accountName +"&groupId="+ groupId
-                    + "&time=" + time + "&status=" + status;
-            Log.d("setAlarm", serverURLandParams);
-
-            HttpGet httpGet = new HttpGet(serverURLandParams);
-            try {
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                result = EntityUtils.toString(httpResponse.getEntity());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.d("SetAlarm",result);
-            return result;
-        }
-
-
-    }*/
 
 }

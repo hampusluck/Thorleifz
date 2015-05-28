@@ -36,7 +36,7 @@
         android:layout_height="50dp"
         android:id="@+id/setAlarmConfirmButton"
         android:text="Set alarm"
-        android:onClick="setAlarmTime"
+        android:onClick="setAlarmButtonPressed"
         android:background="#ffffffff"
         android:textSize="20dp"
         android:textColor="#25b347"

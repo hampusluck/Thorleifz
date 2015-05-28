@@ -43,7 +43,6 @@ public class ActiveAlarm extends Activity {
     private String snoozeString = "ERROR";
 
 
-
     private String time;
     private SharedPreferences settings;
     private String accountName;
@@ -60,7 +59,6 @@ public class ActiveAlarm extends Activity {
     private final String getSnoozeStringURL = "https://script.google.com/macros/s/AKfycbwgzzbw-NXaxYfB8urQ0PM8rsKp2S3zgoTWG5LYHTRevHcIus0/exec";
     // A variable that indicates if the user has turned of the alarm.
     private boolean turnedOff;
-    Boolean haswindowfocus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +67,6 @@ public class ActiveAlarm extends Activity {
 
         snoozeStringView = (TextView) findViewById(R.id.activeAlarmTextView);
         turnedOff = false;
-
         settings = getSharedPreferences("settings", 0);
         accountName = settings.getString("accountName", null);
         groupId = getIntent().getStringExtra("groupId");
@@ -81,18 +78,15 @@ public class ActiveAlarm extends Activity {
 
         vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 
-
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ringtone = RingtoneManager.getRingtone(this, alarmUri);
 
         getSnoozeString();
 
-
     }
 
     @Override
     protected void onResume(){
-        Log.i("newTag","onResume");
         super.onResume();
 
         // Create a pattern for alarm vibration
@@ -113,30 +107,31 @@ public class ActiveAlarm extends Activity {
     private void setSnoozeTextView(){
         snoozeString = snoozeString.replaceAll("_", " ").toLowerCase();
         snoozeStringView.setText(snoozeString);
-
     }
 
     // This method is called when the user presses the button to snooze
     public void snoozeButtonPressed(View view){
-        Log.i("newTag","snoozeButtonPressed");
         snooze();
         finish();
     }
 
     //This method is called when the user presses the button to turn of the alarm
     public void turnOffAlarmButtonPressed(View view){
-        Log.i("newTag","turnOffAlarmButtonPressed");
         turnOffAlarm();
+        setLocalAlarmInactive();
+        finish();
+    }
+
+    //Sets the alarm in SharedPreferences to inactive
+    private void setLocalAlarmInactive() {
         SharedPreferences.Editor editor = settings.edit();
         String AlarmActiveKey = "alarmActive" + groupId;
         editor.putBoolean(AlarmActiveKey,false);
         editor.commit();
-        finish();
     }
 
     // This method stops the alarm and generates a new one within the snoozing time
     private void snooze(){
-        Log.i("newTag","snooze");
         ringtone.stop();
         vibrator.cancel();
 
@@ -148,28 +143,31 @@ public class ActiveAlarm extends Activity {
         alarmTime.add(Calendar.MINUTE, snoozeTime);
         time = String.format("%02d%02d", alarmTime.get(Calendar.HOUR_OF_DAY), alarmTime.get(Calendar.MINUTE));
 
-
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.putExtra("groupId", groupId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (snoozeTime * 1000 * 10), pendingIntent);
+        long newAlarmTime = System.currentTimeMillis() + (snoozeTime * 1000 * 10);
+        setAlarm(newAlarmTime);
 
         SnoozeAlarmTask snoozeAlarmTask = new SnoozeAlarmTask();
         snoozeAlarmTask.execute();
 
     }
+    //Sets a new alarm at a given time
+    private void setAlarm(long time) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("groupId", groupId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
+    }
 
     // This method stops the alarm
     private void turnOffAlarm(){
-        Log.i("newTag","turnOffAlarm");
         turnedOff = true;
         status = INACTIVE_ALARM;
 
         TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask(accountName,groupId,status);
         turnOffAlarmTask.execute();
 
-        snoozeString = turnOffAlarmTask.result;
+        //snoozeString = turnOffAlarmTask.result;
     }
 
     // This method is called whenever the activity is not in the foreground
@@ -177,37 +175,13 @@ public class ActiveAlarm extends Activity {
 
     @Override
     protected void onStop(){
-        Log.i("newTag","onStop");
        // If the alarm has not been turned off yet, generate a snooze
-        Log.i("newTag",Boolean.toString(turnedOff));
         ringtone.stop();
         vibrator.cancel();
         super.onStop();
     }
 
-/*    // side thread that notifies the database that the alarm has been turned off
-    private class TurnOffAlarmTask extends AsyncTask<String, Void, String> {
-        String result;
 
-        @Override
-        protected String doInBackground(String... params) {
-
-            HttpClient httpClient = new DefaultHttpClient();
-            String serverURLandParams = alarmOffServerURL +"?accountName="+ accountName +"&groupId="+ groupId
-                    + "&status=" + status;
-            Log.d("turnOffAlarm", serverURLandParams);
-
-            HttpGet httpGet = new HttpGet(serverURLandParams);
-            try {
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                result = EntityUtils.toString(httpResponse.getEntity());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Log.d("turnOffAlarm",result);
-            return result;
-        }
-    }*/
     // side thread that notifies the database of a new snooze alarm
     private class SnoozeAlarmTask extends AsyncTask<String, Void, String> {
         String result;
@@ -246,7 +220,6 @@ public class ActiveAlarm extends Activity {
             HttpClient httpClient = new DefaultHttpClient();
 
             String serverURLandParams = getSnoozeStringURL +"?accountName="+ accountName +"&groupId="+ groupId;
-            Log.d("SnoozeAlarm", serverURLandParams);
 
             HttpGet httpGet = new HttpGet(serverURLandParams);
             try {
