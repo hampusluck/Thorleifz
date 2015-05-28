@@ -1,0 +1,27 @@
+/**
+ * Serves HTML of the application for HTTP GET requests.
+ * If folderId is provided as a URL parameter, the web app will list
+ * the contents of that folder (if permissions allow). Otherwise
+ * the web app will list the contents of the root folder.
+ *
+ * @param {Object} e event parameter that can contain information
+ *     about any URL parameters provided.
+ */
+ var address = '173.194.246.185';
+ var db = 'testdatabase';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+ var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+function doGet(e) {
+  //accountName = "Adam";
+  accountName = e.parameter.accountName;
+  setAlarmsInactive();
+}
+
+
+function setAlarmsInactive(){
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.prepareStatement('UPDATE alarms SET status="0", time="0000" WHERE accountName= "' + accountName + '"');
+  stmt.execute();
+}

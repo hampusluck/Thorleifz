@@ -1,0 +1,30 @@
+/*
+This is a script that retrieves all the names of all groups that a given accountName is associated with and returns them
+
+*/
+
+  var address = '173.194.246.185';
+  var user = 'testuser';
+  var userPwd = 'testuser';
+  var db = 'testdatabase';
+  var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+  var accountName;
+  var groups = "";
+
+function doGet(e) {
+  accountName = e.parameter.accountName;
+  //accountName = "Adam";
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.createStatement();
+  var theQuery = 'SELECT groupId FROM isMember WHERE accountName = "' + accountName + '"';
+  var results = stmt.executeQuery(theQuery);
+  
+  while (results.next()){
+  groups = groups + results.getString("groupId") + " ";
+  Logger.log(results.getString("groupId"));
+  
+  }
+  
+  Logger.log(groups);
+  return ContentService.createTextOutput(groups);
+}

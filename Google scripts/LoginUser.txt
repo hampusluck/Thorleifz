@@ -1,0 +1,32 @@
+/*
+
+This is a script that checks whether a user exists in the database with a given accountName and password
+*/
+  var address = '173.194.246.185';
+  var db = 'testdatabase';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+  var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+
+
+function doGet(e) {
+  // Checks if the user is not in database
+  var accountName = e.parameter.accountName;
+  var password = e.parameter.password;
+  
+  
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.createStatement();
+  var theQuery = 'SELECT * FROM users WHERE accountName = "' + accountName + '" AND password = "' + password + '"';
+ 
+  var results = stmt.executeQuery(theQuery);
+  var userExists = results.next();
+  results.close();
+  stmt.close();
+  if(userExists == true){
+    return ContentService.createTextOutput("Login successful");
+     
+  }
+  return ContentService.createTextOutput("Login unsuccessful");
+}

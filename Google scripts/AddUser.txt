@@ -1,0 +1,57 @@
+/**
+ * Serves HTML of the application for HTTP GET requests.
+ * If folderId is provided as a URL parameter, the web app will list
+ * the contents of that folder (if permissions allow). Otherwise
+ * the web app will list the contents of the root folder.
+ *
+ * @param {Object} e event parameter that can contain information
+ *     about any URL parameters provided.
+ */
+
+  // Replace the variables in this block with real values.
+  var address = '173.194.246.185';
+  var db = 'testdatabase';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+  var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+
+//Main method that runs when the script is called
+function doGet(e) {
+  userName = e.parameter.username;
+  password = e.parameter.password;
+  
+  if (userIsUnique() == true){
+    createNewUser();
+    return ContentService.createTextOutput("New User created");
+  }
+  return ContentService.createTextOutput("Accountname occupied");
+}
+
+// Checks if the user is not in database
+function userIsUnique(){
+  var isUnique;
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.createStatement();
+  var theQuery = 'SELECT * FROM users WHERE accountName = "' + userName + '"';
+  var results = stmt.executeQuery(theQuery);
+  isUnique = !results.next();
+  
+  results.close();
+  stmt.close();
+  
+  return (isUnique);
+}
+
+  // Adds the user to the database
+function createNewUser() {
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.prepareStatement('INSERT INTO users '
+      + '(accountName, password) values (?, ?)');
+  stmt.setString(1, userName);
+  stmt.setString(2, password);
+  stmt.execute();
+}
+
