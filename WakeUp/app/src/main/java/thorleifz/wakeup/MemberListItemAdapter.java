@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 public class MemberListItemAdapter extends ArrayAdapter {
 
-    ImageView status;
-    TextView memberName;
-    TextView alarmTime;
+    private ImageView status;
+    private TextView memberName;
+    private TextView alarmTime;
 
-    ArrayList<MemberClass> theList;
+    private ArrayList<MemberClass> theList;
 
     //When the adapter is created, the list of rows is saved
     public MemberListItemAdapter(Context context, int resource, ArrayList<MemberClass> theList) {

@@ -106,7 +106,7 @@ public class LogIn extends Activity {
         startActivity(theIntent);
     }
 
-    // calls method to remove keyboard
+    //Runs whenever the user touches the screen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
@@ -123,7 +123,7 @@ public class LogIn extends Activity {
     @Override
     public void onBackPressed(){} //Overriding this method makes it impossible to go back to mainActivity
 
-    //private class that runs the back-end script in a seperate thread
+    //private class that runs checks if a user with a given accountName and password exists
     private class LoginTask extends AsyncTask<String, Void, String> {
         String s;
         //The doInBackground-method is called when the object is executed

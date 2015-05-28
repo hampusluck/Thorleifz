@@ -16,9 +16,9 @@ import java.util.ArrayList;
  */
 public class GroupListItemAdapter extends ArrayAdapter {
 
-    ImageView status;
-    TextView groupName;
-    TextView alarmTime;
+    private ImageView status;
+    private TextView groupName;
+    private TextView alarmTime;
 
     //When the adapter is created, the list of rows is saved
     public GroupListItemAdapter(Context context, int resource, ArrayList<GroupClass> theList) {

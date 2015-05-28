@@ -16,13 +16,13 @@ import java.io.IOException;
 /**
  * Created by adammyren on 15-04-29.
  */
-//private class that runs the back-end script in a seperate thread
+//This class downloads a String containing all members of a given group from the database
 public class DownloadGroupsTask extends AsyncTask<String, Void, String> {
 
-    String serverURL = "https://script.google.com/macros/s/AKfycbxu0F2ua8I8iu5NheQ8F6uzTiju1MLjLk_29-HU3jfoSfrhkeT0/exec";
-    String accountName;
-    String theGroups;
-    Context context;
+    private String serverURL = "https://script.google.com/macros/s/AKfycbxu0F2ua8I8iu5NheQ8F6uzTiju1MLjLk_29-HU3jfoSfrhkeT0/exec";
+    private String accountName;
+    private String theGroups;
+    private Context context;
 
     //The doInBackground-method is called when the object is executed
     public DownloadGroupsTask(String accountName, Context context){

@@ -28,7 +28,7 @@ import java.util.GregorianCalendar;
  */
 public class SetAlarm extends Activity {
 
-    AlarmManager alarmManager;
+    private AlarmManager alarmManager;
     private TimePicker alarmTimePicker;
     private String time;
     private SharedPreferences settings;
@@ -39,8 +39,6 @@ public class SetAlarm extends Activity {
     private int ACTIVE_ALARM = 1;
     private int SNOOZE_ALARM = 2;
     private int status;
-
-    private final String serverURL = "https://script.google.com/macros/s/AKfycbwZ_k3B0xfsgIG9AgpsTsqIBZx_UtmVXjUD1--msnD218XQkbSC/exec";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

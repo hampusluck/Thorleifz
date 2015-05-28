@@ -56,7 +56,7 @@ public class JoinGroup extends Activity {
         joinProgressBar = (ProgressBar)findViewById(R.id.joinProgressBar);
         joinProgressBar.setVisibility(View.GONE);
     }
-    //removes keyboard
+    //Runs whenever the user touches the screen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
@@ -91,7 +91,6 @@ public class JoinGroup extends Activity {
         password = inputPassword.getText().toString();
         if( (!groupId.equals("")) && !password.equals("")) {
             if(!containsSpaces(groupId) && !containsSpaces(password)) {
-
 
                 joinProgressBar.setVisibility(View.VISIBLE);
                 JoinTask joinTask = new JoinTask();

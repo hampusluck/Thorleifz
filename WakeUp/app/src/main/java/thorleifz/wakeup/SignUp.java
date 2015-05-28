@@ -41,7 +41,7 @@ public class SignUp extends Activity {
     private String accountName;
     private String password;
     private SharedPreferences settings;
-    SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor;
     private final String serverURL = "https://script.google.com/macros/s/AKfycbzuhhatsk9csXCv0oBKZ1TbtJqnLGsqrpR2ymTQStcrDaEgsGmP/exec";
 
 
@@ -81,7 +81,6 @@ public class SignUp extends Activity {
 
                     else
                         Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_LONG).show();
-
                 }
 
                 else
@@ -93,7 +92,7 @@ public class SignUp extends Activity {
 
     }
 
-    //removes keyboard
+    //Runs whenever the user clicks on the screen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
@@ -155,7 +154,6 @@ public class SignUp extends Activity {
             }
             else {
                 Toast.makeText(getApplicationContext(), "username occupied", Toast.LENGTH_LONG).show();
-
             }
         }
     }

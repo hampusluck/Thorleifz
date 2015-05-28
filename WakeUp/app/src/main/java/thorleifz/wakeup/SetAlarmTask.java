@@ -37,7 +37,6 @@ public class SetAlarmTask extends AsyncTask<String, Void, String> {
         HttpClient httpClient = new DefaultHttpClient();
         String serverURLandParams = serverURL +"?accountName="+ accountName +"&groupId="+ groupId
                 + "&time=" + time + "&status=" + status;
-        Log.d("setAlarm", serverURLandParams);
 
         HttpGet httpGet = new HttpGet(serverURLandParams);
         try {
@@ -46,7 +45,6 @@ public class SetAlarmTask extends AsyncTask<String, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("SetAlarm",result);
         return result;
     }
 }

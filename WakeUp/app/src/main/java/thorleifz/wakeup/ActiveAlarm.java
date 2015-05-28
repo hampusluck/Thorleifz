@@ -166,8 +166,6 @@ public class ActiveAlarm extends Activity {
 
         TurnOffAlarmTask turnOffAlarmTask = new TurnOffAlarmTask(accountName,groupId,status);
         turnOffAlarmTask.execute();
-
-        //snoozeString = turnOffAlarmTask.result;
     }
 
     // This method is called whenever the activity is not in the foreground
@@ -202,7 +200,6 @@ public class ActiveAlarm extends Activity {
                 e.printStackTrace();
             }
             Log.d("SnoozeAlarm",result);
-            //snoozeStringView.setText(snoozeString + "");
             return result;
 
         }

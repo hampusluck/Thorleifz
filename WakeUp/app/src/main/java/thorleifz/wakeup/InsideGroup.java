@@ -38,23 +38,22 @@ import java.util.Scanner;
  */
 public class InsideGroup extends ActionBarActivity {
 
-    ListView membersListView;
-    TextView myAlarmTimeTextView;
-    Switch setAlarmSwitch;
-    Button alarmActiveButton;
-    ImageButton updateButton;
-    ProgressBar updateProgressBar;
+    private ListView membersListView;
+    private TextView myAlarmTimeTextView;
+    private Switch setAlarmSwitch;
+    private ImageButton updateButton;
+    private ProgressBar updateProgressBar;
 
-    SharedPreferences settings;
+    private SharedPreferences settings;
 
-    String groupId;
-    String accountName;
-    String membersString;
-    String myTime;
-    Boolean alarmActive;
+    private String groupId;
+    private String accountName;
+    private String membersString;
+    private String myTime;
+    private Boolean alarmActive;
 
-    ArrayList<MemberClass> theList;
-    MemberListItemAdapter memberListItemAdapter;
+    private ArrayList<MemberClass> theList;
+    private MemberListItemAdapter memberListItemAdapter;
 
 
 
@@ -85,6 +84,7 @@ public class InsideGroup extends ActionBarActivity {
         //Sets the ActionBarTitle to the groupName
         groupId = getIntent().getStringExtra("groupId");
         setTitle(groupId);
+
         settings = getSharedPreferences("settings",0);
         accountName = settings.getString("accountName",null);
         theList = new ArrayList<MemberClass>();
@@ -201,53 +201,18 @@ public class InsideGroup extends ActionBarActivity {
         updateButton.setEnabled(false);
     }
 
-    public void AlarmActiveButtonPressed(View v){
-        //Add stuff to turn off/on the alarm
-
-        //Test Stuff
-        if(alarmActiveButton.getText().equals("Alarm Active")){
-            alarmActiveButton.setText("Alarm Inactive");
-        }
-        else{
-            alarmActiveButton.setText("Alarm Active");
-        }
-
-        /*
-            // This method cancels the alarm
-        public void cancelAlarm(View view) {
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 1, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "Alarm canceled", Toast.LENGTH_LONG).show();
-
-        status = INACTIVE_ALARM;
-        //TODO database stuff
-
-    }
-         */
 
 
-    }
-
-
-
-
-
-    //Auto generated stuff for menu
+    // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_inside_group, menu);
         return true;
     }
 
-    //Auto generated stuff for menu
+    //Runs whenever the user clicks on an object in the actionbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -266,7 +231,6 @@ public class InsideGroup extends ActionBarActivity {
     private class DownloadMembersTask extends AsyncTask<String, Void, Void> {
 
         String serverURL = "https://script.google.com/macros/s/AKfycbzq3AKQZ-GgQEzXdpIpNjG5nvzB89hDQ-wZAkrRudRbOkoQ5AiQ/exec";
-
 
         @Override
 

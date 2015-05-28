@@ -29,13 +29,12 @@ import java.util.Scanner;
  * Created by rebeccaharkonen on 2015-04-24.
  */
 public class Groups extends ActionBarActivity {
-    String accountName;
+    private String accountName;
     private String groupString; // a single string that contains all group names
     private ListView groupList;
-    SharedPreferences settings;
-    ArrayList<GroupClass> theList;
+    private SharedPreferences settings;
+    private ArrayList<GroupClass> theList;
     private GroupListItemAdapter theAdapter;
-    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +75,16 @@ public class Groups extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar
         getMenuInflater().inflate(R.menu.menu_groups, menu);
         return true;
     }
 
+    //Runs whenever the user clicks on an object in the actionbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             clearAlarms();
 
@@ -110,6 +106,7 @@ public class Groups extends ActionBarActivity {
         }
         SetAlarmInactiveTask theTask = new SetAlarmInactiveTask();
         theTask.execute();
+
         SharedPreferences.Editor editor = settings.edit();
         editor.clear();
         editor.commit();
@@ -145,6 +142,7 @@ public class Groups extends ActionBarActivity {
     @Override
     public void onBackPressed(){} //Overriding this method makes it impossible to go back to mainActivity
 
+    //private class that Inactivates alarms in the database on a separate thread
     private class SetAlarmInactiveTask extends AsyncTask<String, Void, Void> {
 
         String serverURL = "https://script.google.com/macros/s/AKfycbyKYa8rYf382qq0dzabyEXb4JLeEIUoGr3D8sy1cnY5dlYIK_Te/exec";
@@ -162,6 +160,5 @@ public class Groups extends ActionBarActivity {
             }
             return null;
         }
-        //This method is automatically when doInBackground is complete, in this case starting starting the new activity by calling startGroupActivity-method
     }
 }

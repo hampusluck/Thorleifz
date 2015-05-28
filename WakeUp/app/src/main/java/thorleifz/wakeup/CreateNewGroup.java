@@ -35,20 +35,20 @@ import java.util.regex.Pattern;
 
 public class CreateNewGroup extends Activity {
 
-    String serverURL = "https://script.google.com/macros/s/AKfycbyL917crfmq3rm3laLN2ebLZyC_VSXSlYhE8kwCkNeHyezAQQ4/exec";
+    private String serverURL = "https://script.google.com/macros/s/AKfycbyL917crfmq3rm3laLN2ebLZyC_VSXSlYhE8kwCkNeHyezAQQ4/exec";
 
-    EditText inputGroupID;
-    EditText inputGroupName;
-    EditText inputGroupPassword1;
-    EditText inputGroupPassword2;
-    ProgressBar createGroupProgressBar;
+    private EditText inputGroupID;
+    private EditText inputGroupName;
+    private EditText inputGroupPassword1;
+    private EditText inputGroupPassword2;
+    private ProgressBar createGroupProgressBar;
 
-    String groupId;
-    String groupPassword;
-    String accountName;
-    String groupName;
+    private String groupId;
+    private String groupPassword;
+    private String accountName;
+    private String groupName;
 
-    SharedPreferences settings;
+    private SharedPreferences settings;
 
 
 
@@ -118,7 +118,7 @@ public class CreateNewGroup extends Activity {
         return matcher.find();
     }
 
-    //removes keyboard
+    //Runs whenever the user touches the screen
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         hideKeyboard();
@@ -132,28 +132,6 @@ public class CreateNewGroup extends Activity {
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 
-
-    @Override
-    // Inflate the menu; this adds items to the action bar if it is present.
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_new_group, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     //Runs when the AddUser i executed, sends an HttpGet to the Google Script containing the accountName and password
     private class CreateGroupTask extends AsyncTask<String, Void, String> {
