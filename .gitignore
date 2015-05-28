@@ -29,3 +29,13 @@ proguard/
 .idea/
 
 WakeUp/.idea/gradle.xml
+<<<<<<< HEAD
+=======
+
+WakeUp/.idea/misc.xml
+WakeUp/.idea/misc.xml
+WakeUp/.idea/vcs.xml
+WakeUp/app/app.iml
+WakeUp/WakeUp.iml
+WakeUp/WakeUp.iml
+>>>>>>> develop

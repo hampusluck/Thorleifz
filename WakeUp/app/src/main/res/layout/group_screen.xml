@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/groupList"
+        android:layout_gravity="center_horizontal"
+        android:focusable="false"
+        android:drawSelectorOnTop="true"
+        android:layout_alignParentBottom="true" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/newGroupButton"
+        android:layout_gravity="right"
+        android:clickable="true"
+        android:background="@drawable/add_button_xml"
+        android:onClick="newGroupButtonPressed"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp" />
+</RelativeLayout>

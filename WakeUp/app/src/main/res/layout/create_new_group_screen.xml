@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="thorleifz.wakeup.CreateNewGroup"
+    android:background="@color/green"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/sleepsmart555"
+                android:layout_marginLeft="60dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="CREATE GROUP"
+                android:id="@+id/textView2"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="15dp" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/groupID"
+        android:layout_gravity="center_horizontal"
+        android:hint="Group ID must be unique"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/groupName"
+        android:layout_gravity="center_horizontal"
+        android:hint="Group Name"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPassword"
+        android:id="@+id/createGroupPassword1"
+        android:layout_gravity="center_horizontal"
+        android:hint="Password"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPassword"
+        android:id="@+id/createGroupPassword2"
+        android:layout_gravity="center_horizontal"
+        android:hint="Repeat Password"
+        android:background="#ffffffff" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="CREATE"
+        android:id="@+id/createGroupConfirmButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="createGroupConfirmButtonPressed"
+        android:background="#ffffffff"
+        android:textColor="@color/green"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="5dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createGroupProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:indeterminate="true" />
+
+</LinearLayout>

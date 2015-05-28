@@ -1,0 +1,60 @@
+//Script that saves an alarm in the database
+
+ var address = '173.194.246.185';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+ var db = 'testdatabase';
+ var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+function doGet(e) {
+  accountName = e.parameter.accountName;
+  groupId = e.parameter.groupId;
+  time = e.parameter.time;
+  status = e.parameter.status;
+  
+ 
+  
+  if (alarmAlreadyExists() == false){
+    createNewAlarm();
+    return ContentService.createTextOutput("New Alarm created");
+  }else{
+  updateAlarm();
+  return ContentService.createTextOutput("Alarm updated");
+  }
+}
+
+function alarmAlreadyExists(){
+  var exists;
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.createStatement();
+  var theQuery = 'SELECT * FROM alarms WHERE accountName= "' + accountName + '"'
+                  + ' AND groupId= "' + groupId + '"';
+  var results = stmt.executeQuery(theQuery);
+  exists = results.next();
+  
+  results.close();
+  stmt.close();
+  
+  return (exists);
+}
+
+function createNewAlarm() {
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.prepareStatement('INSERT INTO alarms '
+      + '(accountName, groupId, time, status) values (?, ?, ?, ?)');
+  stmt.setString(1, accountName);
+  stmt.setString(2, groupId);
+  stmt.setString(3, time);
+  stmt.setString(4, status);
+  stmt.execute();
+}
+
+function updateAlarm() {
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.prepareStatement('UPDATE alarms SET time="'
+      + time + '", status="' + status + '" WHERE accountName="' + accountName + '" AND groupId="' + groupId + '"');
+  stmt.execute();
+}

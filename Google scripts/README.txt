@@ -1,0 +1,1 @@
+These are all the Google Scripts that have been used for the communication between that android application and the database. Google Scripts are implemented in Googles web based developer environment. 

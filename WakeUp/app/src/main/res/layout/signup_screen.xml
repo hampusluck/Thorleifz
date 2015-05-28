@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:clickable="true"
+    android:background="@color/green">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/logoSignup"
+            android:src="@drawable/sleepsmart555"
+            android:layout_marginLeft="60dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="CREATE ACCOUNT"
+            android:id="@+id/createAcc"
+            android:textColor="#ffffffff"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:id="@+id/signupUsername"
+        android:layout_gravity="center"
+        android:hint="Username must be unique"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp"
+/>
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPassword"
+        android:id="@+id/signupPassword1"
+        android:layout_gravity="center"
+        android:hint="Password"
+        android:background="#ffffffff"
+        android:layout_marginBottom="5dp" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/signupPassword2"
+        android:layout_gravity="center"
+        android:hint="Confirm Password"
+        android:background="#ffffffff"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:id="@+id/signupConfirmButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="signUpConfirmButtonPressed"
+        android:background="#ffffffff"
+        android:textColor="@color/green"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signupProgressBar"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.58"
+        android:indeterminate="true" />
+
+</LinearLayout>

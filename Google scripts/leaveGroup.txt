@@ -1,0 +1,33 @@
+//Script that delets a user from a given group in the databae
+
+var address = '173.194.246.185';
+  var db = 'testdatabase';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+  var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+function doGet(e) {
+  groupId = e.parameter.groupId;
+  accountName = e.parameter.accountName;
+
+  leaveGroup();
+  deleteAlarm();
+  
+  return ContentService.createTextOutput("Left group");
+  
+}
+
+
+function leaveGroup(){
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.prepareStatement('DELETE FROM isMember WHERE '
+                                   + 'accountName = "' + accountName + '" AND groupId ="' + groupId + '"');
+  stmt.execute();
+}
+
+function deleteAlarm(){
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.prepareStatement('DELETE FROM alarms WHERE '
+                                   + 'accountName = "' + accountName + '" AND groupId ="' + groupId + '"');
+  stmt.execute();
+}

@@ -1,0 +1,26 @@
+//Script that sets the alarm active in the database
+
+var address = '173.194.246.185';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+ var db = 'testdatabase';
+ var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+function doGet(e) {
+  accountName = e.parameter.accountName;
+  groupId = e.parameter.groupId;
+  status = e.parameter.status;
+ 
+  
+  toggleAlarmOn();
+  return ContentService.createTextOutput("Alarm toggled on");
+}
+  
+function toggleAlarmOn() {
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.prepareStatement('UPDATE alarms SET status="1" WHERE accountName="' + accountName + '" AND groupId="' + groupId + '"');
+  stmt.execute();
+}
+ 
+ 

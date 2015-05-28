@@ -1,0 +1,27 @@
+//Script that saves a snooze String in the database
+
+var address = '173.194.246.185';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+ var db = 'testdatabase';
+ var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+
+function doGet(e) {
+  accountName = e.parameter.accountName;
+  groupId = e.parameter.groupId;
+  snoozeString = e.parameter.snoozeString;
+  
+  setAlarmSnoozeString();
+  
+  
+}
+
+function setAlarmSnoozeString() {
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+
+  var stmt = conn.prepareStatement('UPDATE alarms SET snoozeString="'
+      + snoozeString + '" WHERE accountName="' + accountName + '" AND groupId="' + groupId + '"');
+  stmt.execute();
+  return ContentService.createTextOutput("Snooze text set!");
+  
+}

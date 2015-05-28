@@ -1,0 +1,86 @@
+/*
+This is a script that creates a group with a given groupId, groupName and password.
+
+*/
+
+  var address = '173.194.246.185';
+  var db = 'testdatabase';
+ var user = 'testuser';
+ var userPwd = 'testuser';
+  var dbUrl = 'jdbc:mysql://' + address + '/' + db;
+  var groupName;
+  var groupId;
+  var groupPassword;
+  var accountName;
+
+function doGet(e) {
+  groupId = e.parameter.groupId;
+  groupName = e.parameter.groupName;
+  groupPassword = e.parameter.groupPassword;
+  accountName = e.parameter.accountName;
+  
+  /*groupName = "vadsomhelst";
+  groupId = "Thorleifz";
+  groupPassword = "hemligt";
+  accountName = "Adam";*/
+  if (groupIsUnique()){
+    
+    createGroup();
+    joinGroup();
+    defaultAlarm();
+    return ContentService.createTextOutput("Group created.");
+  }
+  
+  function defaultAlarm(){
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.prepareStatement('INSERT INTO alarms '
+                                   + '(accountName, groupId, time, status) values (?, ?, ?, ?)');
+  stmt.setString(1, accountName);
+  stmt.setString(2, groupId);
+  stmt.setString(3, "0000");
+  stmt.setString(4, "0");
+  stmt.execute();
+  
+  
+}
+  
+  
+  
+  return ContentService.createTextOutput("Group id already exists.");
+}
+
+function joinGroup(){
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  var stmt = conn.prepareStatement('INSERT INTO isMember '
+                                   + '(groupId, accountName) values (?, ?)');
+  stmt.setString(1, groupId);
+  stmt.setString(2, accountName);
+  stmt.execute();
+  
+  
+}
+
+function createGroup(){
+    var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+    var stmt = conn.prepareStatement('INSERT INTO groups '
+                                   + '(groupId, groupName, groupPassword) values (?, ?, ?)');
+    stmt.setString(1, groupId);
+    stmt.setString(2, groupName);
+    stmt.setString(3, groupPassword);
+    stmt.execute();
+}
+
+function groupIsUnique(){
+  var isUnique;
+  var conn = Jdbc.getConnection(dbUrl, user, userPwd);
+  
+  var stmt = conn.createStatement();
+  var theQuery = 'SELECT * FROM groups WHERE groupId = "' + groupId + '"';
+  var results = stmt.executeQuery(theQuery);
+  isUnique = !results.next();
+  
+  results.close();
+  stmt.close();
+  
+  return (isUnique);
+}
