@@ -76,14 +76,6 @@ public class LogIn extends Activity {
             else{
                 Toast.makeText(getApplicationContext(), "Login unsuccessful", Toast.LENGTH_LONG).show();
             }
-/*            if(loginStatus.equals("Login successful")){
-                createLocalUser();
-                loginInfo.setText("You are logged in");
-                // Go to "group activity"
-                //Intent theIntent = new Intent(this, "group activity".class);
-                //startActivity(theIntent);
-            }
-            */
         }
     }
     //Saves the entered information in the local memory using SharedPreferences
